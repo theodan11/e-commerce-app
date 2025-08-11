@@ -86,6 +86,9 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 104,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
