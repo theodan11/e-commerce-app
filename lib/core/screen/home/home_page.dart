@@ -30,10 +30,13 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          MyTextField(
-            textEditingController: searchController,
-            hintText: "Search Product Name",
-            icon: Icons.search,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: MyTextField(
+              textEditingController: searchController,
+              hintText: "Search Product Name",
+              icon: Icons.search,
+            ),
           ),
           const SizedBox(
             height: 30,

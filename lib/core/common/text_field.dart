@@ -6,10 +6,14 @@ class MyTextField extends StatelessWidget {
   final TextEditingController textEditingController;
   final IconData? icon;
   final String hintText;
+  final bool isObscure;
+  final Function? iconBtnFunc;
   const MyTextField(
       {super.key,
       required this.textEditingController,
       required this.hintText,
+      this.isObscure = false,
+      this.iconBtnFunc,
       this.icon});
 
   @override
@@ -17,13 +21,14 @@ class MyTextField extends StatelessWidget {
     return Container(
       decoration:
           const BoxDecoration(color: MyThemeColors.searchContainerColor),
-      margin: const EdgeInsets.symmetric(horizontal: 25),
+      // margin: const EdgeInsets.symmetric(horizontal: 25),
       width: MediaQuery.of(context).size.width,
       height: 50,
       child: Row(
         children: [
           Expanded(
             child: TextField(
+              obscureText: isObscure,
               controller: textEditingController,
               decoration: InputDecoration(
                 hintText: hintText,
@@ -39,8 +44,10 @@ class MyTextField extends StatelessWidget {
           ),
           icon != null
               ? IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    iconBtnFunc;
+                  },
+                  icon: Icon(icon),
                 )
               : const SizedBox(),
         ],
