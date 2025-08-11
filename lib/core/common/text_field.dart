@@ -2,9 +2,15 @@ import 'package:e_commerce_app/core/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
 
-class SearchTextField extends StatelessWidget {
+class MyTextField extends StatelessWidget {
   final TextEditingController textEditingController;
-  const SearchTextField({super.key, required this.textEditingController});
+  final IconData? icon;
+  final String hintText;
+  const MyTextField(
+      {super.key,
+      required this.textEditingController,
+      required this.hintText,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,7 @@ class SearchTextField extends StatelessWidget {
             child: TextField(
               controller: textEditingController,
               decoration: InputDecoration(
-                hintText: "Search Product Name",
+                hintText: hintText,
                 hintStyle: MyTextTheme.searchHintText,
                 enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide.none,
@@ -31,10 +37,12 @@ class SearchTextField extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-          ),
+          icon != null
+              ? IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.search),
+                )
+              : const SizedBox(),
         ],
       ),
     );

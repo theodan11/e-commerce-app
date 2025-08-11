@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyTextTheme {
+  MyTextTheme._();
+
   static final TextStyle appBarTitle = GoogleFonts.dmSans(
     fontWeight: FontWeight.bold,
     fontSize: 18,
@@ -92,5 +94,23 @@ class MyTextTheme {
     fontWeight: FontWeight.w400,
     fontSize: 12,
     color: MyThemeColors.grayText,
+  );
+
+  static final TextStyle loginPageHeaderText = GoogleFonts.dmSans(
+    fontWeight: FontWeight.bold,
+    fontSize: 25,
+    color: MyThemeColors.textNaviColor,
+  );
+
+  static final TextStyle loginPageSubHeaderText = GoogleFonts.dmSans(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    color: MyThemeColors.grayText,
+  );
+
+  static final TextStyle loginPageLabel = GoogleFonts.dmSans(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    color: MyThemeColors.textNaviColor,
   );
 }

@@ -18,7 +18,7 @@ class _HomeLayoutState extends State<HomeLayout> {
     HomePage(),
     const WishlistPage(),
     const OrderPage(),
-    const LoginPage(),
+    // const LoginPage(),
   ];
   int _selectedIndex = 0;
   @override
@@ -53,9 +53,14 @@ class _HomeLayoutState extends State<HomeLayout> {
         unselectedLabelStyle: MyTextTheme.bottomNavigationLabel,
         selectedLabelStyle: MyTextTheme.bottomNavigationLabel,
         onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
+          if (index == 3) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => LoginPage()));
+          } else {
+            setState(() {
+              _selectedIndex = index;
+            });
+          }
         },
         items: const [
           BottomNavigationBarItem(

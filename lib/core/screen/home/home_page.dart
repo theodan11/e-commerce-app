@@ -3,7 +3,7 @@ import 'package:e_commerce_app/core/common/discount_product_card.dart';
 import 'package:e_commerce_app/core/common/header_and_see_all.dart';
 import 'package:e_commerce_app/core/common/latest_news_card.dart';
 import 'package:e_commerce_app/core/common/product_card.dart';
-import 'package:e_commerce_app/core/common/search_text_field.dart';
+import 'package:e_commerce_app/core/common/text_field.dart';
 import 'package:e_commerce_app/core/common/show_now_card.dart';
 import 'package:e_commerce_app/core/dummyData/dummy_news_list.dart';
 import 'package:e_commerce_app/core/dummyData/dummy_product_list.dart';
@@ -30,8 +30,10 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          SearchTextField(
+          MyTextField(
             textEditingController: searchController,
+            hintText: "Search Product Name",
+            icon: Icons.search,
           ),
           const SizedBox(
             height: 30,
