@@ -176,7 +176,7 @@ class ProductDetailPage extends StatelessWidget {
                 color: MyThemeColors.grayText,
               ),
               HeaderAndSeeAll(
-                headerTitle: "Reviews(86)",
+                headerTitle: "Reviews (86)",
                 btnTitle: "4.6",
               ),
               GestureDetector(
