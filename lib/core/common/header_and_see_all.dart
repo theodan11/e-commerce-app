@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 
 class HeaderAndSeeAll extends StatelessWidget {
   final String headerTitle;
+  final String btnTitle;
   final bool isSeeAllVis;
   const HeaderAndSeeAll(
-      {super.key, required this.headerTitle, this.isSeeAllVis = true});
+      {super.key,
+      required this.headerTitle,
+      this.isSeeAllVis = true,
+      this.btnTitle = "See All"});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class HeaderAndSeeAll extends StatelessWidget {
               ? GestureDetector(
                   onTap: () {},
                   child: Text(
-                    "See All",
+                    btnTitle,
                     style: MyTextTheme.seeAll,
                   ),
                 )

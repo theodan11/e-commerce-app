@@ -1,22 +1,23 @@
 import 'package:e_commerce_app/core/common/text_field.dart';
-import 'package:e_commerce_app/core/cubit/login_form_cubit/login_form_cubit.dart';
-import 'package:e_commerce_app/core/cubit/login_form_cubit/login_form_state.dart';
-import 'package:e_commerce_app/core/screen/registration/registration_page.dart';
+import 'package:e_commerce_app/core/cubit/sign_up_form_cubit/sign_up_form_cubit.dart';
+import 'package:e_commerce_app/core/cubit/sign_up_form_cubit/sign_up_form_state.dart';
+import 'package:e_commerce_app/core/screen/common/pin_verification.dart';
+import 'package:e_commerce_app/core/screen/registration/registration_name_pass.dart';
 import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/theme/my_text_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegistrationPage extends StatelessWidget {
+  const RegistrationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: BlocProvider(
-        create: (context) => LoginFormCubit(),
-        child: BlocBuilder<LoginFormCubit, LoginFormState>(
+        create: (context) => SignUpFormCubit(),
+        child: BlocBuilder<SignUpFormCubit, SignUpFormState>(
           builder: (context, state) => SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -27,14 +28,14 @@ class LoginPage extends StatelessWidget {
                     height: 72,
                   ),
                   Text(
-                    "Welcome back to \nMega Mall",
+                    "Register Account",
                     style: MyTextTheme.loginPageHeaderText,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   Text(
-                    "Please enter your login information",
+                    "Enter Email/ Phone Number to register",
                     style: MyTextTheme.loginPageSubHeaderText,
                   ),
                   const SizedBox(
@@ -51,37 +52,19 @@ class LoginPage extends StatelessWidget {
                     value: state.emailOrPhone,
                     hintText: "Enter you Email Addresss/ Phone Number",
                     onChanged: (value) {
-                      context.read<LoginFormCubit>().updateEmailOrPhone(value);
+                      context.read<SignUpFormCubit>().updateEmailOrPhone(value);
                     },
                   ),
                   const SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    "Password",
-                    style: MyTextTheme.loginPageLabel,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  MyTextField(
-                    value: state.password,
-                    hintText: "Enter your Account Password",
-                    onChanged: (value) {
-                      context.read<LoginFormCubit>().updatePassword(value);
-                    },
-                    icon: Icons.remove_red_eye_outlined,
-                    isObscure: state.isObscure,
-                    iconBtnFunc: () =>
-                        context.read<LoginFormCubit>().updateIsObscure(),
-                  ),
-                  const SizedBox(
-                    height: 70,
+                    height: 114,
                   ),
                   GestureDetector(
-                    onTap: state.isValid
+                    onTap: state.isEmailValid
                         ? () {
-                            context.read<LoginFormCubit>().submitForm();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => PinVerification(
+                                    emailOrPhone: state.emailOrPhone!,
+                                    nextPage: const RegistrationNamePass())));
                           }
                         : null,
                     child: Container(
@@ -89,13 +72,13 @@ class LoginPage extends StatelessWidget {
                       height: 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: state.isValid
+                        color: state.isEmailValid
                             ? MyThemeColors.primaryColor
                             : MyThemeColors.grayText,
                       ),
                       child: Center(
                         child: Text(
-                          "Sign In",
+                          "Continue",
                           style: MyTextTheme.searchHintText.copyWith(
                             color: Colors.white,
                           ),
@@ -104,33 +87,30 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 80,
+                    height: 100,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                        child: Text(
-                          "Forgot Password",
-                          style: MyTextTheme.productTitle,
-                        ),
+                      Text(
+                        "Have an Account?",
+                        style: MyTextTheme.loginPageLabel,
+                      ),
+                      const SizedBox(
+                        width: 6,
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const RegistrationPage()));
+                          Navigator.of(context).pop();
                         },
                         child: Text(
-                          "Sign Up",
+                          "Sign In",
                           style: MyTextTheme.productTitle
                               .copyWith(color: MyThemeColors.primaryColor),
                         ),
                       )
                     ],
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+                  )
                 ],
               ),
             ),

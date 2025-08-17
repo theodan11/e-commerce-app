@@ -39,6 +39,7 @@ dependencies:
   money_formatter: ^0.0.6
   flutter_bloc: ^8.1.6
   equatable: ^2.0.5
+  pinput: ^5.0.1
 
 dev_dependencies:
   flutter_test:
