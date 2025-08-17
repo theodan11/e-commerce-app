@@ -31,7 +31,7 @@ class DummyNewsList {
         title: "Tips Merawat Bodi Mobil agar Tidak Terlihat Kusam",
         subTitle: "To keep it shiny, the motorcycle body...",
         nDate: "13 Jan 2021",
-        imgPath: "assets/images/ln_3.png",
+        imgPath: "assets/images/ln_4.png",
         desc:
             "The speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers."),
     const News(
@@ -39,7 +39,7 @@ class DummyNewsList {
             "Many Inquiries Outside Of Academia Are Philosophical In The Broad Sense",
         subTitle: "In one general sense, philosophy is ass...",
         nDate: "13 Jan 2021",
-        imgPath: "assets/images/ln_3.png",
+        imgPath: "assets/images/ln_5.png",
         desc:
             "The speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers."),
     const News(
@@ -47,7 +47,7 @@ class DummyNewsList {
             "Tips for Maintaining Your Car's Body to Keep It from Looking Dull",
         subTitle: "To keep it shiny, the motorcycle body...",
         nDate: "13 Jan 2021",
-        imgPath: "assets/images/ln_3.png",
+        imgPath: "assets/images/ln_6.png",
         desc:
             "The speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers.\n\nThe speaker unit features a diaphragm that is precision-engineered from NAC Audio bio-cellulose, making it stiffer, lighter, and stronger than standard PET speaker units, allowing the sound-producing diaphragm to vibrate with minimal distortion compared to other speakers."),
   ];
