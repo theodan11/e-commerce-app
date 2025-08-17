@@ -155,10 +155,23 @@ class ProductDetailPage extends StatelessWidget {
                 headerTitle: "Description Product",
                 isSeeAllVis: false,
               ),
+              const SizedBox(
+                height: 15,
+              ),
               Text(
                 "The speaker unit contains a diaphragm that is precision-grown from NAC Audio bio-cellulose, making it stiffer, lighter and stronger than regular PET speaker units, and allowing the sound-producing diaphragm to vibrate without the levels of distortion found in other speakers.\n\nThe speaker unit contains a diaphragm that is precision-grown from NAC Audio bio-cellulose, making it stiffer, lighter and stronger than regular PET speaker units, and allowing the sound-producing diaphragm to vibrate without the levels of distortion found in other speakers.  ",
                 style: MyTextTheme.newsDescText,
-              )
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Divider(
+                indent: 25,
+                endIndent: 25,
+                thickness: .8,
+                height: 20,
+                color: MyThemeColors.grayText,
+              ),
             ],
           ),
         ),
