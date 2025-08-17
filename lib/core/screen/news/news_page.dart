@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/theme/my_text_theme.dart';
 
 class NewsPage extends StatelessWidget {
-  NewsPage({super.key});
-  List<News> newsList = DummyNewsList.newsList;
+  const NewsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<News> newsList = DummyNewsList.newsList;
     return Scaffold(
       appBar: AppBar(
         title: Text("News",
