@@ -27,7 +27,6 @@ class NewsDetailPage extends StatelessWidget {
 
     final List<News> newsList = filterNews(DummyNewsList.newsList)!;
 
-    ;
     // print(newItem.imgPath);
     return Scaffold(
       appBar: AppBar(

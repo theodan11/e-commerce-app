@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/screen/product/product_detail_page.dart';
 import 'package:e_commerce_app/core/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
 
@@ -31,7 +32,10 @@ class ProductCard extends StatelessWidget {
           ),
         ),
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const ProductDetailPage()));
+          },
           child: Material(
             elevation: 2,
             child: Container(

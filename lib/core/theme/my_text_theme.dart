@@ -113,9 +113,22 @@ class MyTextTheme {
     fontSize: 14,
     color: MyThemeColors.textNaviColor,
   );
+
   static final TextStyle newsDescText = GoogleFonts.dmSans(
     fontWeight: FontWeight.w400,
     fontSize: 14,
     color: MyThemeColors.textNaviColor,
+  );
+
+  static final TextStyle productDetailHeaderText = GoogleFonts.dmSans(
+    fontWeight: FontWeight.bold,
+    fontSize: 24,
+    color: MyThemeColors.textNaviColor,
+  );
+
+  static final TextStyle availableProductText = GoogleFonts.dmSans(
+    fontWeight: FontWeight.w500,
+    fontSize: 12,
+    color: MyThemeColors.categoriesGreen,
   );
 }
