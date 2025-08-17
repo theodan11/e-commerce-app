@@ -15,7 +15,7 @@ class NewsDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final News newItem = DummyNewsList.newsList[newsIndex];
-    List<News>? _filterNews(List<News> newsList) {
+    List<News>? filterNews(List<News> newsList) {
       List<News> filteredItem = [];
       for (int i = 0; i < newsList.length; i++) {
         if (newsList[i].title != newItem.title) {
@@ -25,7 +25,7 @@ class NewsDetailPage extends StatelessWidget {
       return filteredItem;
     }
 
-    final List<News> newsList = _filterNews(DummyNewsList.newsList)!;
+    final List<News> newsList = filterNews(DummyNewsList.newsList)!;
 
     ;
     // print(newItem.imgPath);
@@ -44,14 +44,17 @@ class NewsDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AspectRatio(
-                aspectRatio: 1.625,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: SizedBox(
-                    child: Image.asset(
-                      newItem.imgPath,
-                      fit: BoxFit.cover,
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 500),
+                child: AspectRatio(
+                  aspectRatio: 1.625,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: SizedBox(
+                      child: Image.asset(
+                        newItem.imgPath,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -85,6 +88,7 @@ class NewsDetailPage extends StatelessWidget {
                 height: 20,
               ),
               SizedBox(
+                width: 450,
                 height: 300,
                 child: ListView.separated(
                     itemCount: 2,
