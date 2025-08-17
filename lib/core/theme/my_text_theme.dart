@@ -113,4 +113,9 @@ class MyTextTheme {
     fontSize: 14,
     color: MyThemeColors.textNaviColor,
   );
+  static final TextStyle newsDescText = GoogleFonts.dmSans(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    color: MyThemeColors.textNaviColor,
+  );
 }

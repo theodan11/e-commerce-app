@@ -39,7 +39,7 @@ class DiscountProductCard extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              width: 168,
+              width: 174,
               // height: ,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
@@ -85,21 +85,21 @@ class DiscountProductCard extends StatelessWidget {
                       style: MyTextTheme.productTitle,
                     ),
                     const SizedBox(
-                      height: 8,
+                      height: 6,
                     ),
                     Text(
                       "৳. ${priceMoney.output.nonSymbol}",
                       style: MyTextTheme.productPrice,
                     ),
                     const SizedBox(
-                      height: 8,
+                      height: 6,
                     ),
                     Text(
                       "৳. ${discountpriceMoney.output.nonSymbol}",
                       style: MyTextTheme.discountProductPrice,
                     ),
                     const SizedBox(
-                      height: 8,
+                      height: 6,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -123,7 +123,7 @@ class DiscountProductCard extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              width: 8,
+                              width: 6,
                             ),
                             Text(
                               "$numOfReviews Reviews",

@@ -13,28 +13,25 @@ class HeaderAndSeeAll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            headerTitle,
-            style: MyTextTheme.headerTextStyle,
-          ),
-          isSeeAllVis
-              ? GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    btnTitle,
-                    style: MyTextTheme.seeAll,
-                  ),
-                )
-              : const SizedBox(
-                  width: 2,
-                )
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          headerTitle,
+          style: MyTextTheme.headerTextStyle,
+        ),
+        isSeeAllVis
+            ? GestureDetector(
+                onTap: () {},
+                child: Text(
+                  btnTitle,
+                  style: MyTextTheme.seeAll,
+                ),
+              )
+            : const SizedBox(
+                width: 2,
+              )
+      ],
     );
   }
 }

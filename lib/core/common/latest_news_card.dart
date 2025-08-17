@@ -6,60 +6,66 @@ class LatestNewsCard extends StatelessWidget {
   final String subTitle;
   final String nDate;
   final String imgPath;
-  const LatestNewsCard({
-    super.key,
-    required this.title,
-    required this.subTitle,
-    required this.nDate,
-    required this.imgPath,
-  });
+  final Function onTapFunc;
+  const LatestNewsCard(
+      {super.key,
+      required this.title,
+      required this.subTitle,
+      required this.nDate,
+      required this.imgPath,
+      required this.onTapFunc});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
-      child: SizedBox(
-        width: 325,
-        child: Row(
-          children: [
-            SizedBox(
-              width: 225,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: MyTextTheme.latestNewsHeadterText,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    subTitle,
-                    style: MyTextTheme.latestNewsSubTitleText,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    nDate,
-                    style: MyTextTheme.latestNewsDate,
-                  )
-                ],
+      onTap: () {
+        onTapFunc();
+      },
+      child: FittedBox(
+        child: SizedBox(
+          width: 325,
+          child: Row(
+            children: [
+              SizedBox(
+                width: 225,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: MyTextTheme.latestNewsHeadterText,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      subTitle,
+                      style: MyTextTheme.latestNewsSubTitleText,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      nDate,
+                      style: MyTextTheme.latestNewsDate,
+                    )
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            SizedBox(
-              width: 80,
-              height: 80,
-              child: Image.asset(
-                imgPath,
-                fit: BoxFit.cover,
+              const SizedBox(
+                width: 20,
               ),
-            )
-          ],
+              SizedBox(
+                width: 80,
+                height: 80,
+                child: Image.asset(
+                  imgPath,
+                  fit: BoxFit.cover,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

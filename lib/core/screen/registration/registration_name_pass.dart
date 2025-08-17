@@ -76,7 +76,7 @@ class RegistrationNamePass extends StatelessWidget {
                     },
                   ),
                   const SizedBox(
-                    height: 114,
+                    height: 80,
                   ),
                   GestureDetector(
                     onTap: state.isEmailValid ? () {} : null,
@@ -100,30 +100,8 @@ class RegistrationNamePass extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 100,
+                    height: 50,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Have an Account?",
-                        style: MyTextTheme.loginPageLabel,
-                      ),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(
-                          "Sign In",
-                          style: MyTextTheme.productTitle
-                              .copyWith(color: MyThemeColors.primaryColor),
-                        ),
-                      )
-                    ],
-                  )
                 ],
               ),
             ),

@@ -9,6 +9,8 @@ import 'package:e_commerce_app/core/dummyData/dummy_news_list.dart';
 import 'package:e_commerce_app/core/dummyData/dummy_product_list.dart';
 import 'package:e_commerce_app/core/dummyData/news.dart';
 import 'package:e_commerce_app/core/dummyData/product.dart';
+import 'package:e_commerce_app/core/screen/news/news_detail_page.dart';
+import 'package:e_commerce_app/core/screen/news/news_page.dart';
 import 'package:e_commerce_app/core/theme/my_text_theme.dart';
 
 import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
@@ -58,8 +60,11 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          const HeaderAndSeeAll(
-            headerTitle: "Categories",
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
+            child: HeaderAndSeeAll(
+              headerTitle: "Categories",
+            ),
           ),
           const SizedBox(
             height: 16,
@@ -114,8 +119,11 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 28,
                 ),
-                const HeaderAndSeeAll(
-                  headerTitle: "Featured Product",
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: HeaderAndSeeAll(
+                    headerTitle: "Featured Product",
+                  ),
                 ),
                 const SizedBox(
                   height: 24,
@@ -151,8 +159,11 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const HeaderAndSeeAll(
-                  headerTitle: "Best Sellers",
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: HeaderAndSeeAll(
+                    headerTitle: "Best Sellers",
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -188,8 +199,11 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const HeaderAndSeeAll(
-                  headerTitle: "New Arrivals",
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: HeaderAndSeeAll(
+                    headerTitle: "New Arrivals",
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -217,8 +231,11 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                const HeaderAndSeeAll(
-                  headerTitle: "Top Rated Product",
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: HeaderAndSeeAll(
+                    headerTitle: "Top Rated Product",
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -246,8 +263,11 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 36,
                 ),
-                const HeaderAndSeeAll(
-                  headerTitle: "Special Offers",
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: HeaderAndSeeAll(
+                    headerTitle: "Special Offers",
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -283,9 +303,12 @@ class HomePage extends StatelessWidget {
             height: 60,
           ),
 
-          const HeaderAndSeeAll(
-            headerTitle: "Latest News",
-            isSeeAllVis: false,
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
+            child: HeaderAndSeeAll(
+              headerTitle: "Latest News",
+              isSeeAllVis: false,
+            ),
           ),
 
           const SizedBox(
@@ -299,6 +322,10 @@ class HomePage extends StatelessWidget {
             subTitle: newsList[0].subTitle,
             nDate: newsList[0].nDate,
             imgPath: newsList[0].imgPath,
+            onTapFunc: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const NewsDetailPage(newsIndex: 0)));
+            },
           ),
           const Divider(
             indent: 25,
@@ -313,6 +340,10 @@ class HomePage extends StatelessWidget {
             subTitle: newsList[1].subTitle,
             nDate: newsList[1].nDate,
             imgPath: newsList[1].imgPath,
+            onTapFunc: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const NewsDetailPage(newsIndex: 1)));
+            },
           ),
 
           const Divider(
@@ -328,10 +359,17 @@ class HomePage extends StatelessWidget {
             subTitle: newsList[2].subTitle,
             nDate: newsList[2].nDate,
             imgPath: newsList[2].imgPath,
+            onTapFunc: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const NewsDetailPage(newsIndex: 2)));
+            },
           ),
 
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => NewsPage()));
+            },
             child: Container(
               height: 50,
               width: MediaQuery.of(context).size.width,

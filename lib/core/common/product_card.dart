@@ -38,7 +38,7 @@ class ProductCard extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              width: 168,
+              width: 174,
               // height: 268,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
@@ -68,7 +68,7 @@ class ProductCard extends StatelessWidget {
                       style: MyTextTheme.productPrice,
                     ),
                     const SizedBox(
-                      height: 8,
+                      height: 6,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,7 +92,7 @@ class ProductCard extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              width: 8,
+                              width: 6,
                             ),
                             Text(
                               "$numOfReviews Reviews",
