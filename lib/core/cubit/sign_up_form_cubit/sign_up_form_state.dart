@@ -19,12 +19,14 @@ class SignUpFormState extends Equatable {
 
   SignUpFormState copyWith(
       {String? emailOrPhone,
+      String? fullName,
       String? password,
       String? referalCode,
       bool? isObscure}) {
     return SignUpFormState(
         emailOrPhone: emailOrPhone ?? this.emailOrPhone,
         password: password ?? this.password,
+        fullName: fullName ?? this.fullName,
         referalCode: referalCode ?? this.referalCode,
         isObscure: isObscure ?? this.isObscure);
   }

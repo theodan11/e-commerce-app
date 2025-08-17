@@ -8,6 +8,10 @@ class SignUpFormCubit extends Cubit<SignUpFormState> {
     emit(state.copyWith(emailOrPhone: emailOrPhone));
   }
 
+  void updateFullName(String fullname) {
+    emit(state.copyWith(fullName: fullname));
+  }
+
   void updatePassword(String password) {
     emit(state.copyWith(password: password));
   }
