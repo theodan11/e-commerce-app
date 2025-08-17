@@ -33,7 +33,8 @@ class HomePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: MyTextField(
-              textEditingController: searchController,
+              onChanged: (value) {},
+              value: '',
               hintText: "Search Product Name",
               icon: Icons.search,
             ),

@@ -3,17 +3,21 @@ import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
-  final TextEditingController textEditingController;
+  final String? value;
+
   final IconData? icon;
   final String hintText;
   final bool isObscure;
+
   final Function? iconBtnFunc;
+  final Function(String) onChanged;
   const MyTextField(
       {super.key,
-      required this.textEditingController,
+      required this.value,
       required this.hintText,
       this.isObscure = false,
       this.iconBtnFunc,
+      required this.onChanged,
       this.icon});
 
   @override
@@ -29,7 +33,9 @@ class MyTextField extends StatelessWidget {
           Expanded(
             child: TextField(
               obscureText: isObscure,
-              controller: textEditingController,
+              onChanged: (value) {
+                onChanged(value);
+              },
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: MyTextTheme.searchHintText,
@@ -44,9 +50,7 @@ class MyTextField extends StatelessWidget {
           ),
           icon != null
               ? IconButton(
-                  onPressed: () {
-                    iconBtnFunc;
-                  },
+                  onPressed: iconBtnFunc != null ? () => iconBtnFunc!() : null,
                   icon: Icon(icon),
                 )
               : const SizedBox(),
