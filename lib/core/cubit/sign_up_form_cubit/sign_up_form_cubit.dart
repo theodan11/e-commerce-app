@@ -43,6 +43,14 @@ class SignUpFormCubit extends Cubit<SignUpFormState> {
     );
   }
 
+  void loadingInProgress() {
+    emit(state.copyWith(isLoading: true));
+  }
+
+  void loadingSuccess() {
+    emit(state.copyWith(isLoading: false));
+  }
+
   bool _isEmailValid(String emailOrPhone) {
     if (emailOrPhone.isNotEmpty) {
       // print(state.isEmailValid);

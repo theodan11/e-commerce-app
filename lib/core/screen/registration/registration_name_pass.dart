@@ -96,20 +96,39 @@ class RegistrationNamePass extends StatelessWidget {
                           // print("Full name: ${state.fullName}");
                           // print("Password: ${state.password}");
                           // print(state.isProfileValid);
+                          context.read<SignUpFormCubit>().loadingInProgress();
+                          try {
+                            var userCred = await FirebaseAuthService()
+                                .signUP(state.emailOrPhone!, state.password!);
 
-                          var userCred = await FirebaseAuthService()
-                              .signUP(state.emailOrPhone!, state.password!);
+                            // print(userCred!.user!);
 
-                          // print(userCred!.user!);
-
-                          await FirebaseDbServices()
-                              .saveUserToDB(userCred!, state.fullName!);
+                            await FirebaseDbServices()
+                                .saveUserToDB(userCred!, state.fullName!);
+                            // ignore: use_build_context_synchronously
+                            context.read<SignUpFormCubit>().loadingSuccess();
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Registration Successful"),
+                              backgroundColor: Color.fromARGB(255, 10, 207, 66),
+                            ));
+                            // ignore: use_build_context_synchronously
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => HomeLayout()));
+                          } catch (e) {
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(e.toString()),
+                              backgroundColor: MyThemeColors.productPriceColor,
+                            ));
+                            // ignore: use_build_context_synchronously
+                            context.read<SignUpFormCubit>().loadingSuccess();
+                          }
 
                           // print("presssed");
                           // ignore: use_build_context_synchronously
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => HomeLayout()));
                         }
                       : null,
                   child: Container(
@@ -121,14 +140,20 @@ class RegistrationNamePass extends StatelessWidget {
                           ? MyThemeColors.primaryColor
                           : MyThemeColors.grayText,
                     ),
-                    child: Center(
-                      child: Text(
-                        "Continue",
-                        style: MyTextTheme.searchHintText.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                    child: state.isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : Center(
+                            child: Text(
+                              "Continue",
+                              style: MyTextTheme.searchHintText.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                   ),
                 ),
                 const SizedBox(

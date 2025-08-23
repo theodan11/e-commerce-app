@@ -8,6 +8,7 @@ class SignUpFormState extends Equatable {
   final bool isObscure;
   final bool isEmailValid;
   final bool isProfileValid;
+  final bool isLoading;
 
   const SignUpFormState({
     this.fullName = '',
@@ -17,6 +18,7 @@ class SignUpFormState extends Equatable {
     this.referalCode = '',
     this.isEmailValid = false,
     this.isProfileValid = false,
+    this.isLoading = false,
   });
 
   @override
@@ -27,7 +29,8 @@ class SignUpFormState extends Equatable {
         referalCode,
         isObscure,
         isEmailValid,
-        isProfileValid
+        isProfileValid,
+        isLoading
       ];
 
   SignUpFormState copyWith({
@@ -38,6 +41,7 @@ class SignUpFormState extends Equatable {
     bool? isObscure,
     bool? isEmailValid,
     bool? isProfileValid,
+    bool? isLoading,
   }) {
     return SignUpFormState(
       emailOrPhone: emailOrPhone ?? this.emailOrPhone,
@@ -47,6 +51,7 @@ class SignUpFormState extends Equatable {
       isObscure: isObscure ?? this.isObscure,
       isEmailValid: isEmailValid ?? this.isEmailValid,
       isProfileValid: isProfileValid ?? this.isProfileValid,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 }

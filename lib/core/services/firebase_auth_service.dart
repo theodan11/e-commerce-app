@@ -13,7 +13,6 @@ class FirebaseAuthService implements AuthRepository {
       );
       return userCred;
     } on FirebaseAuthException catch (e) {
-      print(e);
       throw Exception(e.message);
     }
   }
