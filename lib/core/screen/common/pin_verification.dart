@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/core/common/header_and_see_all.dart';
-import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
+import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/core/theme/my_text_theme.dart';
+import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:pinput/pinput.dart';
 
 class PinVerification extends StatelessWidget {

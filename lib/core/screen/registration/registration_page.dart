@@ -3,10 +3,10 @@ import 'package:e_commerce_app/core/cubit/sign_up_form_cubit/sign_up_form_cubit.
 import 'package:e_commerce_app/core/cubit/sign_up_form_cubit/sign_up_form_state.dart';
 
 import 'package:e_commerce_app/core/screen/registration/registration_name_pass.dart';
-import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
+import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/core/theme/my_text_theme.dart';
+import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegistrationPage extends StatelessWidget {

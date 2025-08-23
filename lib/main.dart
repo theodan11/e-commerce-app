@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/core/cubit/login_form_cubit/login_form_cubit.dart';
 import 'package:e_commerce_app/core/cubit/sign_up_form_cubit/sign_up_form_cubit.dart';
 import 'package:e_commerce_app/core/screen/home/home_layout.dart';
-import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
+import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

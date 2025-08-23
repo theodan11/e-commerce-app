@@ -20,6 +20,14 @@ class LoginFormCubit extends Cubit<LoginFormState> {
     emit(const LoginFormState());
   }
 
+  void loadingInProgress() {
+    emit(state.copyWith(isSubmitting: true, isSuccess: false));
+  }
+
+  void loadingSuccess() {
+    emit(state.copyWith(isSubmitting: false, isSuccess: true));
+  }
+
   void submitForm() {
     print("Email: ${state.emailOrPhone}\nPassword: ${state.password} ");
   }

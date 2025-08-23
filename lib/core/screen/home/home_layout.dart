@@ -1,13 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/screen/home/home_page.dart';
 import 'package:e_commerce_app/core/screen/login/login_page.dart';
 import 'package:e_commerce_app/core/screen/order/order_page.dart';
+import 'package:e_commerce_app/core/screen/user/user_profile_page.dart';
 import 'package:e_commerce_app/core/screen/wishlist/wishlist_page.dart';
-import 'package:e_commerce_app/core/theme/my_text_theme.dart';
+import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
+import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
 class HomeLayout extends StatefulWidget {
-  HomeLayout({super.key});
+  const HomeLayout({super.key});
 
   @override
   State<HomeLayout> createState() => _HomeLayoutState();
@@ -23,65 +27,158 @@ class _HomeLayoutState extends State<HomeLayout> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Mega Mall",
-          style: MyTextTheme.appBarTitle,
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_outlined),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.shopping_cart_outlined),
-          ),
-          const SizedBox(
-            width: 25,
-          )
-        ],
-      ),
-      body: screenList[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        showUnselectedLabels: true,
-        iconSize: 22,
-        unselectedLabelStyle: MyTextTheme.bottomNavigationLabel,
-        selectedLabelStyle: MyTextTheme.bottomNavigationLabel,
-        onTap: (int index) {
-          if (index == 3) {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => LoginPage()));
-          } else {
-            setState(() {
-              _selectedIndex = index;
-            });
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
+    var auth = FirebaseAuth.instance;
+    return StreamBuilder(
+      stream: auth.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
+          );
+        }
+        if (snapshot.hasData) {
+          return FutureBuilder<DocumentSnapshot>(
+              future: FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(auth.currentUser!.uid)
+                  .get(),
+              builder: (context, userSnapshot) {
+                if (!userSnapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: MyThemeColors.primaryColor,
+                    ),
+                  );
+                }
+                Map<String, dynamic> user =
+                    userSnapshot.data!.data() as Map<String, dynamic>;
+
+                String fullname = user['fullname'];
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text(
+                      "Mega Mall",
+                      style: MyTextTheme.appBarTitle,
+                    ),
+                    centerTitle: true,
+                    actions: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.notifications_outlined),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.shopping_cart_outlined),
+                      ),
+                      const SizedBox(
+                        width: 25,
+                      )
+                    ],
+                  ),
+                  body: screenList[_selectedIndex],
+                  bottomNavigationBar: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
+                    currentIndex: _selectedIndex,
+                    showUnselectedLabels: true,
+                    iconSize: 22,
+                    unselectedLabelStyle: MyTextTheme.bottomNavigationLabel,
+                    selectedLabelStyle: MyTextTheme.bottomNavigationLabel,
+                    onTap: (int index) {
+                      if (index == 3) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const UserProfilePage()));
+                      } else {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      }
+                    },
+                    items: [
+                      const BottomNavigationBarItem(
+                          icon: Icon(
+                            Icons.home,
+                          ),
+                          label: "HOME"),
+                      const BottomNavigationBarItem(
+                        icon: Icon(Icons.favorite_outline_outlined),
+                        label: "WISHLIST",
+                      ),
+                      const BottomNavigationBarItem(
+                        icon: Icon(Icons.shopping_bag_outlined),
+                        label: "ORDER",
+                      ),
+                      BottomNavigationBarItem(
+                        icon: const Icon(Icons.person),
+                        label: fullname,
+                      ),
+                    ],
+                  ),
+                );
+              });
+        }
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Mega Mall",
+              style: MyTextTheme.appBarTitle,
+            ),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.notifications_outlined),
               ),
-              label: "HOME"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_outline_outlined),
-            label: "WISHLIST",
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.shopping_cart_outlined),
+              ),
+              const SizedBox(
+                width: 25,
+              )
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_outlined),
-            label: "ORDER",
+          body: screenList[_selectedIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _selectedIndex,
+            showUnselectedLabels: true,
+            iconSize: 22,
+            unselectedLabelStyle: MyTextTheme.bottomNavigationLabel,
+            selectedLabelStyle: MyTextTheme.bottomNavigationLabel,
+            onTap: (int index) {
+              if (index == 3) {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const LoginPage()));
+              } else {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              }
+            },
+            items: const [
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.home,
+                  ),
+                  label: "HOME"),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite_outline_outlined),
+                label: "WISHLIST",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_bag_outlined),
+                label: "ORDER",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: "LOGIN",
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "LOGIN",
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

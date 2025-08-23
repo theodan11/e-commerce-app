@@ -1,10 +1,13 @@
 import 'package:e_commerce_app/core/common/text_field.dart';
 import 'package:e_commerce_app/core/cubit/login_form_cubit/login_form_cubit.dart';
 import 'package:e_commerce_app/core/cubit/login_form_cubit/login_form_state.dart';
+import 'package:e_commerce_app/core/screen/home/home_layout.dart';
 import 'package:e_commerce_app/core/screen/registration/registration_page.dart';
-import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
+import 'package:e_commerce_app/core/services/firebase_auth_service.dart';
+import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/core/theme/my_text_theme.dart';
+import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatelessWidget {
@@ -78,8 +81,41 @@ class LoginPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: state.isValid
-                      ? () {
-                          context.read<LoginFormCubit>().submitForm();
+                      ? () async {
+                          // print("email: ${state.emailOrPhone}");
+                          // print("isValid: ${state.isValid}");
+                          try {
+                            context.read<LoginFormCubit>().loadingInProgress();
+                            UserCredential? userCred =
+                                await FirebaseAuthService()
+                                    .signIn(state.emailOrPhone, state.password);
+                            // print(userCred);
+                            // ignore: use_build_context_synchronously
+                            context.read<LoginFormCubit>().loadingSuccess();
+
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Login Successful"),
+                              backgroundColor: Color.fromARGB(255, 10, 207, 66),
+                            ));
+                            // ignore: use_build_context_synchronously
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => HomeLayout()));
+                          } catch (e) {
+                            // ignore: use_build_context_synchronously
+                            context.read<LoginFormCubit>().loadingSuccess();
+                            print(e);
+
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                e.toString(),
+                              ),
+                              backgroundColor: MyThemeColors.productPriceColor,
+                            ));
+                          }
                         }
                       : null,
                   child: Container(
@@ -91,14 +127,20 @@ class LoginPage extends StatelessWidget {
                           ? MyThemeColors.primaryColor
                           : MyThemeColors.grayText,
                     ),
-                    child: Center(
-                      child: Text(
-                        "Sign In",
-                        style: MyTextTheme.searchHintText.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                    child: state.isSubmitting && !state.isSuccess
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : Center(
+                            child: Text(
+                              "Sign In",
+                              style: MyTextTheme.searchHintText.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                   ),
                 ),
                 const SizedBox(

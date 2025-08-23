@@ -3,9 +3,9 @@ import 'package:e_commerce_app/core/common/text_field.dart';
 import 'package:e_commerce_app/core/dummyData/dummy_news_list.dart';
 import 'package:e_commerce_app/core/dummyData/news.dart';
 import 'package:e_commerce_app/core/screen/news/news_detail_page.dart';
-import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
+import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/core/theme/my_text_theme.dart';
+import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 
 class NewsPage extends StatelessWidget {
   const NewsPage({super.key});

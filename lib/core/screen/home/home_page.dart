@@ -11,9 +11,9 @@ import 'package:e_commerce_app/core/dummyData/news.dart';
 import 'package:e_commerce_app/core/dummyData/product.dart';
 import 'package:e_commerce_app/core/screen/news/news_detail_page.dart';
 import 'package:e_commerce_app/core/screen/news/news_page.dart';
-import 'package:e_commerce_app/core/theme/my_text_theme.dart';
+import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 
-import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
+import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 
 import 'package:flutter/material.dart';
 

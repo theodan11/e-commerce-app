@@ -2,8 +2,8 @@ import 'package:e_commerce_app/core/common/header_and_see_all.dart';
 import 'package:e_commerce_app/core/common/product_card.dart';
 import 'package:e_commerce_app/core/dummyData/dummy_product_list.dart';
 import 'package:e_commerce_app/core/dummyData/product.dart';
-import 'package:e_commerce_app/core/theme/my_text_theme.dart';
-import 'package:e_commerce_app/core/theme/my_theme_colors.dart';
+import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
+import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:money_formatter/money_formatter.dart';
 
