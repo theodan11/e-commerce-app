@@ -6,40 +6,47 @@ class SignUpFormState extends Equatable {
   final String? password;
   final String? referalCode;
   final bool isObscure;
+  final bool isEmailValid;
+  final bool isProfileValid;
 
-  const SignUpFormState(
-      {this.fullName = '',
-      this.emailOrPhone = '',
-      this.password = '',
-      this.isObscure = true,
-      this.referalCode = ''});
+  const SignUpFormState({
+    this.fullName = '',
+    this.emailOrPhone = '',
+    this.password = '',
+    this.isObscure = true,
+    this.referalCode = '',
+    this.isEmailValid = false,
+    this.isProfileValid = false,
+  });
 
   @override
-  List<Object?> get props => [emailOrPhone, password, referalCode, isObscure];
+  List<Object?> get props => [
+        emailOrPhone,
+        fullName,
+        password,
+        referalCode,
+        isObscure,
+        isEmailValid,
+        isProfileValid
+      ];
 
-  SignUpFormState copyWith(
-      {String? emailOrPhone,
-      String? fullName,
-      String? password,
-      String? referalCode,
-      bool? isObscure}) {
+  SignUpFormState copyWith({
+    String? emailOrPhone,
+    String? fullName,
+    String? password,
+    String? referalCode,
+    bool? isObscure,
+    bool? isEmailValid,
+    bool? isProfileValid,
+  }) {
     return SignUpFormState(
-        emailOrPhone: emailOrPhone ?? this.emailOrPhone,
-        password: password ?? this.password,
-        fullName: fullName ?? this.fullName,
-        referalCode: referalCode ?? this.referalCode,
-        isObscure: isObscure ?? this.isObscure);
-  }
-
-  bool get isEmailValid {
-    if (emailOrPhone!.isNotEmpty) return true;
-    return false;
-  }
-
-  bool get isProfileValid {
-    if (fullName!.isNotEmpty && password!.isNotEmpty && password!.length > 6) {
-      return true;
-    }
-    return false;
+      emailOrPhone: emailOrPhone ?? this.emailOrPhone,
+      password: password ?? this.password,
+      fullName: fullName ?? this.fullName,
+      referalCode: referalCode ?? this.referalCode,
+      isObscure: isObscure ?? this.isObscure,
+      isEmailValid: isEmailValid ?? this.isEmailValid,
+      isProfileValid: isProfileValid ?? this.isProfileValid,
+    );
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "436519925113",
+    "project_id": "e-com-theo",
+    "storage_bucket": "e-com-theo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436519925113:android:a720b8ffae92c53adcaba8",
+        "android_client_info": {
+          "package_name": "com.example.e_commerce_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1_rM1-ngvrZtgGfH3Grg8nsZ2O70SlOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

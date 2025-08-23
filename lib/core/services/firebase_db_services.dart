@@ -1,0 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/core/repository/database_action_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+class FirebaseDbServices implements DatabaseActionRepository {
+  @override
+  Future<void>? saveUserToDB(UserCredential userCred, String fullname) async {
+    var db = FirebaseFirestore.instance.collection("users");
+
+    await db.doc(userCred.user!.uid).set({
+      "email": userCred.user!.email,
+      "fullname": fullname,
+    });
+  }
+}
