@@ -100,6 +100,8 @@ class LoginPage extends StatelessWidget {
                               backgroundColor: Color.fromARGB(255, 10, 207, 66),
                             ));
                             // ignore: use_build_context_synchronously
+                            Navigator.of(context).pop();
+                            // ignore: use_build_context_synchronously
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) => HomeLayout()));

@@ -1,4 +1,6 @@
 import 'package:e_commerce_app/core/common/custom_profile_button.dart';
+import 'package:e_commerce_app/core/screen/home/home_layout.dart';
+import 'package:e_commerce_app/core/services/firebase_auth_service.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +50,14 @@ class UserProfilePage extends StatelessWidget {
               height: 24,
             ),
             CustomProfileButton(
-              onTapFunc: () {},
+              onTapFunc: () async {
+                await FirebaseAuthService().signOut();
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pop();
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const HomeLayout()));
+              },
               btnTitle: "Sign out",
               icon: Icons.logout,
               iconColor: MyThemeColors.productPriceColor,

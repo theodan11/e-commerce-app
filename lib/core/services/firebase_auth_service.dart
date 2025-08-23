@@ -28,4 +28,9 @@ class FirebaseAuthService implements AuthRepository {
       throw Exception(e);
     }
   }
+
+  @override
+  Future<void> signOut() async {
+    await auth.signOut();
+  }
 }
