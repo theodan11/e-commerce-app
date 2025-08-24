@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 class LatestNewsCard extends StatelessWidget {
   final String title;
   final String subTitle;
-  final String nDate;
+  // final String nDate;
   final String imgPath;
   final Function onTapFunc;
   const LatestNewsCard(
       {super.key,
       required this.title,
       required this.subTitle,
-      required this.nDate,
+      // required this.nDate,
       required this.imgPath,
       required this.onTapFunc});
 
@@ -46,22 +46,25 @@ class LatestNewsCard extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      nDate,
-                      style: MyTextTheme.latestNewsDate,
-                    )
+                    // Text(
+                    //   nDate,
+                    //   style: MyTextTheme.latestNewsDate,
+                    // )
                   ],
                 ),
               ),
               const SizedBox(
                 width: 20,
               ),
-              SizedBox(
-                width: 80,
-                height: 80,
-                child: Image.asset(
-                  imgPath,
-                  fit: BoxFit.cover,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: Image.network(
+                    imgPath,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               )
             ],

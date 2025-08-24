@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/core/common/custom_profile_button.dart';
 import 'package:e_commerce_app/core/screen/home/home_layout.dart';
+import 'package:e_commerce_app/core/screen/news/add_news_page.dart';
 import 'package:e_commerce_app/core/services/firebase_auth_service.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
@@ -37,7 +38,10 @@ class UserProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomProfileButton(
-              onTapFunc: () {},
+              onTapFunc: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AddNewsPage()));
+              },
               btnTitle: "Add News",
               icon: Icons.post_add_outlined,
               iconColor: MyThemeColors.primaryColor,

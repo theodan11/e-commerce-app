@@ -1,4 +1,6 @@
 import 'package:e_commerce_app/core/cubit/login_form_cubit/login_form_cubit.dart';
+import 'package:e_commerce_app/core/cubit/news_cubit/add_news_cubit.dart';
+
 import 'package:e_commerce_app/core/cubit/sign_up_form_cubit/sign_up_form_cubit.dart';
 import 'package:e_commerce_app/core/screen/home/home_layout.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
@@ -14,7 +16,8 @@ void main() async {
   );
   runApp(MultiBlocProvider(providers: [
     BlocProvider(create: (_) => LoginFormCubit()),
-    BlocProvider(create: (_) => SignUpFormCubit())
+    BlocProvider(create: (_) => SignUpFormCubit()),
+    BlocProvider(create: (_) => AddNewsCubit()),
   ], child: const MyApp()));
 }
 
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
             const ColorScheme.light(primary: MyThemeColors.primaryColor),
         useMaterial3: true,
       ),
-      home: HomeLayout(),
+      home: const HomeLayout(),
     );
   }
 }

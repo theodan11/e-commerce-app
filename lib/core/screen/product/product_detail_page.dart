@@ -175,7 +175,7 @@ class ProductDetailPage extends StatelessWidget {
                 height: 20,
                 color: MyThemeColors.grayText,
               ),
-              HeaderAndSeeAll(
+              const HeaderAndSeeAll(
                 headerTitle: "Reviews (86)",
                 btnTitle: "4.6",
               ),

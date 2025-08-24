@@ -317,16 +317,16 @@ class HomePage extends StatelessWidget {
 
           // can add dynamic news later. this is just for static news
 
-          LatestNewsCard(
-            title: newsList[0].title,
-            subTitle: newsList[0].subTitle,
-            nDate: newsList[0].nDate,
-            imgPath: newsList[0].imgPath,
-            onTapFunc: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const NewsDetailPage(newsIndex: 0)));
-            },
-          ),
+          // LatestNewsCard(
+          //   title: newsList[0].title,
+          //   subTitle: newsList[0].subTitle,
+          //   // nDate: newsList[0].nDate,
+          //   // imgPath: newsList[0].imgPath,
+          //   onTapFunc: () {
+          //     Navigator.of(context).push(MaterialPageRoute(
+          //         builder: (context) => const NewsDetailPage(newsIndex: 0)));
+          //   },
+          // ),
           const Divider(
             indent: 25,
             endIndent: 25,
@@ -335,16 +335,16 @@ class HomePage extends StatelessWidget {
             color: MyThemeColors.grayText,
           ),
 
-          LatestNewsCard(
-            title: newsList[1].title,
-            subTitle: newsList[1].subTitle,
-            nDate: newsList[1].nDate,
-            imgPath: newsList[1].imgPath,
-            onTapFunc: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const NewsDetailPage(newsIndex: 1)));
-            },
-          ),
+          // LatestNewsCard(
+          //   title: newsList[1].title,
+          //   subTitle: newsList[1].subTitle,
+          //   // nDate: newsList[1].nDate,
+          //   imgPath: newsList[1].imgPath,
+          //   onTapFunc: () {
+          //     Navigator.of(context).push(MaterialPageRoute(
+          //         builder: (context) => const NewsDetailPage(newsIndex: 1)));
+          //   },
+          // ),
 
           const Divider(
             indent: 25,
@@ -354,16 +354,16 @@ class HomePage extends StatelessWidget {
             color: MyThemeColors.grayText,
           ),
 
-          LatestNewsCard(
-            title: newsList[2].title,
-            subTitle: newsList[2].subTitle,
-            nDate: newsList[2].nDate,
-            imgPath: newsList[2].imgPath,
-            onTapFunc: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const NewsDetailPage(newsIndex: 2)));
-            },
-          ),
+          // LatestNewsCard(
+          //   title: newsList[2].title,
+          //   subTitle: newsList[2].subTitle,
+          //   // nDate: newsList[2].nDate,
+          //   imgPath: newsList[2].imgPath,
+          //   onTapFunc: () {
+          //     Navigator.of(context).push(MaterialPageRoute(
+          //         builder: (context) => const NewsDetailPage(newsIndex: 2)));
+          //   },
+          // ),
 
           GestureDetector(
             onTap: () {

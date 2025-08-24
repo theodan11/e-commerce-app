@@ -12,4 +12,20 @@ class FirebaseDbServices implements DatabaseActionRepository {
       "fullname": fullname,
     });
   }
+
+  @override
+  Future<void>? saveNewsToCloud(
+    String? title,
+    String? desc,
+    String? imagePath,
+  ) async {
+    var db = FirebaseFirestore.instance.collection("news");
+
+    await db.add({
+      "userID": FirebaseAuth.instance.currentUser!.uid,
+      "imagePath": imagePath,
+      "title": title,
+      "desc": desc
+    });
+  }
 }

@@ -5,7 +5,7 @@ import 'package:e_commerce_app/core/screen/home/home_layout.dart';
 import 'package:e_commerce_app/core/screen/registration/registration_page.dart';
 import 'package:e_commerce_app/core/services/firebase_auth_service.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -86,9 +86,9 @@ class LoginPage extends StatelessWidget {
                           // print("isValid: ${state.isValid}");
                           try {
                             context.read<LoginFormCubit>().loadingInProgress();
-                            UserCredential? userCred =
-                                await FirebaseAuthService()
-                                    .signIn(state.emailOrPhone, state.password);
+
+                            await FirebaseAuthService()
+                                .signIn(state.emailOrPhone, state.password);
                             // print(userCred);
                             // ignore: use_build_context_synchronously
                             context.read<LoginFormCubit>().loadingSuccess();
@@ -104,11 +104,11 @@ class LoginPage extends StatelessWidget {
                             // ignore: use_build_context_synchronously
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                    builder: (context) => HomeLayout()));
+                                    builder: (context) => const HomeLayout()));
                           } catch (e) {
                             // ignore: use_build_context_synchronously
                             context.read<LoginFormCubit>().loadingSuccess();
-                            print(e);
+                            // print(e);
 
                             // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
