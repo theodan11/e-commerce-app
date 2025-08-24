@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/core/screen/product/product_detail_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 
@@ -9,16 +8,20 @@ class ProductCard extends StatelessWidget {
   final String title;
   final String imgPath;
   final double price;
-  final double rating;
-  final int numOfReviews;
+  final double? rating;
+  final int? numOfReviews;
+  final Function? onTapFunc;
+  final Function? iconBtnFunc;
 
   const ProductCard(
       {super.key,
       required this.title,
       required this.imgPath,
       required this.price,
-      required this.rating,
-      required this.numOfReviews});
+      required this.onTapFunc,
+      required this.iconBtnFunc,
+      this.rating = 0,
+      this.numOfReviews = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +36,7 @@ class ProductCard extends StatelessWidget {
         ),
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const ProductDetailPage()));
+            onTapFunc!();
           },
           child: Material(
             elevation: 2,
@@ -51,10 +53,10 @@ class ProductCard extends StatelessWidget {
                   children: [
                     SizedBox(
                       height: 130,
-                      width: 130,
-                      child: Image.asset(
+                      width: 160,
+                      child: Image.network(
                         imgPath,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                       ),
                     ),
                     const SizedBox(
@@ -65,7 +67,7 @@ class ProductCard extends StatelessWidget {
                       style: MyTextTheme.productTitle,
                     ),
                     const SizedBox(
-                      height: 8,
+                      height: 6,
                     ),
                     Text(
                       "৳. ${money.output.nonSymbol}",
@@ -106,7 +108,9 @@ class ProductCard extends StatelessWidget {
                         ),
                         IconButton(
                           iconSize: 16,
-                          onPressed: () {},
+                          onPressed: () {
+                            iconBtnFunc!();
+                          },
                           icon: const Icon(
                             Icons.more_vert,
                           ),

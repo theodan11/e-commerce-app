@@ -4,4 +4,7 @@ abstract class DatabaseActionRepository {
   Future<void>? saveUserToDB(UserCredential userCred, String fullname);
 
   Future<void>? saveNewsToCloud(String? title, String? desc, String? imagePath);
+
+  Future<void>? saveProductToCloud(String? title, String? imagePath,
+      double? price, int? stock, String? desc);
 }

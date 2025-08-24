@@ -21,53 +21,59 @@ class LatestNewsCard extends StatelessWidget {
       onTap: () {
         onTapFunc();
       },
-      child: FittedBox(
-        child: SizedBox(
-          width: 325,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 225,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: MyTextTheme.latestNewsHeadterText,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      subTitle,
-                      style: MyTextTheme.latestNewsSubTitleText,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // Text(
-                    //   nDate,
-                    //   style: MyTextTheme.latestNewsDate,
-                    // )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: SizedBox(
-                  width: 80,
-                  height: 80,
-                  child: Image.network(
-                    imgPath,
-                    fit: BoxFit.cover,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxHeight: 100, maxWidth: 550),
+        child: FittedBox(
+          child: SizedBox(
+            width: 325,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 225,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: MyTextTheme.latestNewsHeadterText,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        subTitle.length > 35
+                            ? "${subTitle.substring(0, 35)}..."
+                            : subTitle,
+                        style: MyTextTheme.latestNewsSubTitleText,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      // Text(
+                      //   nDate,
+                      //   style: MyTextTheme.latestNewsDate,
+                      // )
+                    ],
                   ),
                 ),
-              )
-            ],
+                const SizedBox(
+                  width: 20,
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: Image.network(
+                      imgPath,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topLeft,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

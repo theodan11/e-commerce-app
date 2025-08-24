@@ -25,7 +25,27 @@ class FirebaseDbServices implements DatabaseActionRepository {
       "userID": FirebaseAuth.instance.currentUser!.uid,
       "imagePath": imagePath,
       "title": title,
-      "desc": desc
+      "desc": desc,
+      "addedAt": FieldValue.serverTimestamp()
     });
+  }
+
+  @override
+  Future<void>? saveProductToCloud(String? title, String? imagePath,
+      double? price, int? stock, String? desc) async {
+    try {
+      var db = FirebaseFirestore.instance.collection("products");
+
+      await db.add({
+        "name": title,
+        "imagePath": imagePath,
+        "price": price,
+        "stock": stock,
+        "desc": desc,
+        "addedAt": FieldValue.serverTimestamp()
+      });
+    } on FirebaseException catch (e) {
+      throw Exception("Something went wrong while adding product $e");
+    }
   }
 }

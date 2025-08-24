@@ -9,6 +9,7 @@ class MyTextField extends StatelessWidget {
   final String hintText;
   final bool isObscure;
   final int maxLine;
+  final TextInputType? isNumber;
 
   final Function? iconBtnFunc;
   final Function(String) onChanged;
@@ -18,6 +19,7 @@ class MyTextField extends StatelessWidget {
       required this.hintText,
       this.isObscure = false,
       this.maxLine = 1,
+      this.isNumber,
       this.iconBtnFunc,
       required this.onChanged,
       this.icon});
@@ -38,6 +40,7 @@ class MyTextField extends StatelessWidget {
               onChanged: (value) {
                 onChanged(value);
               },
+              keyboardType: isNumber,
               maxLines: maxLine,
               decoration: InputDecoration(
                 hintText: hintText,
