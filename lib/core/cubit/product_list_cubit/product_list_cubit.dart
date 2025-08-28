@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/cubit/product_list/product_list_state.dart';
-import 'package:e_commerce_app/core/cubit/product_list/product_model.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_state.dart';
+import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductListCubit extends Cubit<ProductListState> {
@@ -22,11 +21,11 @@ class ProductListCubit extends Cubit<ProductListState> {
       emit(state.copyWith(
           productList: plist, isLoading: false, isSuccess: true));
     } on FirebaseException catch (e) {
-      print(e.message.toString());
+      // print(e.message.toString());
       emit(state.copyWith(
           isSuccess: false, isLoading: false, error: e.message.toString()));
     } catch (e) {
-      print(e);
+      // print(e);
       emit(state.copyWith(
           isSuccess: false, isLoading: false, error: e.toString()));
     }

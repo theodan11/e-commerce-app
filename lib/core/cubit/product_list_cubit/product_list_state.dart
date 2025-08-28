@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/cubit/product_list/product_model.dart';
+import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductListState extends Equatable {

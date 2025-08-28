@@ -82,6 +82,25 @@ class _NewsPageState extends State<NewsPage> {
                   height: MediaQuery.of(context).size.height * 0.7,
                   child: BlocBuilder<NewsListCubit, NewsListState>(
                       builder: (context, state) {
+                    if (state.isLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: MyThemeColors.primaryColor,
+                        ),
+                      );
+                    }
+
+                    if (state.error.isNotEmpty) {
+                      return Center(
+                        child: SizedBox(height: 130, child: Text(state.error)),
+                      );
+                    }
+                    if (state.newsList.isEmpty) {
+                      return const Center(
+                        child: Text("No product"),
+                      );
+                    }
+
                     return ListView.separated(
                         itemCount: state.newsList.length,
                         itemBuilder: (context, index) {
