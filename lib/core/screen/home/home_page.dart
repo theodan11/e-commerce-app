@@ -1,12 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/common/banner_card.dart';
 import 'package:e_commerce_app/core/common/header_and_see_all.dart';
+import 'package:e_commerce_app/core/common/latest_news_card.dart';
 import 'package:e_commerce_app/core/common/product_card.dart';
 import 'package:e_commerce_app/core/common/text_field.dart';
 import 'package:e_commerce_app/core/common/show_now_card.dart';
+import 'package:e_commerce_app/core/cubit/news_cubit/news_list_cubit.dart';
+import 'package:e_commerce_app/core/cubit/news_cubit/news_list_state.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_state.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
+import 'package:e_commerce_app/core/screen/login/login_page.dart';
+import 'package:e_commerce_app/core/screen/news/news_detail_page.dart';
 import 'package:e_commerce_app/core/screen/news/news_page.dart';
 import 'package:e_commerce_app/core/screen/product/product_detail_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
@@ -27,12 +32,18 @@ class _HomePageState extends State<HomePage> {
     await context.read<ProductListCubit>().fetchProduct();
   }
 
+  Future<void> fetchNews() async {
+    await context.read<NewsListCubit>().fetchNewsList();
+  }
+
   @override
   void initState() {
     fetchData();
-
+    fetchNews();
     super.initState();
   }
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   final TextEditingController searchController = TextEditingController();
 
@@ -231,55 +242,75 @@ class _HomePageState extends State<HomePage> {
             height: 20,
           ),
 
-          // can add dynamic news later. this is just for static news
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SizedBox(
+                height: 430,
+                child: BlocBuilder<NewsListCubit, NewsListState>(
+                    builder: (context, state) {
+                  if (state.isLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: MyThemeColors.primaryColor,
+                      ),
+                    );
+                  }
 
-          // LatestNewsCard(
-          //   title: newsList[0].title,
-          //   subTitle: newsList[0].subTitle,
-          //   // nDate: newsList[0].nDate,
-          //   // imgPath: newsList[0].imgPath,
-          //   onTapFunc: () {
-          //     Navigator.of(context).push(MaterialPageRoute(
-          //         builder: (context) => const NewsDetailPage(newsIndex: 0)));
-          //   },
-          // ),
-          const Divider(
-            indent: 25,
-            endIndent: 25,
-            thickness: .8,
-            height: 20,
-            color: MyThemeColors.grayText,
+                  if (state.error.isNotEmpty) {
+                    return Center(
+                      child: SizedBox(height: 130, child: Text(state.error)),
+                    );
+                  }
+                  if (state.newsList.isEmpty) {
+                    return const Center(
+                      child: Text("No product"),
+                    );
+                  }
+
+                  return ListView.separated(
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        var singleNews = state.newsList[index];
+                        return LatestNewsCard(
+                          imgPath: singleNews.imagePath,
+                          // nDate: singleNews["nDate"],
+                          subTitle: singleNews.desc,
+                          title: singleNews.title,
+                          onTapFunc: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => NewsDetailPage(
+                                  newsID: singleNews.id,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Column(
+                          children: [
+                            SizedBox(
+                              height: 18,
+                            ),
+                            Divider(
+                              indent: 25,
+                              endIndent: 25,
+                              thickness: .8,
+                              height: 20,
+                              color: MyThemeColors.grayText,
+                            ),
+                            SizedBox(
+                              height: 18,
+                            )
+                          ],
+                        );
+                      });
+                })),
           ),
-
-          // LatestNewsCard(
-          //   title: newsList[1].title,
-          //   subTitle: newsList[1].subTitle,
-          //   // nDate: newsList[1].nDate,
-          //   imgPath: newsList[1].imgPath,
-          //   onTapFunc: () {
-          //     Navigator.of(context).push(MaterialPageRoute(
-          //         builder: (context) => const NewsDetailPage(newsIndex: 1)));
-          //   },
-          // ),
-
-          const Divider(
-            indent: 25,
-            endIndent: 25,
-            thickness: .8,
+          const SizedBox(
             height: 20,
-            color: MyThemeColors.grayText,
           ),
-
-          // LatestNewsCard(
-          //   title: newsList[2].title,
-          //   subTitle: newsList[2].subTitle,
-          //   // nDate: newsList[2].nDate,
-          //   imgPath: newsList[2].imgPath,
-          //   onTapFunc: () {
-          //     Navigator.of(context).push(MaterialPageRoute(
-          //         builder: (context) => const NewsDetailPage(newsIndex: 2)));
-          //   },
-          // ),
 
           GestureDetector(
             onTap: () {
@@ -356,30 +387,46 @@ class _HomePageState extends State<HomePage> {
                             style: MyTextTheme.latestNewsHeadterText),
                         actionsAlignment: MainAxisAlignment.start,
                         actions: [
-                          GestureDetector(
-                            onTap: () async {
-                              await FirebaseFirestore.instance
-                                  .collection("users")
-                                  .doc(FirebaseAuth.instance.currentUser!.uid)
-                                  .collection("wishList")
-                                  .doc(productItem.id)
-                                  .set({});
+                          (user == null)
+                              ? GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
 
-                              // ignore: use_build_context_synchronously
-                              Navigator.of(context).pop();
-                              // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text("Added to wishlist"),
-                                    backgroundColor:
-                                        MyThemeColors.categoriesGreen),
-                              );
-                            },
-                            child: Text(
-                              "Add to wishlist",
-                              style: MyTextTheme.latestNewsHeadterText,
-                            ),
-                          )
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginPage()));
+                                  },
+                                  child: Text(
+                                    "Add to wishlist",
+                                    style: MyTextTheme.latestNewsHeadterText,
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: () async {
+                                    await FirebaseFirestore.instance
+                                        .collection("users")
+                                        .doc(FirebaseAuth
+                                            .instance.currentUser!.uid)
+                                        .collection("wishList")
+                                        .doc(productItem.id)
+                                        .set({});
+
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.of(context).pop();
+                                    // ignore: use_build_context_synchronously
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text("Added to wishlist"),
+                                          backgroundColor:
+                                              MyThemeColors.categoriesGreen),
+                                    );
+                                  },
+                                  child: Text(
+                                    "Add to wishlist",
+                                    style: MyTextTheme.latestNewsHeadterText,
+                                  ),
+                                )
                         ],
                       );
                     });

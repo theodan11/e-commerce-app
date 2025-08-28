@@ -76,6 +76,11 @@ class NewsDetailPage extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(8),
                                     child: Image.network(
                                       newsItem!["imagePath"],
+                                      errorBuilder:
+                                          (context, error, stacktrace) {
+                                        return const Icon(
+                                            Icons.broken_image_outlined);
+                                      },
                                     ),
                                   ),
                                 ),
@@ -84,6 +89,12 @@ class NewsDetailPage extends StatelessWidget {
                             child: SizedBox(
                               child: Image.network(
                                 newsItem!["imagePath"],
+                                errorBuilder: (context, error, stacktrace) {
+                                  return const Icon(
+                                    Icons.broken_image_outlined,
+                                    size: 50,
+                                  );
+                                },
                                 fit: BoxFit.cover,
                               ),
                             ),

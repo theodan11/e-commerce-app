@@ -23,35 +23,12 @@ class _NewsPageState extends State<NewsPage> {
 
   @override
   void initState() {
+    fetchNews();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // List<Map<String, dynamic>> newsList = [];
-    // Future<void>? fetchNews() async {
-    //   newsList = [];
-    //   try {
-    //     await FirebaseFirestore.instance
-    //         .collection("news")
-    //         .get()
-    //         .then((querySnapshot) {
-    //       for (var doc in querySnapshot.docs) {
-    //         newsList.add({
-    //           'title': doc['title'],
-    //           'desc': doc['desc'],
-    //           'imagePath': doc['imagePath'],
-    //           'userID': doc['userID'],
-    //           '_id': doc.id
-    //         });
-    //       }
-    //       // print(newsList[0]["title"]);
-    //     });
-    //   } on FirebaseException catch (e) {
-    //     throw Exception("Something went wrong while fetching news. $e");
-    //   }
-    // }
-
     return Scaffold(
       appBar: AppBar(
         title: Text("News",
@@ -97,9 +74,10 @@ class _NewsPageState extends State<NewsPage> {
                     }
                     if (state.newsList.isEmpty) {
                       return const Center(
-                        child: Text("No product"),
+                        child: Text("No News"),
                       );
                     }
+                    print(state.newsList.length);
 
                     return ListView.separated(
                         itemCount: state.newsList.length,

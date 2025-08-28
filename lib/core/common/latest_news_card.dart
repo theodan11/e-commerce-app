@@ -70,6 +70,10 @@ class LatestNewsCard extends StatelessWidget {
                     height: 80,
                     child: Image.network(
                       imgPath,
+                      errorBuilder: (context, error, stacktrace) {
+                        return const Icon(Icons.broken_image_outlined);
+                      },
+                      scale: 1.0,
                       fit: BoxFit.cover,
                       alignment: Alignment.topLeft,
                     ),

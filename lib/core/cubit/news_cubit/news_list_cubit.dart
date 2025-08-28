@@ -12,13 +12,15 @@ class NewsListCubit extends Cubit<NewsListState> {
     try {
       List<NewsModel> nList = [];
 
-      final newsListSnapshot =
-          await FirebaseFirestore.instance.collection("news").get();
+      final newsListSnapshot = await FirebaseFirestore.instance
+          .collection("news")
+          .orderBy("addedAt", descending: true)
+          .get();
 
       nList = newsListSnapshot.docs.map((doc) {
         return NewsModel.fromJSON(doc.data(), doc.id);
       }).toList();
-
+      print(nList);
       emit(state.copyWith(isLoading: false, isSuccess: true, newsList: nList));
     } on FirebaseException catch (e) {
       emit(state.copyWith(
