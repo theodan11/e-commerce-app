@@ -39,8 +39,8 @@ class FirebaseDbServices implements DatabaseActionRepository {
       await db.add({
         "name": title,
         "imagePath": imagePath,
-        "price": price,
-        "stock": stock,
+        "price": price ?? 0.0,
+        "stock": stock ?? 0,
         "desc": desc,
         "addedAt": FieldValue.serverTimestamp()
       });

@@ -163,7 +163,7 @@ class NewsDetailPage extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => NewsPage()));
+                            builder: (context) => const NewsPage()));
                       },
                       child: Container(
                         height: 50,

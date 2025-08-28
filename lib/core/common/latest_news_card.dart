@@ -27,38 +27,41 @@ class LatestNewsCard extends StatelessWidget {
           child: SizedBox(
             width: 325,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: 225,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: MyTextTheme.latestNewsHeadterText,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        subTitle.length > 35
-                            ? "${subTitle.substring(0, 35)}..."
-                            : subTitle,
-                        style: MyTextTheme.latestNewsSubTitleText,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      // Text(
-                      //   nDate,
-                      //   style: MyTextTheme.latestNewsDate,
-                      // )
-                    ],
+                FittedBox(
+                  child: SizedBox(
+                    width: 225,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: MyTextTheme.latestNewsHeadterText,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          subTitle.length > 35
+                              ? "${subTitle.substring(0, 35)}..."
+                              : subTitle,
+                          style: MyTextTheme.latestNewsSubTitleText,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        // Text(
+                        //   nDate,
+                        //   style: MyTextTheme.latestNewsDate,
+                        // )
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
+                Expanded(
+                  child: Container(),
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),

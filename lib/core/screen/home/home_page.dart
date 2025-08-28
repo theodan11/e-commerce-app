@@ -1,60 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/common/banner_card.dart';
-
 import 'package:e_commerce_app/core/common/header_and_see_all.dart';
-
 import 'package:e_commerce_app/core/common/product_card.dart';
 import 'package:e_commerce_app/core/common/text_field.dart';
 import 'package:e_commerce_app/core/common/show_now_card.dart';
-import 'package:e_commerce_app/core/dummyData/dummy_news_list.dart';
-import 'package:e_commerce_app/core/dummyData/dummy_product_list.dart';
-import 'package:e_commerce_app/core/dummyData/news.dart';
-import 'package:e_commerce_app/core/dummyData/product.dart';
-
+import 'package:e_commerce_app/core/cubit/product_list/product_list_cubit.dart';
+import 'package:e_commerce_app/core/cubit/product_list/product_list_state.dart';
+import 'package:e_commerce_app/core/cubit/product_list/product_model.dart';
 import 'package:e_commerce_app/core/screen/news/news_page.dart';
 import 'package:e_commerce_app/core/screen/product/product_detail_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
-
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
 
-  final List<News> newsList = DummyNewsList.newsList;
-  final List<Product> products = DummyProducts.productList;
-  final List<Product> discountProducts = DummyProducts.productDiscountList;
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Future<void> fetchData() async {
+    await context.read<ProductListCubit>().fetchProduct();
+  }
+
+  @override
+  void initState() {
+    fetchData();
+
+    super.initState();
+  }
+
   final TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Map<String, dynamic>>> fetchProduct() async {
-      List<Map<String, dynamic>>? productList = [];
-      try {
-        await FirebaseFirestore.instance
-            .collection("products")
-            .get()
-            .then((querySnapshot) {
-          for (var doc in querySnapshot.docs) {
-            productList.add({
-              "title": doc['name'],
-              "imagePath": doc['imagePath'],
-              "price": doc['price'],
-              "stock": doc['stock'],
-              "desc": doc['desc'],
-              "_id": doc.id,
-            });
-          }
-        });
-        // print("this is product list: $productList");
-        return productList;
-      } on FirebaseException catch (e) {
-        throw Exception(e);
-      }
-    }
-
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -157,7 +140,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                _fBuilder(fetchProduct)!,
+                _fBuilder(),
                 const SizedBox(
                   height: 36,
                 ),
@@ -178,7 +161,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                _fBuilder(fetchProduct)!,
+                _fBuilder(),
                 const SizedBox(
                   height: 36,
                 ),
@@ -199,7 +182,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                _fBuilder(fetchProduct)!,
+                _fBuilder(),
                 const SizedBox(
                   height: 30,
                 ),
@@ -212,7 +195,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                _fBuilder(fetchProduct)!,
+                _fBuilder(),
                 const SizedBox(
                   height: 36,
                 ),
@@ -225,7 +208,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                _fBuilder(fetchProduct)!,
+                _fBuilder(),
                 const SizedBox(
                   height: 36,
                 ),
@@ -328,88 +311,94 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget? _fBuilder(
-      Future<List<Map<String, dynamic>>> Function() fetchProduct) {
-    return FutureBuilder(
-        future: fetchProduct(),
-        builder: (context, snapShot) {
-          if (snapShot.connectionState == ConnectionState.waiting ||
-              snapShot.data == null) {
-            return const Center(
-                child: CircularProgressIndicator(
-              color: MyThemeColors.primaryColor,
-            ));
-          }
+  Widget _fBuilder() {
+    return BlocBuilder<ProductListCubit, ProductListState>(
+        builder: (context, state) {
+      if (state.isLoading) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: MyThemeColors.primaryColor,
+          ),
+        );
+      }
 
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 25),
-            height: 280,
-            child: ListView.builder(
-              // shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: snapShot.data!.length,
-              itemBuilder: (context, index) {
-                Map<String, dynamic> productItem = snapShot.data![index];
-                // print(productItem);
-                return ProductCard(
-                  title: productItem["title"]!.toString().length > 15
-                      ? productItem["title"].toString().substring(0, 15)
-                      : productItem["title"],
-                  price: productItem["price"],
-                  imgPath: productItem["imagePath"],
-                  iconBtnFunc: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text("Product Action",
-                                style: MyTextTheme.latestNewsHeadterText),
-                            actionsAlignment: MainAxisAlignment.start,
-                            actions: [
-                              GestureDetector(
-                                onTap: () async {
-                                  await FirebaseFirestore.instance
-                                      .collection("users")
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser!.uid)
-                                      .collection("wishList")
-                                      .doc(productItem['_id'])
-                                      .set({});
+      if (state.error.isNotEmpty) {
+        return Center(
+          child: SizedBox(height: 130, child: Text(state.error)),
+        );
+      }
+      if (state.productList.isEmpty) {
+        return const Center(
+          child: Text("No product"),
+        );
+      }
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 25),
+        height: 280,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: state.productList!.length,
+          itemBuilder: (context, index) {
+            ProductModel productItem = state.productList![index];
 
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.of(context).pop();
-                                  // ignore: use_build_context_synchronously
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text("Added to wishlist"),
-                                        backgroundColor:
-                                            MyThemeColors.categoriesGreen),
-                                  );
-                                },
-                                child: Text(
-                                  "Add to wishlist",
-                                  style: MyTextTheme.latestNewsHeadterText,
-                                ),
-                              )
-                            ],
-                          );
-                        });
-                  },
-                  onTapFunc: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetailPage(
-                          productID: productItem['_id'],
-                        ),
-                      ),
-                    );
-                  },
-                  // rating: productItem["stock"],
-                  // numOfReviews: productItem["des"],
+            return ProductCard(
+              title: productItem.title.toString().length > 15
+                  ? productItem.title.toString().substring(0, 15)
+                  : productItem.title,
+              price: productItem.price,
+              imgPath: productItem.imagePath,
+              iconBtnFunc: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Product Action",
+                            style: MyTextTheme.latestNewsHeadterText),
+                        actionsAlignment: MainAxisAlignment.start,
+                        actions: [
+                          GestureDetector(
+                            onTap: () async {
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                                  .collection("wishList")
+                                  .doc(productItem.id)
+                                  .set({});
+
+                              // ignore: use_build_context_synchronously
+                              Navigator.of(context).pop();
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("Added to wishlist"),
+                                    backgroundColor:
+                                        MyThemeColors.categoriesGreen),
+                              );
+                            },
+                            child: Text(
+                              "Add to wishlist",
+                              style: MyTextTheme.latestNewsHeadterText,
+                            ),
+                          )
+                        ],
+                      );
+                    });
+              },
+              onTapFunc: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ProductDetailPage(
+                      productID: productItem.id,
+                    ),
+                  ),
                 );
               },
-            ),
-          );
-        });
+              // rating: productItem["stock"],
+              // numOfReviews: productItem["des"],
+            );
+          },
+        ),
+      );
+    });
   }
 }

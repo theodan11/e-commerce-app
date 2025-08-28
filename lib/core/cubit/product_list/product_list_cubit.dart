@@ -1,0 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/core/cubit/product_list/product_list_state.dart';
+import 'package:e_commerce_app/core/cubit/product_list/product_model.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class ProductListCubit extends Cubit<ProductListState> {
+  ProductListCubit() : super(const ProductListState(productList: []));
+
+  Future<void> fetchProduct() async {
+    emit(state.copyWith(isLoading: true));
+
+    try {
+      List<ProductModel> plist;
+      final productSnapshot =
+          await FirebaseFirestore.instance.collection("products").get();
+
+      plist = productSnapshot.docs.map((doc) {
+        return ProductModel.fromJSON(doc.data(), doc.id);
+      }).toList();
+
+      emit(state.copyWith(
+          productList: plist, isLoading: false, isSuccess: true));
+    } on FirebaseException catch (e) {
+      print(e.message.toString());
+      emit(state.copyWith(
+          isSuccess: false, isLoading: false, error: e.message.toString()));
+    } catch (e) {
+      print(e);
+      emit(state.copyWith(
+          isSuccess: false, isLoading: false, error: e.toString()));
+    }
+  }
+}

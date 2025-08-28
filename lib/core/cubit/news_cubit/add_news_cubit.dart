@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/core/cubit/news_cubit/add_news_state.dart';
 
 import 'package:file_picker/file_picker.dart';
-
+import 'package:e_commerce_app/core/services/firebase_db_services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -58,12 +58,13 @@ class AddNewsCubit extends Cubit<AddNewsState> {
   void resetForm() {
     emit(const AddNewsState());
   }
-  // Future<void>? uploadToCloud() async {
-  //   if (state.title!.isNotEmpty &&
-  //       state.desc!.isNotEmpty &&
-  //       state.imagePath!.isNotEmpty) {
-  //     FirebaseDbServices()
-  //         .saveNewsToCloud(state.title, state.desc, state.imagePath);
-  //   }
-  // }
+
+  Future<void>? uploadToCloud() async {
+    if (state.title!.isNotEmpty &&
+        state.desc!.isNotEmpty &&
+        state.imagePath!.isNotEmpty) {
+      FirebaseDbServices()
+          .saveNewsToCloud(state.title, state.desc, state.imagePath);
+    }
+  }
 }

@@ -2,7 +2,7 @@ import 'package:e_commerce_app/core/common/text_field.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/add_news_cubit.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/add_news_state.dart';
 import 'package:e_commerce_app/core/screen/news/news_page.dart';
-import 'package:e_commerce_app/core/services/firebase_db_services.dart';
+
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 
@@ -117,11 +117,9 @@ class AddNewsPage extends StatelessWidget {
                                       .read<AddNewsCubit>()
                                       .loadingInProgress();
 
-                                  await FirebaseDbServices().saveNewsToCloud(
-                                    state.title,
-                                    state.desc,
-                                    state.imagePath,
-                                  );
+                                  await context
+                                      .read<AddNewsCubit>()
+                                      .uploadToCloud();
 
                                   // ignore: use_build_context_synchronously
                                   context.read<AddNewsCubit>().loadingSuccess();
