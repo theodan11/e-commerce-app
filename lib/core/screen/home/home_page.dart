@@ -337,9 +337,9 @@ class _HomePageState extends State<HomePage> {
         height: 280,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: state.productList!.length,
+          itemCount: state.productList.length,
           itemBuilder: (context, index) {
-            ProductModel productItem = state.productList![index];
+            ProductModel productItem = state.productList[index];
 
             return ProductCard(
               title: productItem.title.toString().length > 15

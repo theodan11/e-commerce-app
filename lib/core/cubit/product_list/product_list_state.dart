@@ -14,11 +14,12 @@ class ProductListState extends Equatable {
     this.error = '',
   });
 
-  ProductListState copyWith(
-      {List<ProductModel>? productList,
-      bool? isLoading,
-      bool? isSuccess,
-      String? error}) {
+  ProductListState copyWith({
+    List<ProductModel>? productList,
+    bool? isLoading,
+    bool? isSuccess,
+    String? error,
+  }) {
     return ProductListState(
       productList: productList ?? this.productList,
       isLoading: isLoading ?? this.isLoading,

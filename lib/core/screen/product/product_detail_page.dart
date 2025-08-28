@@ -46,9 +46,11 @@ class ProductDetailPage extends StatelessWidget {
               builder: (context, snapShot) {
                 if (snapShot.connectionState == ConnectionState.waiting ||
                     !snapShot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: MyThemeColors.primaryColor,
+                  return const Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: MyThemeColors.primaryColor,
+                      ),
                     ),
                   );
                 }
@@ -193,7 +195,7 @@ class ProductDetailPage extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                     snapShot.data!['desc'],
+                      snapShot.data!['desc'],
                       style: MyTextTheme.newsDescText,
                     ),
                     const SizedBox(

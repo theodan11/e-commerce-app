@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/core/cubit/login_form_cubit/login_form_cubit.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/add_news_cubit.dart';
+import 'package:e_commerce_app/core/cubit/news_cubit/news_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/product_cubit/product_cubit.dart';
 import 'package:e_commerce_app/core/cubit/product_list/product_list_cubit.dart';
 
@@ -21,7 +22,8 @@ void main() async {
     BlocProvider(create: (_) => SignUpFormCubit()),
     BlocProvider(create: (_) => AddNewsCubit()),
     BlocProvider(create: (_) => ProductCubit()),
-    BlocProvider(create: (_) => ProductListCubit())
+    BlocProvider(create: (_) => ProductListCubit()),
+    BlocProvider(create: (_) => NewsListCubit()),
   ], child: const MyApp()));
 }
 
