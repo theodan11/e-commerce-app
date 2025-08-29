@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/core/common/app_bar_custom.dart';
 import 'package:e_commerce_app/core/screen/home/home_page.dart';
 import 'package:e_commerce_app/core/screen/login/login_page.dart';
 import 'package:e_commerce_app/core/screen/order/order_page.dart';
@@ -57,26 +58,7 @@ class _HomeLayoutState extends State<HomeLayout> {
 
                 String fullname = user['fullname'];
                 return Scaffold(
-                  appBar: AppBar(
-                    title: Text(
-                      "Mega Mall",
-                      style: MyTextTheme.appBarTitle,
-                    ),
-                    centerTitle: true,
-                    actions: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.notifications_outlined),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.shopping_cart_outlined),
-                      ),
-                      const SizedBox(
-                        width: 25,
-                      )
-                    ],
-                  ),
+                  // appBar: const AppBarCustom(),
                   body: screenList[_selectedIndex],
                   bottomNavigationBar: BottomNavigationBar(
                     type: BottomNavigationBarType.fixed,
@@ -119,26 +101,7 @@ class _HomeLayoutState extends State<HomeLayout> {
               });
         }
         return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              "Mega Mall",
-              style: MyTextTheme.appBarTitle,
-            ),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.notifications_outlined),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.shopping_cart_outlined),
-              ),
-              const SizedBox(
-                width: 25,
-              )
-            ],
-          ),
+          appBar: const AppBarCustom(),
           body: screenList[_selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,

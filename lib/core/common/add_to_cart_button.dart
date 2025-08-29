@@ -64,6 +64,9 @@ class AddToCartButton extends StatelessWidget {
                                   totalPriceLocal =
                                       productItem.price * (state.quantity + 1);
                                   context.read<CartCubit>().increaseQuantity();
+
+                                  print(state.cartItemCount);
+                                  print(state.cartItem);
                                 }
                               },
                               icon: const Icon(
@@ -98,6 +101,18 @@ class AddToCartButton extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context).pop();
                             Navigator.of(context).pop();
+                            context
+                                .read<CartCubit>()
+                                .addToCart(productItem, state.quantity);
+                            context.read<CartCubit>().cartCount();
+
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text(
+                                "Added to Cart",
+                              ),
+                              backgroundColor: MyThemeColors.categoriesGreen,
+                            ));
                           },
                           child: Container(
                             width: 325,

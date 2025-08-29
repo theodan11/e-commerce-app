@@ -23,9 +23,12 @@ class CartCubit extends Cubit<CartState> {
       copyOfCartItemList
           .add(CartItemModel(product: product, quantity: quantity));
     }
+    // int cartC = cartCount();
     double totalPrice = _totalPriceCalculate(copyOfCartItemList);
     emit(state.copyWith(
-        cartItem: copyOfCartItemList, totalShoppingPrice: totalPrice));
+      cartItem: copyOfCartItemList,
+      totalShoppingPrice: totalPrice,
+    ));
   }
 
   void removeFromCart(ProductModel product, int quantity) {
@@ -49,11 +52,13 @@ class CartCubit extends Cubit<CartState> {
         copyOfCartItemList.removeAt(index);
       }
     }
-
+    // int cartC = cartCount();
     double totalPrice = _totalPriceCalculate(copyOfCartItemList);
 
     emit(state.copyWith(
-        cartItem: copyOfCartItemList, totalShoppingPrice: totalPrice));
+      cartItem: copyOfCartItemList,
+      totalShoppingPrice: totalPrice,
+    ));
   }
 
   void increaseQuantity() {
@@ -74,5 +79,9 @@ class CartCubit extends Cubit<CartState> {
     return cartItem.fold(0.0, (sum, item) {
       return sum + (item.product.price * item.quantity);
     });
+  }
+
+  void cartCount() {
+    emit(state.copyWith(cartItemCount: state.cartItem.length));
   }
 }
