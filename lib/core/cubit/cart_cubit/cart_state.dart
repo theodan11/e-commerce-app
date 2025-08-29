@@ -1,0 +1,29 @@
+import 'package:e_commerce_app/core/cubit/cart_cubit/cart_item_model.dart';
+import 'package:equatable/equatable.dart';
+
+class CartState extends Equatable {
+  final List<CartItemModel> cartItem;
+  final double totalShoppingPrice;
+  final int quantity;
+
+  const CartState({
+    required this.cartItem,
+    this.totalShoppingPrice = 0,
+    this.quantity = 1,
+  });
+
+  CartState copyWith({
+    List<CartItemModel>? cartItem,
+    double? totalShoppingPrice,
+    int? quantity,
+  }) {
+    return CartState(
+      cartItem: cartItem ?? this.cartItem,
+      totalShoppingPrice: totalShoppingPrice ?? this.totalShoppingPrice,
+      quantity: quantity ?? this.quantity,
+    );
+  }
+
+  @override
+  List<Object?> get props => [cartItem, totalShoppingPrice, quantity];
+}

@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/core/common/add_to_cart_button.dart';
 import 'package:e_commerce_app/core/common/banner_card.dart';
 import 'package:e_commerce_app/core/common/header_and_see_all.dart';
 import 'package:e_commerce_app/core/common/latest_news_card.dart';
 import 'package:e_commerce_app/core/common/product_card.dart';
 import 'package:e_commerce_app/core/common/text_field.dart';
 import 'package:e_commerce_app/core/common/show_now_card.dart';
+import 'package:e_commerce_app/core/cubit/cart_cubit/cart_cubit.dart';
+import 'package:e_commerce_app/core/cubit/cart_cubit/cart_state.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/news_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/news_list_state.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_cubit.dart';
@@ -450,136 +453,7 @@ class _HomePageState extends State<HomePage> {
                               const SizedBox(
                                 height: 18,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: const Text("Add to Cart"),
-                                          actions: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const Divider(
-                                                  // indent: 25,
-                                                  // endIndent: 25,
-                                                  thickness: .8,
-                                                  height: 2,
-                                                  color: MyThemeColors.grayText,
-                                                ),
-                                                // const SizedBox(
-                                                //   height: 18,
-                                                // ),
-                                                Row(
-                                                  children: [
-                                                    const Text("Quantity"),
-                                                    const Spacer(),
-                                                    IconButton(
-                                                      onPressed: () {},
-                                                      icon: const Icon(
-                                                        Icons.remove,
-                                                        color: MyThemeColors
-                                                            .grayText,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 16,
-                                                      width: 16,
-                                                      child: Center(
-                                                        child: Text(
-                                                          "0",
-                                                          style: MyTextTheme
-                                                              .loginPageLabel,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    IconButton(
-                                                      onPressed: () {},
-                                                      icon: const Icon(
-                                                        Icons.add,
-                                                        color: MyThemeColors
-                                                            .grayText,
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                                const Divider(
-                                                  indent: 25,
-                                                  endIndent: 25,
-                                                  thickness: .8,
-                                                  height: 8,
-                                                  color: MyThemeColors.grayText,
-                                                ),
-                                                const SizedBox(
-                                                  height: 16,
-                                                ),
-                                                Text("Total Shopping",
-                                                    style: MyTextTheme
-                                                        .loginPageLabel),
-                                                const SizedBox(
-                                                  height: 8,
-                                                ),
-
-                                                Text("75000",
-                                                    style: MyTextTheme
-                                                        .productPrice
-                                                        .copyWith(
-                                                            color: Colors
-                                                                .black87)),
-                                                const SizedBox(
-                                                  height: 16,
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.of(context).pop();
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Container(
-                                                    width: 325,
-                                                    height: 50,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        color: MyThemeColors
-                                                            .primaryColor),
-                                                    child: Center(
-                                                      child: Text(
-                                                        "Add to Cart",
-                                                        style: MyTextTheme
-                                                            .searchHintText
-                                                            .copyWith(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Container(
-                                  width: 325,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: MyThemeColors.primaryColor),
-                                  child: Center(
-                                    child: Text(
-                                      "Add to Cart",
-                                      style:
-                                          MyTextTheme.searchHintText.copyWith(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              AddToCartButton(productItem: productItem)
                             ],
                           )
                         ],
