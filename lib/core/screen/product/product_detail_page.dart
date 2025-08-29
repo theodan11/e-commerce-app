@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/core/common/add_to_cart_button.dart';
 import 'package:e_commerce_app/core/common/header_and_see_all.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_state.dart';
@@ -16,6 +17,7 @@ import 'package:money_formatter/money_formatter.dart';
 class ProductDetailPage extends StatelessWidget {
   final String productID;
   const ProductDetailPage({super.key, required this.productID});
+
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
@@ -29,13 +31,13 @@ class ProductDetailPage extends StatelessWidget {
         Map<String, dynamic> productItem =
             result.data() as Map<String, dynamic>;
 
-        MoneyFormatter money = MoneyFormatter(amount: productItem['price']);
-        productItem['formattedAmount'] = money;
         return productItem;
       } on FirebaseException catch (e) {
         throw Exception(e);
       }
     }
+
+    dynamic productItem;
 
     return Scaffold(
       appBar: AppBar(
@@ -59,6 +61,13 @@ class ProductDetailPage extends StatelessWidget {
                     ),
                   );
                 }
+
+                productItem = ProductModel.fromJSON(snapShot.data!, productID);
+                // print(productItem);
+                MoneyFormatter money =
+                    MoneyFormatter(amount: productItem.price);
+                snapShot.data!["formattedAmount"] = money;
+                // print("this is product: $productItem");
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -264,67 +273,68 @@ class ProductDetailPage extends StatelessWidget {
                               // numOfReviews: productItem.numOfReviews,
                               iconBtnFunc: () {
                                 showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text("Product Action",
-                                            style: MyTextTheme
-                                                .latestNewsHeadterText),
-                                        actionsAlignment:
-                                            MainAxisAlignment.start,
-                                        actions: [
-                                          (user == null)
-                                              ? GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.of(context).pop();
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        "Product Action",
+                                        style:
+                                            MyTextTheme.latestNewsHeadterText,
+                                      ),
+                                      actionsAlignment: MainAxisAlignment.start,
+                                      actions: [
+                                        (user == null)
+                                            ? GestureDetector(
+                                                onTap: () {
+                                                  Navigator.of(context).pop();
 
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const LoginPage()));
-                                                  },
-                                                  child: Text(
-                                                    "Add to wishlist",
-                                                    style: MyTextTheme
-                                                        .latestNewsHeadterText,
-                                                  ),
-                                                )
-                                              : GestureDetector(
-                                                  onTap: () async {
-                                                    await FirebaseFirestore
-                                                        .instance
-                                                        .collection("users")
-                                                        .doc(FirebaseAuth
-                                                            .instance
-                                                            .currentUser!
-                                                            .uid)
-                                                        .collection("wishList")
-                                                        .doc(productItem.id)
-                                                        .set({});
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const LoginPage(),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Text(
+                                                  "Add to wishlist",
+                                                  style: MyTextTheme
+                                                      .latestNewsHeadterText,
+                                                ),
+                                              )
+                                            : GestureDetector(
+                                                onTap: () async {
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection("users")
+                                                      .doc(FirebaseAuth.instance
+                                                          .currentUser!.uid)
+                                                      .collection("wishList")
+                                                      .doc(productItem.id)
+                                                      .set({});
 
-                                                    // ignore: use_build_context_synchronously
-                                                    Navigator.of(context).pop();
-                                                    // ignore: use_build_context_synchronously
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      const SnackBar(
-                                                          content: Text(
-                                                              "Added to wishlist"),
-                                                          backgroundColor:
-                                                              MyThemeColors
-                                                                  .categoriesGreen),
-                                                    );
-                                                  },
-                                                  child: Text(
-                                                    "Add to wishlist",
-                                                    style: MyTextTheme
-                                                        .latestNewsHeadterText,
-                                                  ),
-                                                )
-                                        ],
-                                      );
-                                    });
+                                                  // ignore: use_build_context_synchronously
+                                                  Navigator.of(context).pop();
+                                                  // ignore: use_build_context_synchronously
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    const SnackBar(
+                                                        content: Text(
+                                                            "Added to wishlist"),
+                                                        backgroundColor:
+                                                            MyThemeColors
+                                                                .categoriesGreen),
+                                                  );
+                                                },
+                                                child: Text(
+                                                  "Add to wishlist",
+                                                  style: MyTextTheme
+                                                      .latestNewsHeadterText,
+                                                ),
+                                              )
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                               onTapFunc: () {
                                 Navigator.of(context).push(
@@ -348,20 +358,27 @@ class ProductDetailPage extends StatelessWidget {
                         Expanded(
                           child: GestureDetector(
                             onTap: () async {
-                              await FirebaseFirestore.instance
-                                  .collection("users")
-                                  .doc(FirebaseAuth.instance.currentUser!.uid)
-                                  .collection("wishList")
-                                  .doc(productID)
-                                  .set({});
-
-                              // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text("Added to wishlist"),
-                                    backgroundColor:
-                                        MyThemeColors.categoriesGreen),
-                              );
+                              if (FirebaseAuth.instance.currentUser != null) {
+                                try {
+                                  await FirebaseFirestore.instance
+                                      .collection("users")
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                      .collection("wishList")
+                                      .doc(productID)
+                                      .set({});
+                                  // ignore: use_build_context_synchronously
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text("Added to wishlist"),
+                                      backgroundColor:
+                                          MyThemeColors.categoriesGreen,
+                                    ),
+                                  );
+                                } catch (e) {
+                                  throw Exception(e);
+                                }
+                              }
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
@@ -396,25 +413,8 @@ class ProductDetailPage extends StatelessWidget {
                           width: 20,
                         ),
                         Expanded(
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: MyThemeColors.primaryColor),
-                              child: Center(
-                                child: Text(
-                                  "Add to Cart",
-                                  style: MyTextTheme.searchHintText.copyWith(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
+                          child: AddToCartButton(productItem: productItem),
+                        ),
                       ],
                     )
                   ],

@@ -6,14 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddToCartButton extends StatelessWidget {
-  final productItem;
+  dynamic productItem;
 
-  const AddToCartButton({super.key, required this.productItem});
+  AddToCartButton({super.key, required this.productItem});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        // print("add to cart pressed");
         context.read<CartCubit>().resetQuantity();
         double totalPriceLocal = productItem.price;
         showDialog(
@@ -59,9 +60,11 @@ class AddToCartButton extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {
-                                totalPriceLocal =
-                                    productItem.price * (state.quantity + 1);
-                                context.read<CartCubit>().increaseQuantity();
+                                if (state.quantity < productItem.stock) {
+                                  totalPriceLocal =
+                                      productItem.price * (state.quantity + 1);
+                                  context.read<CartCubit>().increaseQuantity();
+                                }
                               },
                               icon: const Icon(
                                 Icons.add,

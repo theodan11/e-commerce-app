@@ -6,8 +6,6 @@ import 'package:e_commerce_app/core/common/latest_news_card.dart';
 import 'package:e_commerce_app/core/common/product_card.dart';
 import 'package:e_commerce_app/core/common/text_field.dart';
 import 'package:e_commerce_app/core/common/show_now_card.dart';
-import 'package:e_commerce_app/core/cubit/cart_cubit/cart_cubit.dart';
-import 'package:e_commerce_app/core/cubit/cart_cubit/cart_state.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/news_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/news_list_state.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_cubit.dart';
