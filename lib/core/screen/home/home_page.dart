@@ -92,7 +92,6 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 16,
           ),
-
           Padding(
             padding: const EdgeInsets.only(left: 16),
             child: SizedBox(
@@ -128,7 +127,6 @@ class _HomePageState extends State<HomePage> {
                   }),
             ),
           ),
-
           const SizedBox(
             height: 50,
           ),
@@ -229,7 +227,6 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 60,
           ),
-
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.0),
             child: HeaderAndSeeAll(
@@ -237,11 +234,9 @@ class _HomePageState extends State<HomePage> {
               isSeeAllVis: false,
             ),
           ),
-
           const SizedBox(
             height: 20,
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: SizedBox(
@@ -268,6 +263,7 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   return ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: 3,
                       itemBuilder: (context, index) {
                         var singleNews = state.newsList[index];
@@ -308,14 +304,10 @@ class _HomePageState extends State<HomePage> {
                       });
                 })),
           ),
-          const SizedBox(
-            height: 20,
-          ),
-
           GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => NewsPage()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const NewsPage()));
             },
             child: Container(
               height: 50,
@@ -335,8 +327,6 @@ class _HomePageState extends State<HomePage> {
                   )),
             ),
           )
-
-          //
         ],
       ),
     );
@@ -388,46 +378,210 @@ class _HomePageState extends State<HomePage> {
                             style: MyTextTheme.latestNewsHeadterText),
                         actionsAlignment: MainAxisAlignment.start,
                         actions: [
-                          (user == null)
-                              ? GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
+                          Column(
+                            children: [
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              const Divider(
+                                indent: 25,
+                                endIndent: 25,
+                                thickness: .8,
+                                height: 20,
+                                color: MyThemeColors.grayText,
+                              ),
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              (user == null)
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
 
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const LoginPage()));
-                                  },
-                                  child: Text(
-                                    "Add to wishlist",
-                                    style: MyTextTheme.latestNewsHeadterText,
-                                  ),
-                                )
-                              : GestureDetector(
-                                  onTap: () async {
-                                    await FirebaseFirestore.instance
-                                        .collection("users")
-                                        .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
-                                        .collection("wishList")
-                                        .doc(productItem.id)
-                                        .set({});
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const LoginPage()));
+                                      },
+                                      child: Text(
+                                        "Add to wishlist",
+                                        style:
+                                            MyTextTheme.latestNewsHeadterText,
+                                      ),
+                                    )
+                                  : GestureDetector(
+                                      onTap: () async {
+                                        await FirebaseFirestore.instance
+                                            .collection("users")
+                                            .doc(FirebaseAuth
+                                                .instance.currentUser!.uid)
+                                            .collection("wishList")
+                                            .doc(productItem.id)
+                                            .set({});
 
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.of(context).pop();
-                                    // ignore: use_build_context_synchronously
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text("Added to wishlist"),
-                                          backgroundColor:
-                                              MyThemeColors.categoriesGreen),
-                                    );
-                                  },
-                                  child: Text(
-                                    "Add to wishlist",
-                                    style: MyTextTheme.latestNewsHeadterText,
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.of(context).pop();
+                                        // ignore: use_build_context_synchronously
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content:
+                                                  Text("Added to wishlist"),
+                                              backgroundColor: MyThemeColors
+                                                  .categoriesGreen),
+                                        );
+                                      },
+                                      child: Text(
+                                        "Add to wishlist",
+                                        style:
+                                            MyTextTheme.latestNewsHeadterText,
+                                      ),
+                                    ),
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              const Divider(
+                                indent: 25,
+                                endIndent: 25,
+                                thickness: .8,
+                                height: 20,
+                                color: MyThemeColors.grayText,
+                              ),
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: const Text("Add to Cart"),
+                                          actions: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Divider(
+                                                  // indent: 25,
+                                                  // endIndent: 25,
+                                                  thickness: .8,
+                                                  height: 2,
+                                                  color: MyThemeColors.grayText,
+                                                ),
+                                                // const SizedBox(
+                                                //   height: 18,
+                                                // ),
+                                                Row(
+                                                  children: [
+                                                    const Text("Quantity"),
+                                                    const Spacer(),
+                                                    IconButton(
+                                                      onPressed: () {},
+                                                      icon: const Icon(
+                                                        Icons.remove,
+                                                        color: MyThemeColors
+                                                            .grayText,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 16,
+                                                      width: 16,
+                                                      child: Center(
+                                                        child: Text(
+                                                          "0",
+                                                          style: MyTextTheme
+                                                              .loginPageLabel,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    IconButton(
+                                                      onPressed: () {},
+                                                      icon: const Icon(
+                                                        Icons.add,
+                                                        color: MyThemeColors
+                                                            .grayText,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                const Divider(
+                                                  indent: 25,
+                                                  endIndent: 25,
+                                                  thickness: .8,
+                                                  height: 8,
+                                                  color: MyThemeColors.grayText,
+                                                ),
+                                                const SizedBox(
+                                                  height: 16,
+                                                ),
+                                                Text("Total Shopping",
+                                                    style: MyTextTheme
+                                                        .loginPageLabel),
+                                                const SizedBox(
+                                                  height: 8,
+                                                ),
+
+                                                Text("75000",
+                                                    style: MyTextTheme
+                                                        .productPrice
+                                                        .copyWith(
+                                                            color: Colors
+                                                                .black87)),
+                                                const SizedBox(
+                                                  height: 16,
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.of(context).pop();
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Container(
+                                                    width: 325,
+                                                    height: 50,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        color: MyThemeColors
+                                                            .primaryColor),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "Add to Cart",
+                                                        style: MyTextTheme
+                                                            .searchHintText
+                                                            .copyWith(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        );
+                                      });
+                                },
+                                child: Container(
+                                  width: 325,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: MyThemeColors.primaryColor),
+                                  child: Center(
+                                    child: Text(
+                                      "Add to Cart",
+                                      style:
+                                          MyTextTheme.searchHintText.copyWith(
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
-                                )
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       );
                     });
