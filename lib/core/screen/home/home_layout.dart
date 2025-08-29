@@ -58,7 +58,7 @@ class _HomeLayoutState extends State<HomeLayout> {
 
                 String fullname = user['fullname'];
                 return Scaffold(
-                  // appBar: const AppBarCustom(),
+                  appBar: const AppBarCustom(),
                   body: screenList[_selectedIndex],
                   bottomNavigationBar: BottomNavigationBar(
                     type: BottomNavigationBarType.fixed,

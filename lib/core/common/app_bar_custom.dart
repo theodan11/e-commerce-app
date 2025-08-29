@@ -14,7 +14,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        "ddMega Maldddl",
+        "Mega Mall",
         style: MyTextTheme.appBarTitle,
       ),
       centerTitle: true,
