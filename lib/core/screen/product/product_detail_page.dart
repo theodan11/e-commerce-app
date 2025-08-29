@@ -1,11 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/common/header_and_see_all.dart';
-
+import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_cubit.dart';
+import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_state.dart';
+import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
+import 'package:e_commerce_app/core/common/product_card.dart';
+import 'package:e_commerce_app/core/screen/login/login_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_formatter/money_formatter.dart';
 
 class ProductDetailPage extends StatelessWidget {
@@ -13,6 +18,7 @@ class ProductDetailPage extends StatelessWidget {
   const ProductDetailPage({super.key, required this.productID});
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
     Future<Map<String, dynamic>> fetchSingleProduct() async {
       try {
         DocumentSnapshot result = await FirebaseFirestore.instance
@@ -33,10 +39,9 @@ class ProductDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Detail Product",
-          style: MyTextTheme.appBarTitle.copyWith(color: Colors.black87),
-        ),
+        title: Text("Detail Product",
+            style: MyTextTheme.appBarTitle.copyWith(color: Colors.black87)),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -228,7 +233,7 @@ class ProductDetailPage extends StatelessWidget {
                         child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "See All News",
+                              "See All Reviews",
                               style: MyTextTheme.productTitle,
                             )),
                       ),
@@ -239,26 +244,102 @@ class ProductDetailPage extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    // Container(
-                    //   margin: const EdgeInsets.symmetric(horizontal: 25),
-                    //   height: 280,
-                    //   child: ListView.builder(
-                    //     shrinkWrap: true,
-                    //     scrollDirection: Axis.horizontal,
-                    //     itemCount: products.length,
-                    //     itemBuilder: (context, index) {
-                    //       Product productItem = products[index];
+                    BlocBuilder<ProductListCubit, ProductListState>(
+                        builder: (context, state) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 25),
+                        height: 280,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: state.productList.length,
+                          itemBuilder: (context, index) {
+                            ProductModel productItem = state.productList[index];
 
-                    //       return ProductCard(
-                    //         title: productItem.title,
-                    //         price: productItem.price,
-                    //         // imgPath: productItem.img,
-                    //         // rating: productItem.rating,
-                    //         // numOfReviews: productItem.numOfReviews,
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
+                            return ProductCard(
+                              title: productItem.title,
+                              price: productItem.price,
+                              imgPath: productItem.imagePath,
+                              // rating: productItem.rating,
+                              // numOfReviews: productItem.numOfReviews,
+                              iconBtnFunc: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text("Product Action",
+                                            style: MyTextTheme
+                                                .latestNewsHeadterText),
+                                        actionsAlignment:
+                                            MainAxisAlignment.start,
+                                        actions: [
+                                          (user == null)
+                                              ? GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.of(context).pop();
+
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const LoginPage()));
+                                                  },
+                                                  child: Text(
+                                                    "Add to wishlist",
+                                                    style: MyTextTheme
+                                                        .latestNewsHeadterText,
+                                                  ),
+                                                )
+                                              : GestureDetector(
+                                                  onTap: () async {
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection("users")
+                                                        .doc(FirebaseAuth
+                                                            .instance
+                                                            .currentUser!
+                                                            .uid)
+                                                        .collection("wishList")
+                                                        .doc(productItem.id)
+                                                        .set({});
+
+                                                    // ignore: use_build_context_synchronously
+                                                    Navigator.of(context).pop();
+                                                    // ignore: use_build_context_synchronously
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                          content: Text(
+                                                              "Added to wishlist"),
+                                                          backgroundColor:
+                                                              MyThemeColors
+                                                                  .categoriesGreen),
+                                                    );
+                                                  },
+                                                  child: Text(
+                                                    "Add to wishlist",
+                                                    style: MyTextTheme
+                                                        .latestNewsHeadterText,
+                                                  ),
+                                                )
+                                        ],
+                                      );
+                                    });
+                              },
+                              onTapFunc: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailPage(
+                                      productID: productItem.id,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    }),
                     const SizedBox(
                       height: 36,
                     ),

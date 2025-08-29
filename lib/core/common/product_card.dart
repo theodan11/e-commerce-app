@@ -26,98 +26,103 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MoneyFormatter money = MoneyFormatter(amount: price);
-    return Padding(
-      padding: const EdgeInsets.only(right: 15),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(
-            8,
-          ),
-        ),
-        child: GestureDetector(
-          onTap: () {
-            onTapFunc!();
-          },
-          child: Material(
-            elevation: 2,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 200),
+      child: FittedBox(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 15),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(
+                8,
               ),
-              width: 174,
-              // height: 268,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 130,
-                      width: 160,
-                      child: Image.network(
-                        imgPath,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      title,
-                      style: MyTextTheme.productTitle,
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      "৳. ${money.output.nonSymbol}",
-                      style: MyTextTheme.productPrice,
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+            child: GestureDetector(
+              onTap: () {
+                onTapFunc!();
+              },
+              child: Material(
+                elevation: 2,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  width: 174,
+                  // height: 268,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(
+                          height: 130,
+                          width: 160,
+                          child: Image.network(
+                            imgPath,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          title,
+                          style: MyTextTheme.productTitle,
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        Text(
+                          "৳. ${money.output.nonSymbol}",
+                          style: MyTextTheme.productPrice,
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
-                                const Icon(
-                                  Icons.star,
-                                  size: 10,
-                                  color: MyThemeColors.ratingStarColor,
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.star,
+                                      size: 10,
+                                      color: MyThemeColors.ratingStarColor,
+                                    ),
+                                    const SizedBox(
+                                      width: 6,
+                                    ),
+                                    Text(
+                                      rating.toString(),
+                                      style: MyTextTheme.productBottomText,
+                                    ),
+                                  ],
                                 ),
                                 const SizedBox(
                                   width: 6,
                                 ),
                                 Text(
-                                  rating.toString(),
+                                  "$numOfReviews Reviews",
                                   style: MyTextTheme.productBottomText,
-                                ),
+                                )
                               ],
                             ),
-                            const SizedBox(
-                              width: 6,
-                            ),
-                            Text(
-                              "$numOfReviews Reviews",
-                              style: MyTextTheme.productBottomText,
+                            IconButton(
+                              iconSize: 16,
+                              onPressed: () {
+                                iconBtnFunc!();
+                              },
+                              icon: const Icon(
+                                Icons.more_vert,
+                              ),
                             )
                           ],
-                        ),
-                        IconButton(
-                          iconSize: 16,
-                          onPressed: () {
-                            iconBtnFunc!();
-                          },
-                          icon: const Icon(
-                            Icons.more_vert,
-                          ),
                         )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
               ),
             ),

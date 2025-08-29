@@ -24,7 +24,7 @@ class NewsListState extends Equatable {
         newsList: newsList ?? this.newsList,
         error: error ?? this.error,
         isLoading: isLoading ?? this.isLoading,
-        isSuccess: isSuccess ?? this.isSuccess);
+        isSuccess: isSuccess ?? this.isSuccess,);
   }
 
   @override

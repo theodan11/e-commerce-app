@@ -85,7 +85,7 @@ class _NewsPageState extends State<NewsPage> {
                           var singleNews = state.newsList[index];
                           return LatestNewsCard(
                             imgPath: singleNews.imagePath,
-                            // nDate: singleNews["nDate"],
+                            nDate: singleNews.nDate,
                             subTitle: singleNews.desc,
                             title: singleNews.title,
                             onTapFunc: () {

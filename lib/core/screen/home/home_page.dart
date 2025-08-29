@@ -273,7 +273,7 @@ class _HomePageState extends State<HomePage> {
                         var singleNews = state.newsList[index];
                         return LatestNewsCard(
                           imgPath: singleNews.imagePath,
-                          // nDate: singleNews["nDate"],
+                          nDate: singleNews.nDate,
                           subTitle: singleNews.desc,
                           title: singleNews.title,
                           onTapFunc: () {
@@ -378,6 +378,7 @@ class _HomePageState extends State<HomePage> {
                   : productItem.title,
               price: productItem.price,
               imgPath: productItem.imagePath,
+
               iconBtnFunc: () {
                 showDialog(
                     context: context,

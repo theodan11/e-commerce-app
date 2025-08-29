@@ -20,7 +20,7 @@ class NewsListCubit extends Cubit<NewsListState> {
       nList = newsListSnapshot.docs.map((doc) {
         return NewsModel.fromJSON(doc.data(), doc.id);
       }).toList();
-      print(nList);
+      // print(nList);
       emit(state.copyWith(isLoading: false, isSuccess: true, newsList: nList));
     } on FirebaseException catch (e) {
       emit(state.copyWith(
