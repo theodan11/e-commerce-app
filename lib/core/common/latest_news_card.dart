@@ -6,23 +6,25 @@ import 'package:intl/intl.dart';
 class LatestNewsCard extends StatelessWidget {
   final String title;
   final String subTitle;
-  final Timestamp nDate;
+  final Timestamp? nDate;
   final String imgPath;
   final Function onTapFunc;
   const LatestNewsCard({
     super.key,
     required this.title,
     required this.subTitle,
-    required this.nDate,
+    this.nDate,
     required this.imgPath,
     required this.onTapFunc,
   });
 
   @override
   Widget build(BuildContext context) {
-    Timestamp time = nDate;
-    DateTime dateTime = time.toDate();
-    String formatDate = DateFormat('dd-MM-yyyy').format(dateTime);
+    // Timestamp time = nDate;
+    // DateTime dateTime = nDate.toDate();
+    String formatDate = (nDate != null)
+        ? DateFormat('dd-MM-yyyy').format(nDate!.toDate())
+        : "Uknown date";
     return GestureDetector(
       onTap: () {
         onTapFunc();

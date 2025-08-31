@@ -65,5 +65,7 @@ class AddNewsCubit extends Cubit<AddNewsState> {
       FirebaseDbServices()
           .saveNewsToCloud(state.title, state.desc, state.imagePath);
     }
+
+    loadingSuccess();
   }
 }
