@@ -77,7 +77,7 @@ class _NewsPageState extends State<NewsPage> {
                         child: Text("No News"),
                       );
                     }
-                    print(state.newsList.length);
+                    // print(state.newsList.length);
 
                     return ListView.separated(
                         itemCount: state.newsList.length,

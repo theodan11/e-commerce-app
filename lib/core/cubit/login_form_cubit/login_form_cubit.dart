@@ -29,6 +29,6 @@ class LoginFormCubit extends Cubit<LoginFormState> {
   }
 
   void submitForm() {
-    print("Email: ${state.emailOrPhone}\nPassword: ${state.password} ");
+    // print("Email: ${state.emailOrPhone}\nPassword: ${state.password} ");
   }
 }

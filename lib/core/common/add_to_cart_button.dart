@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddToCartButton extends StatelessWidget {
-  dynamic productItem;
+  final dynamic productItem;
 
-  AddToCartButton({super.key, required this.productItem});
+  const AddToCartButton({super.key, required this.productItem});
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +65,8 @@ class AddToCartButton extends StatelessWidget {
                                       productItem.price * (state.quantity + 1);
                                   context.read<CartCubit>().increaseQuantity();
 
-                                  print(state.cartItemCount);
-                                  print(state.cartItem);
+                                  // print(state.cartItemCount);
+                                  // print(state.cartItem);
                                 }
                               },
                               icon: const Icon(

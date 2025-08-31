@@ -118,7 +118,7 @@ class RegistrationNamePass extends StatelessWidget {
                             // ignore: use_build_context_synchronously
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                    builder: (context) => HomeLayout()));
+                                    builder: (context) => const HomeLayout()));
                           } catch (e) {
                             // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -2,7 +2,6 @@ import 'package:e_commerce_app/core/common/header_and_see_all.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
-import 'package:pinput/pinput.dart';
 
 class PinVerification extends StatelessWidget {
   final String emailOrPhone;
@@ -44,13 +43,13 @@ class PinVerification extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Align(
-                alignment: Alignment.center,
-                child: Pinput(
-                  onCompleted: (pin) => Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => nextPage)),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.center,
+              //   child: Pinput(
+              //     onCompleted: (pin) => Navigator.of(context)
+              //         .push(MaterialPageRoute(builder: (context) => nextPage)),
+              //   ),
+              // ),
               const SizedBox(
                 height: 120,
               ),

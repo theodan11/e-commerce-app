@@ -22,7 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                   itemCount: 6,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return Container(
+                    return SizedBox(
                       width: 80,
                       height: 76,
                       child: Column(
