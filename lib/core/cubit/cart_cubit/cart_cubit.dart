@@ -61,11 +61,39 @@ class CartCubit extends Cubit<CartState> {
     ));
   }
 
-  void increaseQuantity() {
+  void increaseQuantity({int? index}) {
+    if (index != null) {
+      List<CartItemModel> existingCart =
+          List<CartItemModel>.from(state.cartItem);
+      int updatedQuantity = existingCart[index].quantity + 1;
+      ProductModel existingProduct = existingCart[index].product;
+      existingCart[index] =
+          CartItemModel(product: existingProduct, quantity: updatedQuantity);
+
+      emit(state.copyWith(cartItem: existingCart));
+    }
     emit(state.copyWith(quantity: state.quantity + 1));
   }
 
-  void decreaseQuantity() {
+  void decreaseQuantity({int? index}) {
+    if (index != null) {
+      List<CartItemModel> existingCart =
+          List<CartItemModel>.from(state.cartItem);
+      int updatedQuantity = existingCart[index].quantity - 1;
+      ProductModel existingProduct = existingCart[index].product;
+
+      if (updatedQuantity <= 0) {
+        existingCart.removeAt(index);
+        emit(state.copyWith(
+            cartItem: existingCart, cartItemCount: existingCart.length));
+      } else {
+        existingCart[index] =
+            CartItemModel(product: existingProduct, quantity: updatedQuantity);
+        emit(state.copyWith(
+          cartItem: existingCart,
+        ));
+      }
+    }
     if (state.quantity > 0) {
       emit(state.copyWith(quantity: state.quantity - 1));
     }

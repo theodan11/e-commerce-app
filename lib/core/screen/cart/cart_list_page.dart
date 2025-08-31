@@ -13,76 +13,93 @@ class CartListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-          child: BlocBuilder<CartCubit, CartState>(builder: (context, state) {
-        if (state.cartItemCount <= 0) {
-          return const Center(
-            child: Text("Cart is empty."),
-          );
-        }
+        child: BlocBuilder<CartCubit, CartState>(
+          builder: (context, state) {
+            if (state.cartItemCount <= 0) {
+              return const Center(
+                child: Text("Cart is empty."),
+              );
+            }
 
-        return Center(
-            child: ListView.builder(
-                itemCount: state.cartItemCount,
-                itemBuilder: (context, index) {
-                  var cartItem = state.cartItem[index];
-                  return Card(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 80,
-                            height: 120,
-                            child: Image.network(
-                              cartItem.product.imagePath,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          (cartItem.product.title.length > 20
-                              ? Text(
-                                  "${cartItem.product.title.substring(0, 20)}...")
-                              : Text(cartItem.product.title)),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: () {
-                              context.read<CartCubit>().decreaseQuantity();
-                            },
-                            icon: const Icon(
-                              Icons.remove,
-                              color: MyThemeColors.grayText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 16,
-                            width: 16,
-                            child: Center(
-                              child: Text(
-                                cartItem.quantity.toString(),
-                                style: MyTextTheme.loginPageLabel,
+            return Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  child: ListView.builder(
+                    itemCount: state.cartItemCount,
+                    itemBuilder: (context, index) {
+                      var cartItem = state.cartItem[index];
+                      return Card(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 80,
+                                height: 120,
+                                child: Image.network(
+                                  cartItem.product.imagePath,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
+                              const SizedBox(width: 8),
+                              (cartItem.product.title.length > 20
+                                  ? Text(
+                                      "${cartItem.product.title.substring(0, 20)}...")
+                                  : Text(cartItem.product.title)),
+                              const Spacer(),
+                              IconButton(
+                                onPressed: () {
+                                  context
+                                      .read<CartCubit>()
+                                      .decreaseQuantity(index: index);
+                                },
+                                icon: const Icon(
+                                  Icons.remove,
+                                  color: MyThemeColors.grayText,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: Center(
+                                  child: Text(
+                                    cartItem.quantity.toString(),
+                                    style: MyTextTheme.loginPageLabel,
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  if (cartItem.quantity <
+                                      cartItem.product.stock) {
+                                    context
+                                        .read<CartCubit>()
+                                        .increaseQuantity(index: index);
+                                  }
+                                },
+                                icon: const Icon(
+                                  Icons.add,
+                                  color: MyThemeColors.grayText,
+                                ),
+                              )
+                            ],
                           ),
-                          IconButton(
-                            onPressed: () {
-                              if (cartItem.quantity < cartItem.product.stock) {
-                                context.read<CartCubit>().increaseQuantity();
-
-                                // print(state.cartItemCount);
-                                // print(state.cartItem);
-                              }
-                            },
-                            icon: const Icon(
-                              Icons.add,
-                              color: MyThemeColors.grayText,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                }));
-      })),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Text(
+                  state.totalShoppingPrice.toString(),
+                  style:
+                      MyTextTheme.productPrice.copyWith(color: Colors.black87),
+                )
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }
