@@ -394,7 +394,7 @@ class ProductDetailPage extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Added to card",
+                                        "Add to wishlist",
                                         style:
                                             MyTextTheme.searchHintText.copyWith(
                                           color: Colors.white,

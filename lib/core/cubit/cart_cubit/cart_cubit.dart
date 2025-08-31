@@ -69,8 +69,9 @@ class CartCubit extends Cubit<CartState> {
       ProductModel existingProduct = existingCart[index].product;
       existingCart[index] =
           CartItemModel(product: existingProduct, quantity: updatedQuantity);
-
-      emit(state.copyWith(cartItem: existingCart));
+      double totalPrice = _totalPriceCalculate(existingCart);
+      emit(state.copyWith(
+          cartItem: existingCart, totalShoppingPrice: totalPrice));
     }
     emit(state.copyWith(quantity: state.quantity + 1));
   }
@@ -81,17 +82,22 @@ class CartCubit extends Cubit<CartState> {
           List<CartItemModel>.from(state.cartItem);
       int updatedQuantity = existingCart[index].quantity - 1;
       ProductModel existingProduct = existingCart[index].product;
-
+      // double totalPrice = _totalPriceCalculate(existingCart);
       if (updatedQuantity <= 0) {
         existingCart.removeAt(index);
+        double totalPrice = _totalPriceCalculate(existingCart);
+        //  CartItemModel cartItems = CartItemModel(product: product, quantity: quantity)
         emit(state.copyWith(
-            cartItem: existingCart, cartItemCount: existingCart.length));
+            cartItem: existingCart,
+            cartItemCount: existingCart.length,
+            totalShoppingPrice: totalPrice));
       } else {
+        // existingCart.removeAt(index);
         existingCart[index] =
             CartItemModel(product: existingProduct, quantity: updatedQuantity);
+        double totalPrice = _totalPriceCalculate(existingCart);
         emit(state.copyWith(
-          cartItem: existingCart,
-        ));
+            cartItem: existingCart, totalShoppingPrice: totalPrice));
       }
     }
     if (state.quantity > 0) {
