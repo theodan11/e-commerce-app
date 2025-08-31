@@ -118,4 +118,8 @@ class CartCubit extends Cubit<CartState> {
   void cartCount() {
     emit(state.copyWith(cartItemCount: state.cartItem.length));
   }
+
+  void cartReset() {
+    emit(const CartState(cartItem: []));
+  }
 }

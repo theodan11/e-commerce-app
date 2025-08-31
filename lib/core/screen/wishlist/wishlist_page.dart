@@ -89,71 +89,90 @@ class WishlistPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         Map<String, dynamic> product = wishListarr[index];
 
-                        return Card(
-                            child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailPage(
-                                  productID: product["id"],
-                                ),
-                              ),
+                        return Dismissible(
+                          key: ValueKey(product["id"]),
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (direction) async {
+                            await FirebaseFirestore.instance
+                                .collection("users")
+                                .doc(FirebaseAuth.instance.currentUser!.uid)
+                                .collection("wishList")
+                                .doc(product["id"])
+                                .delete();
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text("Removed from wishlist"),
+                                  backgroundColor:
+                                      MyThemeColors.categoriesGreen),
                             );
                           },
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(
-                                maxHeight: 150, maxWidth: 550),
-                            child: FittedBox(
-                              child: SizedBox(
-                                width: 325,
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 225,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              product['name'],
-                                              style: MyTextTheme
-                                                  .latestNewsHeadterText,
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                          ],
+                          child: Card(
+                              child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ProductDetailPage(
+                                    productID: product["id"],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                  maxHeight: 150, maxWidth: 550),
+                              child: FittedBox(
+                                child: SizedBox(
+                                  width: 325,
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 225,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                product['name'],
+                                                style: MyTextTheme
+                                                    .latestNewsHeadterText,
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: SizedBox(
-                                        width: 80,
-                                        height: 80,
-                                        child: Image.network(
-                                          product['imagePath'],
-                                          fit: BoxFit.cover,
-                                          alignment: Alignment.topLeft,
-                                        ),
+                                      const SizedBox(
+                                        width: 20,
                                       ),
-                                    )
-                                  ],
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: SizedBox(
+                                          width: 80,
+                                          height: 80,
+                                          child: Image.network(
+                                            product['imagePath'],
+                                            fit: BoxFit.cover,
+                                            alignment: Alignment.topLeft,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ));
+                          )),
+                        );
                       },
                     ),
                   ),
