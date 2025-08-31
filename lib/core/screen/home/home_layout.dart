@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/common/app_bar_custom.dart';
+import 'package:e_commerce_app/core/screen/cart/cart_list_page.dart';
 import 'package:e_commerce_app/core/screen/home/home_page.dart';
 import 'package:e_commerce_app/core/screen/login/login_page.dart';
 import 'package:e_commerce_app/core/screen/order/order_page.dart';
@@ -23,7 +24,7 @@ class _HomeLayoutState extends State<HomeLayout> {
     HomePage(),
     const WishlistPage(),
     const OrderPage(),
-    // const LoginPage(),
+    // const CartListPage(),
   ];
   int _selectedIndex = 0;
   @override
