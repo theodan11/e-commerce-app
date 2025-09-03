@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:e_commerce_app/core/cubit/cart_cubit/cart_cubit.dart';
 import 'package:e_commerce_app/core/cubit/cart_cubit/cart_state.dart';
 import 'package:e_commerce_app/core/screen/login/login_page.dart';

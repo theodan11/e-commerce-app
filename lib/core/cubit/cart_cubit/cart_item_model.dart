@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
+import '../product_list_cubit/product_model.dart';
 
 class CartItemModel {
   final ProductModel product;

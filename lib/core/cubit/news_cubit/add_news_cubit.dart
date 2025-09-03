@@ -64,6 +64,8 @@ class AddNewsCubit extends Cubit<AddNewsState> {
         state.imagePath!.isNotEmpty) {
       FirebaseDbServices()
           .saveNewsToCloud(state.title, state.desc, state.imagePath);
+    } else {
+      emit(const AddNewsState());
     }
 
     loadingSuccess();

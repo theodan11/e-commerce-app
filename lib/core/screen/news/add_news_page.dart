@@ -10,7 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddNewsPage extends StatelessWidget {
-  const AddNewsPage({super.key});
+  AddNewsPage({super.key});
+  final TextEditingController imagePathController = TextEditingController();
+  final TextEditingController newsTitleController = TextEditingController();
+  final TextEditingController newsBodyController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,7 @@ class AddNewsPage extends StatelessWidget {
                           IconButton(
                               onPressed: () {
                                 if (state.imagePath != '') {
-                                  context.read<AddNewsCubit>().clearimage();
+                                  context.read<AddNewsCubit>().resetForm();
                                 }
                               },
                               icon: const Icon(Icons.restart_alt_outlined))
@@ -65,6 +68,7 @@ class AddNewsPage extends StatelessWidget {
                         height: 20,
                       ),
                       MyTextField(
+                        textEditingController: imagePathController,
                         value: state.imagePath,
                         hintText: "Image link",
                         onChanged: (value) {
@@ -82,6 +86,7 @@ class AddNewsPage extends StatelessWidget {
                         height: 20,
                       ),
                       MyTextField(
+                        textEditingController: newsTitleController,
                         value: state.title,
                         hintText: "News title",
                         onChanged: (value) {
@@ -99,6 +104,7 @@ class AddNewsPage extends StatelessWidget {
                         height: 20,
                       ),
                       MyTextField(
+                        textEditingController: newsBodyController,
                         value: state.title,
                         maxLine: 5,
                         hintText: "News body",
@@ -110,7 +116,9 @@ class AddNewsPage extends StatelessWidget {
                         height: 20,
                       ),
                       GestureDetector(
-                        onTap: state.title != '' && state.desc != ''
+                        onTap: state.title != '' &&
+                                state.desc != '' &&
+                                state.imagePath != ''
                             ? () async {
                                 try {
                                   context
@@ -133,6 +141,7 @@ class AddNewsPage extends StatelessWidget {
                                     );
                                     // ignore: use_build_context_synchronously
                                     context.read<AddNewsCubit>().resetForm();
+
                                     // ignore: use_build_context_synchronously
                                     Navigator.of(context).pop();
                                     // ignore: use_build_context_synchronously
@@ -169,7 +178,8 @@ class AddNewsPage extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: state.title!.isNotEmpty &&
-                                    state.desc!.isNotEmpty
+                                    state.desc!.isNotEmpty &&
+                                    state.imagePath!.isNotEmpty
                                 ? MyThemeColors.primaryColor
                                 : MyThemeColors.grayText,
                           ),

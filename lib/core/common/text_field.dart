@@ -10,6 +10,7 @@ class MyTextField extends StatelessWidget {
   final bool isObscure;
   final int maxLine;
   final TextInputType? isNumber;
+  final TextEditingController? textEditingController;
 
   final Function? iconBtnFunc;
   final Function(String) onChanged;
@@ -22,6 +23,7 @@ class MyTextField extends StatelessWidget {
       this.isNumber,
       this.iconBtnFunc,
       required this.onChanged,
+      this.textEditingController,
       this.icon});
 
   @override
@@ -36,6 +38,7 @@ class MyTextField extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
+              controller: textEditingController,
               obscureText: isObscure,
               onChanged: (value) {
                 onChanged(value);
