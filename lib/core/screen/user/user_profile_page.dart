@@ -40,8 +40,8 @@ class UserProfilePage extends StatelessWidget {
           children: [
             CustomProfileButton(
               onTapFunc: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const AddNewsPage()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AddNewsPage()));
               },
               btnTitle: "Add News",
               icon: Icons.post_add_outlined,

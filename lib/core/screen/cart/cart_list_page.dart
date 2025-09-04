@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/cubit/cart_cubit/cart_cubit.dart';
 import 'package:e_commerce_app/core/cubit/cart_cubit/cart_state.dart';
 import 'package:e_commerce_app/core/screen/login/login_page.dart';
@@ -137,21 +138,31 @@ class CartListPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         if (FirebaseAuth.instance.currentUser == null) {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const LoginPage()));
                         } else {
-                          // await FirebaseFirestore.instance
-                          //     .collection("users")
-                          //     .doc(FirebaseAuth.instance.currentUser!.uid)
-                          //     .collection("orders")
-                          //     .add({
-                          //   "items": state.cartItem,
-                          //   "totalPrice": state.totalShoppingPrice,
-                          //   "createdAt": FieldValue.serverTimestamp(),
-                          //   "status": "pending"
-                          // });
+                          await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(FirebaseAuth.instance.currentUser!.uid)
+                              .collection("orders")
+                              .add({
+                            "items": state.cartItem.map((item) {
+                              return {
+                                "product": {
+                                  "productId": item.product.id,
+                                  "productTitle": item.product.title,
+                                  "productPrice": item.product.price,
+                                },
+                                "quantity": item.quantity,
+                                "price": item.quantity * item.product.price
+                              };
+                            }).toList(),
+                            "totalPrice": state.totalShoppingPrice,
+                            "createdAt": FieldValue.serverTimestamp(),
+                            "status": "PENDING"
+                          });
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
