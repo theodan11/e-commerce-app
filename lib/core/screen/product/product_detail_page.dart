@@ -135,7 +135,7 @@ class ProductDetailPage extends StatelessWidget {
                                 width: 6,
                               ),
                               Text(
-                                "86 Reviews",
+                                "${snapShot.data!['reviews'].length} Reviews",
                                 style: MyTextTheme.productBottomText,
                               )
                             ],
@@ -192,7 +192,7 @@ class ProductDetailPage extends StatelessWidget {
                                   width: 10,
                                 ),
                                 const Icon(
-                                  Icons.safety_check_rounded,
+                                  Icons.verified_user_rounded,
                                   color: MyThemeColors.primaryColor,
                                 )
                               ]),

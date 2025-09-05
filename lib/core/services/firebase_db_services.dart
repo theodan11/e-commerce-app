@@ -52,6 +52,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
         "price": price ?? 0.0,
         "stock": stock ?? 0,
         "desc": desc,
+        "reviews": [],
         "addedAt": FieldValue.serverTimestamp()
       });
     } on FirebaseException catch (e) {
