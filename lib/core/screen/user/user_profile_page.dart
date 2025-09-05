@@ -55,6 +55,18 @@ class UserProfilePage extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const AddProductPage()));
               },
+              btnTitle: "Become a seller",
+              icon: Icons.add,
+              iconColor: MyThemeColors.primaryColor,
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            CustomProfileButton(
+              onTapFunc: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AddProductPage()));
+              },
               btnTitle: "Add Product",
               icon: Icons.add,
               iconColor: MyThemeColors.primaryColor,
@@ -74,6 +86,10 @@ class UserProfilePage extends StatelessWidget {
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const HomeLayout()));
+
+                // ignore: use_build_context_synchronously
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Sign out successful")));
               },
               btnTitle: "Sign out",
               icon: Icons.logout,

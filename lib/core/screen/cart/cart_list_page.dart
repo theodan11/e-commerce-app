@@ -144,10 +144,10 @@ class CartListPage extends StatelessWidget {
                               builder: (context) => const LoginPage()));
                         } else {
                           await FirebaseFirestore.instance
-                              .collection("users")
-                              .doc(FirebaseAuth.instance.currentUser!.uid)
                               .collection("orders")
                               .add({
+                            "customerId":
+                                FirebaseAuth.instance.currentUser!.uid,
                             "items": state.cartItem.map((item) {
                               return {
                                 "product": {
