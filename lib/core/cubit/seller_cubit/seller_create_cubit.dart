@@ -14,14 +14,17 @@ class SellerCreateCubit extends Cubit<SellerCreateState> {
         );
 
   void addTitle(String title) {
+    // print(state);
     emit(state.copyWith(storeName: title));
   }
 
   void addAdrress(String address) {
+    // print(state);
     emit(state.copyWith(address: address));
   }
 
   void addImagePath(String imagePath) {
+    // print(state);
     emit(state.copyWith(imagePath: imagePath));
   }
 
@@ -32,17 +35,14 @@ class SellerCreateCubit extends Cubit<SellerCreateState> {
   Future<void> uploadToCloud() async {
     emit(state.copyWith(isLoading: true, isSuccess: false));
     try {
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection("store")
-          .add({
+      await FirebaseFirestore.instance.collection("store").add({
+        "storeOwner": FirebaseAuth.instance.currentUser!.uid,
         "imagePath": state.imagePath,
         "storeName": state.storeName,
         "address": state.address,
         "createdAt": FieldValue.serverTimestamp(),
-        "followers": 0.0,
-        "products": 0.0,
+        "followers": [],
+        "products": [],
         "rating": 0.0,
       });
 

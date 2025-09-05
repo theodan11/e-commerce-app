@@ -36,7 +36,17 @@ class FirebaseDbServices implements DatabaseActionRepository {
     try {
       var db = FirebaseFirestore.instance.collection("products");
 
+      var storesnapShot =
+          await FirebaseFirestore.instance.collection("store").get();
+
+      var storeId = storesnapShot.docs
+          .firstWhere((doc) =>
+              doc.data()['storeOwner'] ==
+              FirebaseAuth.instance.currentUser!.uid)
+          .id;
+
       await db.add({
+        "storeId": storeId,
         "name": title,
         "imagePath": imagePath,
         "price": price ?? 0.0,

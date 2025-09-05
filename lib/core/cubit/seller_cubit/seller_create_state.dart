@@ -8,17 +8,17 @@ class SellerCreateState extends Equatable {
   final bool isSuccess;
 
   const SellerCreateState({
-    required this.storeName,
-    required this.imagePath,
-    required this.address,
+    this.storeName = '',
+    this.imagePath = '',
+    this.address = '',
     this.isLoading = false,
     this.isSuccess = false,
   });
 
   SellerCreateState copyWith({
-    String? storeName = '',
-    String? imagePath = '',
-    String? address = '',
+    String? storeName,
+    String? imagePath,
+    String? address,
     bool? isLoading,
     bool? isSuccess,
   }) {

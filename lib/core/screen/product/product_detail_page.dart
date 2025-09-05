@@ -20,7 +20,24 @@ class ProductDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    dynamic productItem;
+    dynamic storeInfo;
     User? user = FirebaseAuth.instance.currentUser;
+    Future<Map<String, dynamic>> fetchStoreInfo(
+        Map<String, dynamic> productItem) async {
+      try {
+        DocumentSnapshot result = await FirebaseFirestore.instance
+            .collection("store")
+            .doc(productItem['storeId'])
+            .get();
+        Map<String, dynamic> storeInfo = result.data() as Map<String, dynamic>;
+
+        return storeInfo;
+      } on FirebaseException catch (e) {
+        throw Exception(e);
+      }
+    }
+
     Future<Map<String, dynamic>> fetchSingleProduct() async {
       try {
         DocumentSnapshot result = await FirebaseFirestore.instance
@@ -30,14 +47,12 @@ class ProductDetailPage extends StatelessWidget {
 
         Map<String, dynamic> productItem =
             result.data() as Map<String, dynamic>;
-
+        storeInfo = await fetchStoreInfo(productItem);
         return productItem;
       } on FirebaseException catch (e) {
         throw Exception(e);
       }
     }
-
-    dynamic productItem;
 
     return Scaffold(
       appBar: AppBar(
@@ -152,7 +167,7 @@ class ProductDetailPage extends StatelessWidget {
                             child: SizedBox(
                                 width: 45,
                                 height: 45,
-                                child: Image.asset("assets/images/ln_2.png")),
+                                child: Image.network(storeInfo['imagePath'])),
                           ),
                           const SizedBox(
                             width: 20,
@@ -162,7 +177,7 @@ class ProductDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                "Shop Larson Electronic",
+                                storeInfo['storeName'],
                                 style: MyTextTheme.latestNewsHeadterText,
                               ),
                               const SizedBox(
