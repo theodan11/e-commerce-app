@@ -2,6 +2,7 @@ import 'package:e_commerce_app/core/common/custom_profile_button.dart';
 import 'package:e_commerce_app/core/screen/home/home_layout.dart';
 import 'package:e_commerce_app/core/screen/news/add_news_page.dart';
 import 'package:e_commerce_app/core/screen/product/add_product_page.dart';
+import 'package:e_commerce_app/core/screen/seller/create_seller_page.dart';
 import 'package:e_commerce_app/core/services/firebase_auth_service.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
@@ -53,7 +54,7 @@ class UserProfilePage extends StatelessWidget {
             CustomProfileButton(
               onTapFunc: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const AddProductPage()));
+                    builder: (context) => const CreateSellerPage()));
               },
               btnTitle: "Become a seller",
               icon: Icons.add,

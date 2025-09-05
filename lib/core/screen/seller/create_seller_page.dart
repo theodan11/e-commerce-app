@@ -72,7 +72,7 @@ class CreateSellerPage extends StatelessWidget {
                         height: 20,
                       ),
                       Text(
-                        "Title",
+                        "Name",
                         style: MyTextTheme.loginPageLabel,
                       ),
                       const SizedBox(
@@ -80,7 +80,7 @@ class CreateSellerPage extends StatelessWidget {
                       ),
                       MyTextField(
                         value: state.storeName,
-                        hintText: "News title",
+                        hintText: "Store name",
                         onChanged: (value) {
                           context.read<SellerCreateCubit>().addTitle(value);
                         },
@@ -89,7 +89,7 @@ class CreateSellerPage extends StatelessWidget {
                         height: 20,
                       ),
                       Text(
-                        "Description",
+                        "Address",
                         style: MyTextTheme.loginPageLabel,
                       ),
                       const SizedBox(
@@ -183,7 +183,7 @@ class CreateSellerPage extends StatelessWidget {
                                 )
                               : Center(
                                   child: Text(
-                                    "Publish News",
+                                    "Create Store",
                                     style: MyTextTheme.searchHintText.copyWith(
                                       color: Colors.white,
                                     ),
