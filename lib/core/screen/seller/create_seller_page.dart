@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/core/common/text_field.dart';
 import 'package:e_commerce_app/core/cubit/seller_cubit/seller_create_cubit.dart';
 import 'package:e_commerce_app/core/cubit/seller_cubit/seller_create_state.dart';
+import 'package:e_commerce_app/core/screen/seller/seller_detail_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +138,8 @@ class CreateSellerPage extends StatelessWidget {
                                     // ignore: use_build_context_synchronously
                                     // Navigator.of(context).push(
                                     //   MaterialPageRoute(
-                                    //     builder: (context) => const NewsPage(),
+                                    //     builder: (context) =>
+                                    //         SellerDetailPage(),
                                     //   ),
                                     // );
                                   }

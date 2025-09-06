@@ -4,8 +4,11 @@ class ProductModel {
   final String title;
   final double price;
   final int stock;
-  // final String vendorID;
+  final String storeId;
   final String desc;
+  final List<dynamic> reviews;
+  final bool isDiscount;
+  final double originalPrice;
 
   const ProductModel({
     required this.id,
@@ -13,8 +16,11 @@ class ProductModel {
     required this.title,
     required this.price,
     required this.stock,
-    // required this.vendorID,
+    required this.storeId,
     required this.desc,
+    required this.reviews,
+    this.isDiscount = false,
+    this.originalPrice = 0,
   });
 
   factory ProductModel.fromJSON(Map<String, dynamic> json, String id) {
@@ -24,8 +30,11 @@ class ProductModel {
       price: json['price'] as double,
       imagePath: json['imagePath'],
       stock: json['stock'] as int,
-      // vendorID: json['vendorID'],
+      storeId: json['storeId'],
       desc: json['desc'],
+      reviews: json['reviews'],
+      isDiscount: json['isDiscount'] ?? false,
+      originalPrice: json['originalPrice'] ?? 0,
     );
   }
 }

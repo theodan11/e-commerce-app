@@ -6,6 +6,7 @@ import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_state.
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
 import 'package:e_commerce_app/core/common/product_card.dart';
 import 'package:e_commerce_app/core/screen/login/login_page.dart';
+import 'package:e_commerce_app/core/screen/seller/seller_detail_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,7 +32,7 @@ class ProductDetailPage extends StatelessWidget {
             .doc(productItem['storeId'])
             .get();
         Map<String, dynamic> storeInfo = result.data() as Map<String, dynamic>;
-
+        storeInfo['id'] = result.id;
         return storeInfo;
       } on FirebaseException catch (e) {
         throw Exception(e);
@@ -159,7 +160,15 @@ class ProductDetailPage extends StatelessWidget {
                       height: 30,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => SellerDetailPage(
+                              storeId: storeInfo['id'],
+                            ),
+                          ),
+                        );
+                      },
                       child: Row(
                         children: [
                           ClipRRect(
