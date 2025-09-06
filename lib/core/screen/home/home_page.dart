@@ -369,126 +369,118 @@ class _HomePageState extends State<HomePage> {
           itemCount: isSpecial ? productListS.length : state.productList.length,
           itemBuilder: (context, index) {
             if (isSpecial) {
-              // print(productListS);
               ProductModel productItem = productListS[index];
               return DiscountProductCard(
-                id: productItem.id,
-                title: productItem.title,
-                stock: productItem.stock,
-                storeId: productItem.storeId,
-                desc: productItem.desc,
-                reviews: productItem.reviews,
-                imagePath: productItem.imagePath,
-                price: productItem.price,
-                originalPrice: productItem.originalPrice,
-                rating: 0,
+                productItem: productItem,
               );
             } else {
               ProductModel productItem = state.productList[index];
 
-              return ProductCard(
-                title: productItem.title.toString().length > 15
-                    ? productItem.title.toString().substring(0, 15)
-                    : productItem.title,
-                price: productItem.price,
-                imgPath: productItem.imagePath,
+              return DiscountProductCard(productItem: productItem);
 
-                iconBtnFunc: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text("Product Action",
-                              style: MyTextTheme.latestNewsHeadterText),
-                          actionsAlignment: MainAxisAlignment.start,
-                          actions: [
-                            Column(
-                              children: [
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                const Divider(
-                                  indent: 25,
-                                  endIndent: 25,
-                                  thickness: .8,
-                                  height: 20,
-                                  color: MyThemeColors.grayText,
-                                ),
-                                const SizedBox(
-                                  height: 18,
-                                ),
-                                (user == null)
-                                    ? GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).pop();
+              // return ProductCard(
+              //   title: productItem.title.toString().length > 15
+              //       ? productItem.title.toString().substring(0, 15)
+              //       : productItem.title,
+              //   price: productItem.price,
+              //   imgPath: productItem.imagePath,
 
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const LoginPage()));
-                                        },
-                                        child: Text(
-                                          "Add to wishlist",
-                                          style:
-                                              MyTextTheme.latestNewsHeadterText,
-                                        ),
-                                      )
-                                    : GestureDetector(
-                                        onTap: () {
-                                          FirebaseDbServices().addWishList(
-                                              FirebaseAuth
-                                                  .instance.currentUser!.uid,
-                                              productItem.id);
+              //   iconBtnFunc: () {
+              //     showDialog(
+              //         context: context,
+              //         builder: (context) {
+              //           return AlertDialog(
+              //             title: Text("Product Action",
+              //                 style: MyTextTheme.latestNewsHeadterText),
+              //             actionsAlignment: MainAxisAlignment.start,
+              //             actions: [
+              //               Column(
+              //                 children: [
+              //                   const SizedBox(
+              //                     height: 8,
+              //                   ),
+              //                   const Divider(
+              //                     indent: 25,
+              //                     endIndent: 25,
+              //                     thickness: .8,
+              //                     height: 20,
+              //                     color: MyThemeColors.grayText,
+              //                   ),
+              //                   const SizedBox(
+              //                     height: 18,
+              //                   ),
+              //                   (user == null)
+              //                       ? GestureDetector(
+              //                           onTap: () {
+              //                             Navigator.of(context).pop();
 
-                                          Navigator.of(context).pop();
+              //                             Navigator.of(context).push(
+              //                                 MaterialPageRoute(
+              //                                     builder: (context) =>
+              //                                         const LoginPage()));
+              //                           },
+              //                           child: Text(
+              //                             "Add to wishlist",
+              //                             style:
+              //                                 MyTextTheme.latestNewsHeadterText,
+              //                           ),
+              //                         )
+              //                       : GestureDetector(
+              //                           onTap: () {
+              //                             FirebaseDbServices().addWishList(
+              //                                 FirebaseAuth
+              //                                     .instance.currentUser!.uid,
+              //                                 productItem.id);
 
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                                content:
-                                                    Text("Added to wishlist"),
-                                                backgroundColor: MyThemeColors
-                                                    .categoriesGreen),
-                                          );
-                                        },
-                                        child: Text(
-                                          "Add to wishlist",
-                                          style:
-                                              MyTextTheme.latestNewsHeadterText,
-                                        ),
-                                      ),
-                                const SizedBox(
-                                  height: 18,
-                                ),
-                                const Divider(
-                                  indent: 25,
-                                  endIndent: 25,
-                                  thickness: .8,
-                                  height: 20,
-                                  color: MyThemeColors.grayText,
-                                ),
-                                const SizedBox(
-                                  height: 18,
-                                ),
-                                AddToCartButton(productItem: productItem)
-                              ],
-                            )
-                          ],
-                        );
-                      });
-                },
-                onTapFunc: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ProductDetailPage(
-                        productID: productItem.id,
-                      ),
-                    ),
-                  );
-                },
-                // rating: productItem["stock"],
-                // numOfReviews: productItem["des"],
-              );
+              //                             Navigator.of(context).pop();
+
+              //                             ScaffoldMessenger.of(context)
+              //                                 .showSnackBar(
+              //                               const SnackBar(
+              //                                   content:
+              //                                       Text("Added to wishlist"),
+              //                                   backgroundColor: MyThemeColors
+              //                                       .categoriesGreen),
+              //                             );
+              //                           },
+              //                           child: Text(
+              //                             "Add to wishlist",
+              //                             style:
+              //                                 MyTextTheme.latestNewsHeadterText,
+              //                           ),
+              //                         ),
+              //                   const SizedBox(
+              //                     height: 18,
+              //                   ),
+              //                   const Divider(
+              //                     indent: 25,
+              //                     endIndent: 25,
+              //                     thickness: .8,
+              //                     height: 20,
+              //                     color: MyThemeColors.grayText,
+              //                   ),
+              //                   const SizedBox(
+              //                     height: 18,
+              //                   ),
+              //                   AddToCartButton(productItem: productItem)
+              //                 ],
+              //               )
+              //             ],
+              //           );
+              //         });
+              //   },
+              //   onTapFunc: () {
+              //     Navigator.of(context).push(
+              //       MaterialPageRoute(
+              //         builder: (context) => ProductDetailPage(
+              //           productID: productItem.id,
+              //         ),
+              //       ),
+              //     );
+              //   },
+              //   // rating: productItem["stock"],
+              //   // numOfReviews: productItem["des"],
+              // );
             }
           },
         ),

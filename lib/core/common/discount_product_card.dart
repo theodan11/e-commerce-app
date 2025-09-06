@@ -10,39 +10,22 @@ import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:money_formatter/money_formatter.dart';
 
 class DiscountProductCard extends StatelessWidget {
-  final String title;
-  final String storeId;
-  final String id;
-  final String desc;
-  final int stock;
-  final String imagePath;
-  final double price;
-  final double originalPrice;
-  final double rating;
-  final List<dynamic> reviews;
-
-  const DiscountProductCard(
-      {super.key,
-      required this.title,
-      required this.storeId,
-      required this.stock,
-      required this.desc,
-      required this.id,
-      required this.imagePath,
-      required this.price,
-      required this.originalPrice,
-      required this.rating,
-      required this.reviews});
+  final ProductModel productItem;
+  const DiscountProductCard({
+    super.key,
+    required this.productItem,
+  });
 
   @override
   Widget build(BuildContext context) {
-    MoneyFormatter priceMoney = MoneyFormatter(amount: price);
-    MoneyFormatter discountpriceMoney = MoneyFormatter(amount: originalPrice);
+    MoneyFormatter priceMoney = MoneyFormatter(amount: productItem.price);
+    MoneyFormatter discountpriceMoney =
+        MoneyFormatter(amount: productItem.originalPrice);
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ProductDetailPage(
-                  productID: id,
+                  productID: productItem.id,
                 )));
       },
       child: Padding(
@@ -72,36 +55,39 @@ class DiscountProductCard extends StatelessWidget {
                           height: 130,
                           width: 130,
                           child: Image.network(
-                            imagePath,
+                            productItem.imagePath,
                             fit: BoxFit.cover,
                           ),
                         ),
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              color: MyThemeColors.productPriceColor,
-                            ),
-                            width: 40,
-                            height: 20,
-                            child: Center(
-                              child: Text(
-                                "SALE",
-                                style: MyTextTheme.discountProductSaleBadgeText,
-                              ),
-                            ),
-                          ),
-                        )
+                        productItem.isDiscount
+                            ? Positioned(
+                                bottom: 0,
+                                left: 0,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    color: MyThemeColors.productPriceColor,
+                                  ),
+                                  width: 40,
+                                  height: 20,
+                                  child: Center(
+                                    child: Text(
+                                      "SALE",
+                                      style: MyTextTheme
+                                          .discountProductSaleBadgeText,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox()
                       ],
                     ),
                     const SizedBox(
                       height: 8,
                     ),
                     Text(
-                      title,
+                      productItem.title,
                       style: MyTextTheme.productTitle,
                       softWrap: true,
                       maxLines: 1,
@@ -116,10 +102,12 @@ class DiscountProductCard extends StatelessWidget {
                     const SizedBox(
                       height: 6,
                     ),
-                    Text(
-                      "৳. ${discountpriceMoney.output.nonSymbol}",
-                      style: MyTextTheme.discountProductPrice,
-                    ),
+                    productItem.isDiscount
+                        ? Text(
+                            "৳. ${discountpriceMoney.output.nonSymbol}",
+                            style: MyTextTheme.discountProductPrice,
+                          )
+                        : const SizedBox(),
                     const SizedBox(
                       height: 6,
                     ),
@@ -139,7 +127,7 @@ class DiscountProductCard extends StatelessWidget {
                                   width: 6,
                                 ),
                                 Text(
-                                  rating.toString(),
+                                  0.toString(),
                                   style: MyTextTheme.productBottomText,
                                 ),
                               ],
@@ -148,7 +136,7 @@ class DiscountProductCard extends StatelessWidget {
                               width: 6,
                             ),
                             Text(
-                              "${reviews.length} Reviews",
+                              "${productItem.reviews.length} Reviews",
                               style: MyTextTheme.productBottomText,
                             )
                           ],
@@ -208,7 +196,7 @@ class DiscountProductCard extends StatelessWidget {
                                                                 .instance
                                                                 .currentUser!
                                                                 .uid,
-                                                            id);
+                                                            productItem.id);
 
                                                     Navigator.of(context).pop();
 
@@ -243,15 +231,7 @@ class DiscountProductCard extends StatelessWidget {
                                             height: 18,
                                           ),
                                           AddToCartButton(
-                                            productItem: ProductModel(
-                                                id: id,
-                                                imagePath: imagePath,
-                                                title: title,
-                                                price: price,
-                                                stock: stock,
-                                                storeId: storeId,
-                                                desc: desc,
-                                                reviews: reviews),
+                                            productItem: productItem,
                                           ),
                                         ],
                                       )
