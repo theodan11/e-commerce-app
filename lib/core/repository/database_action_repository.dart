@@ -13,4 +13,6 @@ abstract class DatabaseActionRepository {
   Future<List<Map<String, dynamic>>> fetchWishList();
 
   Future<void>? deleteWishList(String userId, String productId);
+
+  Future<Map<String, dynamic>>? fetchSingleNews(String newsId);
 }

@@ -112,4 +112,20 @@ class FirebaseDbServices implements DatabaseActionRepository {
       throw Exception(e.message);
     }
   }
+
+  @override
+  Future<Map<String, dynamic>>? fetchSingleNews(String newsId) async {
+    try {
+      var result =
+          await FirebaseFirestore.instance.collection("news").doc(newsId).get();
+      if (result.exists) {
+        Map<String, dynamic> newsItem = result.data() as Map<String, dynamic>;
+        return newsItem;
+      } else {
+        return {};
+      }
+    } on FirebaseException catch (e) {
+      throw Exception("Something went wrong while fetching news. ${e.message}");
+    }
+  }
 }

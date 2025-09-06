@@ -277,7 +277,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => NewsDetailPage(
-                                  newsID: singleNews.id,
+                                  newsId: singleNews.id,
                                 ),
                               ),
                             );

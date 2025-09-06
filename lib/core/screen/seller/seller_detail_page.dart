@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 
 class SellerDetailPage extends StatefulWidget {
   final String storeId;
-  SellerDetailPage({super.key, required this.storeId});
+  const SellerDetailPage({super.key, required this.storeId});
 
   @override
   State<SellerDetailPage> createState() => _SellerDetailPageState();

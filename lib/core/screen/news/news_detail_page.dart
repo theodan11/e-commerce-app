@@ -1,35 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/common/header_and_see_all.dart';
-
 import 'package:e_commerce_app/core/screen/news/news_page.dart';
+import 'package:e_commerce_app/core/services/firebase_db_services.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
-
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 
 class NewsDetailPage extends StatelessWidget {
-  final String newsID;
+  final String newsId;
 
-  const NewsDetailPage({super.key, required this.newsID});
+  const NewsDetailPage({super.key, required this.newsId});
 
   @override
   Widget build(BuildContext context) {
-    // print(newItem.imgPath);
     Map<String, dynamic>? newsItem;
-    Future<void>? fetchSingleNews() async {
-      try {
-        var result = await FirebaseFirestore.instance
-            .collection("news")
-            .doc(newsID)
-            .get();
-        if (result.exists) {
-          newsItem = result.data();
-        }
-      } on FirebaseException catch (e) {
-        throw Exception("Something went wrong while fetching news. $e");
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text("News Detail",
@@ -40,7 +23,7 @@ class NewsDetailPage extends StatelessWidget {
         ],
       ),
       body: FutureBuilder(
-          future: fetchSingleNews(),
+          future: FirebaseDbServices().fetchSingleNews(newsId),
           builder: (context, snapShot) {
             if (snapShot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -48,6 +31,10 @@ class NewsDetailPage extends StatelessWidget {
                   color: MyThemeColors.primaryColor,
                 ),
               );
+            }
+
+            if (snapShot.hasData) {
+              newsItem = snapShot.data;
             }
             return SingleChildScrollView(
               child: Padding(
@@ -131,46 +118,6 @@ class NewsDetailPage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    // SizedBox(
-                    //   width: 450,
-                    //   height: 300,
-                    //   child: ListView.separated(
-                    //     itemCount: 2,
-                    //     itemBuilder: (context, index) {
-                    //       News singleNews = newsList[index];
-                    //       return LatestNewsCard(
-                    //         imgPath: singleNews.imgPath,
-                    //         // nDate: singleNews.nDate,
-                    //         subTitle: singleNews.title,
-                    //         title: singleNews.title,
-                    //         onTapFunc: () {
-                    //           Navigator.of(context).push(MaterialPageRoute(
-                    //               builder: (context) =>
-                    //                   NewsDetailPage(newsIndex: index)));
-                    //         },
-                    //       );
-                    //     },
-                    //     separatorBuilder: (context, index) {
-                    //       return const Column(
-                    //         children: [
-                    //           SizedBox(
-                    //             height: 18,
-                    //           ),
-                    //           Divider(
-                    //             indent: 25,
-                    //             endIndent: 25,
-                    //             thickness: .8,
-                    //             height: 20,
-                    //             color: MyThemeColors.grayText,
-                    //           ),
-                    //           SizedBox(
-                    //             height: 18,
-                    //           )
-                    //         ],
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
