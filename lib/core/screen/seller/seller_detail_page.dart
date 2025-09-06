@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/common/add_to_cart_button.dart';
+import 'package:e_commerce_app/core/common/discount_product_card.dart';
 import 'package:e_commerce_app/core/common/product_card.dart';
+import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
 import 'package:e_commerce_app/core/screen/login/login_page.dart';
 import 'package:e_commerce_app/core/screen/product/product_detail_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
@@ -28,7 +30,11 @@ class _SellerDetailPageState extends State<SellerDetailPage> {
           .collection("products")
           .where("storeId", isEqualTo: widget.storeId)
           .get();
-      var products = productsSnapshot.docs;
+      var products = productsSnapshot.docs.map((doc) {
+        var data = doc.data();
+        data['id'] = doc.id;
+        return data;
+      });
       return products;
     } on FirebaseException catch (e) {
       print(e.message);
@@ -224,6 +230,22 @@ class _SellerDetailPageState extends State<SellerDetailPage> {
                         ),
                         itemBuilder: (context, index) {
                           var productItem = products[index];
+                          print(productItem);
+                          return DiscountProductCard(
+                            productItem: ProductModel(
+                              id: productItem['id'],
+                              imagePath: productItem['imagePath'],
+                              title: productItem['title'],
+                              price: productItem['price'],
+                              stock: productItem['stock'],
+                              storeId: productItem['storeId'],
+                              desc: productItem['desc'],
+                              reviews: productItem['reviews'],
+                              isDiscount: productItem['isDiscount'],
+                              originalPrice: productItem['originalPrice'],
+                            ),
+                          );
+
                           return ProductCard(
                               title: productItem['name'],
                               imgPath: productItem['imagePath'],
