@@ -69,4 +69,47 @@ class FirebaseDbServices implements DatabaseActionRepository {
         .doc(productId)
         .set({});
   }
+
+  @override
+  Future<List<Map<String, dynamic>>> fetchWishList() async {
+    List<Map<String, dynamic>> wishList = [];
+    try {
+      var auth = FirebaseAuth.instance.currentUser!.uid;
+      var wishListSnapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(auth)
+          .collection("wishList")
+          .get();
+
+      for (var doc in wishListSnapshot.docs) {
+        var productSnapshot = await FirebaseFirestore.instance
+            .collection("products")
+            .doc(doc.id)
+            .get();
+        if (productSnapshot.exists) {
+          var productData = productSnapshot.data()!;
+          productData['id'] = productSnapshot.id;
+          wishList.add(productData);
+        }
+      }
+
+      return wishList;
+    } on FirebaseException catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void>? deleteWishList(String userId, String productId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userId)
+          .collection("wishList")
+          .doc(productId)
+          .delete();
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
 }

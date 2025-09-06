@@ -9,4 +9,8 @@ abstract class DatabaseActionRepository {
       double? price, int? stock, String? desc);
 
   Future<void>? addWishList(String userId, String productId);
+
+  Future<List<Map<String, dynamic>>> fetchWishList();
+
+  Future<void>? deleteWishList(String userId, String productId);
 }

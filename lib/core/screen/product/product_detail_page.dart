@@ -10,7 +10,7 @@ import 'package:e_commerce_app/core/screen/seller/seller_detail_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:e_commerce_app/core/services/firebase_db_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_formatter/money_formatter.dart';
@@ -326,19 +326,15 @@ class ProductDetailPage extends StatelessWidget {
                                                 ),
                                               )
                                             : GestureDetector(
-                                                onTap: () async {
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection("users")
-                                                      .doc(FirebaseAuth.instance
-                                                          .currentUser!.uid)
-                                                      .collection("wishList")
-                                                      .doc(productItem.id)
-                                                      .set({});
+                                                onTap: () {
+                                                  FirebaseDbServices()
+                                                      .addWishList(
+                                                          FirebaseAuth.instance
+                                                              .currentUser!.uid,
+                                                          productItem.id);
 
-                                                  // ignore: use_build_context_synchronously
                                                   Navigator.of(context).pop();
-                                                  // ignore: use_build_context_synchronously
+
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     const SnackBar(
@@ -381,17 +377,13 @@ class ProductDetailPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () async {
+                            onTap: () {
                               if (FirebaseAuth.instance.currentUser != null) {
                                 try {
-                                  await FirebaseFirestore.instance
-                                      .collection("users")
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser!.uid)
-                                      .collection("wishList")
-                                      .doc(productID)
-                                      .set({});
-                                  // ignore: use_build_context_synchronously
+                                  FirebaseDbServices().addWishList(
+                                      FirebaseAuth.instance.currentUser!.uid,
+                                      productItem.id);
+
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text("Added to wishlist"),

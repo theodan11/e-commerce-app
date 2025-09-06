@@ -4,38 +4,10 @@ import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:e_commerce_app/core/services/firebase_db_services.dart';
 
 class WishlistPage extends StatelessWidget {
   const WishlistPage({super.key});
-  Future<List<Map<String, dynamic>>> fetchWishList() async {
-    List<Map<String, dynamic>> wishList = [];
-    try {
-      var auth = FirebaseAuth.instance.currentUser!.uid;
-      var wishListSnapshot = await FirebaseFirestore.instance
-          .collection("users")
-          .doc(auth)
-          .collection("wishList")
-          .get();
-
-      for (var doc in wishListSnapshot.docs) {
-        var productSnapshot = await FirebaseFirestore.instance
-            .collection("products")
-            .doc(doc.id)
-            .get();
-        if (productSnapshot.exists) {
-          var productData = productSnapshot.data()!;
-          productData['id'] = productSnapshot.id;
-          wishList.add(productData);
-          // print("this is fetching: $productSnapshot");
-        }
-      }
-
-      // print("this is fetching: $wishList");
-      return wishList;
-    } on FirebaseException catch (e) {
-      throw Exception(e);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +29,7 @@ class WishlistPage extends StatelessWidget {
         }
 
         return FutureBuilder(
-            future: fetchWishList(),
+            future: FirebaseDbServices().fetchWishList(),
             builder: (context, wishSnapshot) {
               if (wishSnapshot.connectionState == ConnectionState.waiting ||
                   wishSnapshot.data == null) {
@@ -92,13 +64,10 @@ class WishlistPage extends StatelessWidget {
                         return Dismissible(
                           key: ValueKey(product["id"]),
                           direction: DismissDirection.endToStart,
-                          onDismissed: (direction) async {
-                            await FirebaseFirestore.instance
-                                .collection("users")
-                                .doc(FirebaseAuth.instance.currentUser!.uid)
-                                .collection("wishList")
-                                .doc(product["id"])
-                                .delete();
+                          onDismissed: (direction) {
+                            FirebaseDbServices().deleteWishList(
+                                FirebaseAuth.instance.currentUser!.uid,
+                                product["id"]);
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

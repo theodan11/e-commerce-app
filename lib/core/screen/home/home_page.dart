@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/common/add_to_cart_button.dart';
 import 'package:e_commerce_app/core/common/banner_card.dart';
 import 'package:e_commerce_app/core/common/header_and_see_all.dart';
