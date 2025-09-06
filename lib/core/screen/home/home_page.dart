@@ -15,6 +15,7 @@ import 'package:e_commerce_app/core/screen/login/login_page.dart';
 import 'package:e_commerce_app/core/screen/news/news_detail_page.dart';
 import 'package:e_commerce_app/core/screen/news/news_page.dart';
 import 'package:e_commerce_app/core/screen/product/product_detail_page.dart';
+import 'package:e_commerce_app/core/services/firebase_db_services.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -411,18 +412,14 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     )
                                   : GestureDetector(
-                                      onTap: () async {
-                                        await FirebaseFirestore.instance
-                                            .collection("users")
-                                            .doc(FirebaseAuth
-                                                .instance.currentUser!.uid)
-                                            .collection("wishList")
-                                            .doc(productItem.id)
-                                            .set({});
+                                      onTap: () {
+                                        FirebaseDbServices().addWishList(
+                                            FirebaseAuth
+                                                .instance.currentUser!.uid,
+                                            productItem.id);
 
-                                        // ignore: use_build_context_synchronously
                                         Navigator.of(context).pop();
-                                        // ignore: use_build_context_synchronously
+
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           const SnackBar(

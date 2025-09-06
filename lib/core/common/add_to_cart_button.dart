@@ -64,9 +64,6 @@ class AddToCartButton extends StatelessWidget {
                                   totalPriceLocal =
                                       productItem.price * (state.quantity + 1);
                                   context.read<CartCubit>().increaseQuantity();
-
-                                  // print(state.cartItemCount);
-                                  // print(state.cartItem);
                                 }
                               },
                               icon: const Icon(
@@ -99,8 +96,6 @@ class AddToCartButton extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
                             context
                                 .read<CartCubit>()
                                 .addToCart(productItem, state.quantity);
@@ -113,6 +108,9 @@ class AddToCartButton extends StatelessWidget {
                               ),
                               backgroundColor: MyThemeColors.categoriesGreen,
                             ));
+
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
                           },
                           child: Container(
                             width: 325,

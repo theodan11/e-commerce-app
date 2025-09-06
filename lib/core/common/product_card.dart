@@ -28,19 +28,19 @@ class ProductCard extends StatelessWidget {
     MoneyFormatter money = MoneyFormatter(amount: price);
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 200),
-      child: FittedBox(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 15),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(
-                8,
-              ),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 4),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(
+              8,
             ),
-            child: GestureDetector(
-              onTap: () {
-                onTapFunc!();
-              },
+          ),
+          child: GestureDetector(
+            onTap: () {
+              onTapFunc!();
+            },
+            child: FittedBox(
               child: Material(
                 elevation: 2,
                 child: Container(
@@ -68,6 +68,8 @@ class ProductCard extends StatelessWidget {
                         Text(
                           title,
                           style: MyTextTheme.productTitle,
+                          maxLines: 1,
+                          softWrap: true,
                         ),
                         const SizedBox(
                           height: 6,

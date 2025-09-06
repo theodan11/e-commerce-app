@@ -59,4 +59,14 @@ class FirebaseDbServices implements DatabaseActionRepository {
       throw Exception("Something went wrong while adding product $e");
     }
   }
+
+  @override
+  Future<void>? addWishList(String userId, String productId) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userId)
+        .collection("wishList")
+        .doc(productId)
+        .set({});
+  }
 }
