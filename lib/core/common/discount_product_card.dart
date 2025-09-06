@@ -127,7 +127,7 @@ class DiscountProductCard extends StatelessWidget {
                                   width: 6,
                                 ),
                                 Text(
-                                  0.toString(),
+                                  "0",
                                   style: MyTextTheme.productBottomText,
                                 ),
                               ],
@@ -171,8 +171,8 @@ class DiscountProductCard extends StatelessWidget {
                                           const SizedBox(
                                             height: 18,
                                           ),
-                                          (FirebaseAuth.instance.currentUser!
-                                                  .isAnonymous)
+                                          (FirebaseAuth.instance.currentUser ==
+                                                  null)
                                               ? GestureDetector(
                                                   onTap: () {
                                                     Navigator.of(context).pop();

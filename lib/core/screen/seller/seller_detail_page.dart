@@ -1,13 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/common/add_to_cart_button.dart';
 import 'package:e_commerce_app/core/common/discount_product_card.dart';
-import 'package:e_commerce_app/core/common/product_card.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
-import 'package:e_commerce_app/core/screen/login/login_page.dart';
-import 'package:e_commerce_app/core/screen/product/product_detail_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -33,8 +29,9 @@ class _SellerDetailPageState extends State<SellerDetailPage> {
       var products = productsSnapshot.docs.map((doc) {
         var data = doc.data();
         data['id'] = doc.id;
+        print(data['id']);
         return data;
-      });
+      }).toList();
       return products;
     } on FirebaseException catch (e) {
       print(e.message);
@@ -85,6 +82,7 @@ class _SellerDetailPageState extends State<SellerDetailPage> {
 
             storeInfo = snapshot.data;
             products = snapshot.data['products'];
+            print(snapshot.data['products'][1]);
             return Column(
               children: [
                 const SizedBox(
@@ -111,6 +109,7 @@ class _SellerDetailPageState extends State<SellerDetailPage> {
                           Text(
                             storeInfo['storeName'],
                             style: MyTextTheme.latestNewsHeadterText,
+                            softWrap: true,
                           ),
                           const SizedBox(
                             height: 10,
@@ -230,138 +229,22 @@ class _SellerDetailPageState extends State<SellerDetailPage> {
                         ),
                         itemBuilder: (context, index) {
                           var productItem = products[index];
-                          print(productItem);
+                          // print(productItem);
                           return DiscountProductCard(
                             productItem: ProductModel(
-                              id: productItem['id'],
-                              imagePath: productItem['imagePath'],
-                              title: productItem['title'],
-                              price: productItem['price'],
-                              stock: productItem['stock'],
-                              storeId: productItem['storeId'],
-                              desc: productItem['desc'],
-                              reviews: productItem['reviews'],
-                              isDiscount: productItem['isDiscount'],
-                              originalPrice: productItem['originalPrice'],
+                              id: productItem!['id'],
+                              imagePath: productItem!['imagePath'],
+                              title: productItem!['name'],
+                              price: productItem!['price'],
+                              stock: productItem!['stock'],
+                              storeId: productItem!['storeId'],
+                              desc: productItem!['desc'],
+                              reviews: productItem!['reviews'],
+                              isDiscount: productItem!['isDiscount'] ?? false,
+                              originalPrice:
+                                  productItem!['originalPrice'] ?? 0.01,
                             ),
                           );
-
-                          return ProductCard(
-                              title: productItem['name'],
-                              imgPath: productItem['imagePath'],
-                              price: productItem['price'],
-                              onTapFunc: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ProductDetailPage(
-                                      productID: productItem.id,
-                                    ),
-                                  ),
-                                );
-                              },
-                              iconBtnFunc: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text("Product Action",
-                                            style: MyTextTheme
-                                                .latestNewsHeadterText),
-                                        actionsAlignment:
-                                            MainAxisAlignment.start,
-                                        actions: [
-                                          Column(
-                                            children: [
-                                              const SizedBox(
-                                                height: 8,
-                                              ),
-                                              const Divider(
-                                                indent: 25,
-                                                endIndent: 25,
-                                                thickness: .8,
-                                                height: 20,
-                                                color: MyThemeColors.grayText,
-                                              ),
-                                              const SizedBox(
-                                                height: 18,
-                                              ),
-                                              (FirebaseAuth.instance
-                                                          .currentUser ==
-                                                      null)
-                                                  ? GestureDetector(
-                                                      onTap: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const LoginPage()));
-                                                      },
-                                                      child: Text(
-                                                        "Add to wishlist",
-                                                        style: MyTextTheme
-                                                            .latestNewsHeadterText,
-                                                      ),
-                                                    )
-                                                  : GestureDetector(
-                                                      onTap: () async {
-                                                        await FirebaseFirestore
-                                                            .instance
-                                                            .collection("users")
-                                                            .doc(FirebaseAuth
-                                                                .instance
-                                                                .currentUser!
-                                                                .uid)
-                                                            .collection(
-                                                                "wishList")
-                                                            .doc(productItem.id)
-                                                            .set({});
-
-                                                        // ignore: use_build_context_synchronously
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                        // ignore: use_build_context_synchronously
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          const SnackBar(
-                                                              content: Text(
-                                                                  "Added to wishlist"),
-                                                              backgroundColor:
-                                                                  MyThemeColors
-                                                                      .categoriesGreen),
-                                                        );
-                                                      },
-                                                      child: Text(
-                                                        "Add to wishlist",
-                                                        style: MyTextTheme
-                                                            .latestNewsHeadterText,
-                                                      ),
-                                                    ),
-                                              const SizedBox(
-                                                height: 18,
-                                              ),
-                                              const Divider(
-                                                indent: 25,
-                                                endIndent: 25,
-                                                thickness: .8,
-                                                height: 20,
-                                                color: MyThemeColors.grayText,
-                                              ),
-                                              const SizedBox(
-                                                height: 18,
-                                              ),
-                                              AddToCartButton(
-                                                productItem: productItem,
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      );
-                                    });
-                              });
                         }),
                   ),
                 )

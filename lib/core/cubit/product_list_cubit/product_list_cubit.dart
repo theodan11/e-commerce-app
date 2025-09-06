@@ -17,7 +17,7 @@ class ProductListCubit extends Cubit<ProductListState> {
       plist = productSnapshot.docs.map((doc) {
         return ProductModel.fromJSON(doc.data(), doc.id);
       }).toList();
-      print(plist);
+      // print(plist);
       emit(state.copyWith(
           productList: plist, isLoading: false, isSuccess: true));
     } on FirebaseException catch (e) {
