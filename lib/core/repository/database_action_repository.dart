@@ -5,8 +5,15 @@ abstract class DatabaseActionRepository {
 
   Future<void>? saveNewsToCloud(String? title, String? desc, String? imagePath);
 
-  Future<void>? saveProductToCloud(String? title, String? imagePath,
-      double? price, int? stock, String? desc);
+  Future<void>? saveProductToCloud({
+    String? title,
+    String? imagePath,
+    double? price,
+    double? originalPrice,
+    bool? isDiscount,
+    int? stock,
+    String? desc,
+  });
 
   Future<void>? addWishList(String userId, String productId);
 

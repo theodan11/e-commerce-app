@@ -112,6 +112,50 @@ class AddProductPage extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Special Offer",
+                              style: MyTextTheme.loginPageLabel,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Checkbox(
+                                value: state.isDiscount,
+                                focusColor: MyThemeColors.primaryColor,
+                                side: const BorderSide(
+                                    color: MyThemeColors.primaryColor),
+                                onChanged: (value) {
+                                  context
+                                      .read<ProductCubit>()
+                                      .updateIsDiscount(value!);
+                                })
+                          ]),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Original Price",
+                        style: MyTextTheme.loginPageLabel,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      MyTextField(
+                        value: state.price.toString(),
+                        hintText: "Product Original Price",
+                        isNumber: TextInputType.number,
+                        onChanged: (value) {
+                          context
+                              .read<ProductCubit>()
+                              .updateOriginalPrice(double.parse(value));
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Text(
                         "Stock",
                         style: MyTextTheme.loginPageLabel,
@@ -152,24 +196,24 @@ class AddProductPage extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: state.title != '' && state.desc != ''
-                            ? () async {
+                            ? () {
                                 try {
                                   context
                                       .read<ProductCubit>()
                                       .loadingInProgress();
 
-                                  await FirebaseDbServices().saveProductToCloud(
-                                    state.title,
-                                    state.imagePath,
-                                    state.price,
-                                    state.stock,
-                                    state.desc,
+                                  FirebaseDbServices().saveProductToCloud(
+                                    title: state.title,
+                                    price: state.price,
+                                    imagePath: state.imagePath,
+                                    stock: state.stock,
+                                    desc: state.desc,
+                                    isDiscount: state.isDiscount,
+                                    originalPrice: state.originalPrice,
                                   );
 
-                                  // ignore: use_build_context_synchronously
                                   context.read<ProductCubit>().loadingSuccess();
 
-                                  // ignore: use_build_context_synchronously
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content:
@@ -179,24 +223,19 @@ class AddProductPage extends StatelessWidget {
                                     ),
                                   );
 
-                                  // ignore: use_build_context_synchronously
                                   context
                                       .read<ProductCubit>()
                                       .resetProductForm();
-                                  // ignore: use_build_context_synchronously
+
                                   Navigator.of(context).pop();
-                                  // ignore: use_build_context_synchronously
+
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => const HomeLayout(),
                                     ),
                                   );
                                 } catch (e) {
-                                  // ignore: use_build_context_synchronously
                                   context.read<ProductCubit>().loadingSuccess();
-                                  // print(e);
-
-                                  // ignore: use_build_context_synchronously
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
                                     content: Text(

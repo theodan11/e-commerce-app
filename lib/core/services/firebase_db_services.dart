@@ -31,8 +31,15 @@ class FirebaseDbServices implements DatabaseActionRepository {
   }
 
   @override
-  Future<void>? saveProductToCloud(String? title, String? imagePath,
-      double? price, int? stock, String? desc) async {
+  Future<void>? saveProductToCloud({
+    String? title,
+    String? imagePath,
+    double? price,
+    double? originalPrice = 0.0,
+    bool? isDiscount = false,
+    int? stock,
+    String? desc,
+  }) async {
     try {
       var db = FirebaseFirestore.instance.collection("products");
 
@@ -50,6 +57,8 @@ class FirebaseDbServices implements DatabaseActionRepository {
         "name": title,
         "imagePath": imagePath,
         "price": price ?? 0.0,
+        "originalPrice": originalPrice,
+        "isDiscount": isDiscount,
         "stock": stock ?? 0,
         "desc": desc,
         "reviews": [],

@@ -4,8 +4,10 @@ class ProductState extends Equatable {
   final String? imagePath;
   final String? title;
   final double? price;
+  final double? originalPrice;
+  final bool? isDiscount;
   final int? stock;
-  final String? vendorID;
+  final String? storeId;
   final String? desc;
   final bool isLoading;
   final bool isSuccess;
@@ -14,9 +16,11 @@ class ProductState extends Equatable {
     this.imagePath = '',
     this.title = '',
     this.price = 0,
+    this.originalPrice = 0.0,
     this.stock = 0,
-    this.vendorID = '',
+    this.storeId = '',
     this.desc = '',
+    this.isDiscount = false,
     this.isLoading = false,
     this.isSuccess = false,
   });
@@ -25,9 +29,11 @@ class ProductState extends Equatable {
     String? imagePath,
     String? title,
     double? price,
+    double? originalPrice,
     int? stock,
-    String? vendorID,
+    String? storeId,
     String? desc,
+    bool? isDiscount,
     bool? isLoading,
     bool? isSuccess,
   }) {
@@ -35,9 +41,11 @@ class ProductState extends Equatable {
       imagePath: imagePath ?? this.imagePath,
       title: title ?? this.title,
       price: price ?? this.price,
+      originalPrice: originalPrice ?? this.originalPrice,
       stock: stock ?? this.stock,
-      vendorID: vendorID ?? this.vendorID,
+      storeId: storeId ?? this.storeId,
       desc: desc ?? this.desc,
+      isDiscount: isDiscount ?? this.isDiscount,
       isLoading: isLoading ?? this.isLoading,
       isSuccess: isSuccess ?? this.isSuccess,
     );
@@ -48,10 +56,12 @@ class ProductState extends Equatable {
         title,
         imagePath,
         price,
+        originalPrice,
         stock,
-        vendorID,
+        storeId,
         desc,
         isLoading,
         isSuccess,
+        isDiscount
       ];
 }

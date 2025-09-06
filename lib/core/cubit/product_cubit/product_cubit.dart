@@ -27,8 +27,16 @@ class ProductCubit extends Cubit<ProductState> {
     emit(state.copyWith(stock: stock));
   }
 
-  void updateVendorID(String vendorID) {
-    emit(state.copyWith(vendorID: vendorID));
+  void updateVendorID(String storeId) {
+    emit(state.copyWith(storeId: storeId));
+  }
+
+  void updateOriginalPrice(double originalPrice) {
+    emit(state.copyWith(originalPrice: originalPrice));
+  }
+
+  void updateIsDiscount(bool isDiscount) {
+    emit(state.copyWith(isDiscount: isDiscount));
   }
 
   void loadingInProgress() {
