@@ -29,7 +29,7 @@ class DiscountProductCard extends StatelessWidget {
                 )));
       },
       child: Padding(
-        padding: const EdgeInsets.only(right: 15.0),
+        padding: const EdgeInsets.only(right: 8.0),
         child: ClipRRect(
           borderRadius: const BorderRadius.all(
             Radius.circular(
@@ -43,7 +43,7 @@ class DiscountProductCard extends StatelessWidget {
                 color: Colors.white,
               ),
               width: 174,
-              height: 268,
+              height: 160,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(8, 15, 10, 8),
                 child: Column(
@@ -111,35 +111,70 @@ class DiscountProductCard extends StatelessWidget {
                     const SizedBox(
                       height: 6,
                     ),
+                    const Spacer(
+                      flex: 1,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.star,
-                                  size: 10,
-                                  color: MyThemeColors.ratingStarColor,
+                        Expanded(
+                          child: MediaQuery.of(context).size.width >= 530
+                              ? Row(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.star,
+                                          size: 10,
+                                          color: MyThemeColors.ratingStarColor,
+                                        ),
+                                        const SizedBox(
+                                          width: 6,
+                                        ),
+                                        Text(
+                                          "0",
+                                          style: MyTextTheme.productBottomText,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      width: 6,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "${productItem.reviews.length} Reviews",
+                                        style: MyTextTheme.productBottomText,
+                                        softWrap: true,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.star,
+                                          size: 10,
+                                          color: MyThemeColors.ratingStarColor,
+                                        ),
+                                        const SizedBox(
+                                          width: 6,
+                                        ),
+                                        Text(
+                                          "0",
+                                          style: MyTextTheme.productBottomText,
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      "${productItem.reviews.length} Reviews",
+                                      style: MyTextTheme.productBottomText,
+                                      softWrap: true,
+                                    )
+                                  ],
                                 ),
-                                const SizedBox(
-                                  width: 6,
-                                ),
-                                Text(
-                                  "0",
-                                  style: MyTextTheme.productBottomText,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 6,
-                            ),
-                            Text(
-                              "${productItem.reviews.length} Reviews",
-                              style: MyTextTheme.productBottomText,
-                            )
-                          ],
                         ),
                         // const Spacer(
                         //   flex: 1,

@@ -26,18 +26,16 @@ class ProductModel {
   factory ProductModel.fromJSON(Map<String, dynamic> json, String id) {
     return ProductModel(
       id: id,
-      title: json['name'] ?? '',
+      title: json['name'],
       price: (json['price'] as num).toDouble(),
-      imagePath: json['imagePath'] ?? '',
+      imagePath: json['imagePath'],
       stock: json['stock'],
       // stock: int.parse(json['stock']),
-      storeId: json['storeId'] as String ?? '',
-      desc: json['desc'] ?? '',
-      reviews: (json['reviews'] ?? []) as List<dynamic>,
+      storeId: json['storeId'],
+      desc: json['desc'],
+      reviews: json['reviews'],
       isDiscount: json['isDiscount'] ?? false,
-      originalPrice: (json['originalPrice'] != null)
-          ? double.parse(json['originalPrice'])
-          : 0.0,
+      originalPrice: json['originalPrice'] ?? 0.0,
     );
   }
 }
