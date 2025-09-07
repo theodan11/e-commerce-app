@@ -27,7 +27,14 @@ class DiscountProductCard extends StatelessWidget {
     //   return prev + item.rating;
     // });
     // double rating = star / productItem.reviews!.length;
-    double rating = 9;
+
+    int rateAcc = productItem.reviews!.fold(0, (prev, item) {
+      return prev + (item!.rating as num).toInt();
+    });
+    double avgRating = rateAcc / productItem.reviews!.length;
+
+    // avgRating.isNaN ? 0.toString() : avgRating.toString(),
+    // double rating = 9;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -139,7 +146,9 @@ class DiscountProductCard extends StatelessWidget {
                                           width: 6,
                                         ),
                                         Text(
-                                          "0",
+                                          avgRating.isNaN
+                                              ? 0.toString()
+                                              : avgRating.toString(),
                                           style: MyTextTheme.productBottomText,
                                         ),
                                       ],
@@ -170,7 +179,9 @@ class DiscountProductCard extends StatelessWidget {
                                           width: 6,
                                         ),
                                         Text(
-                                          rating.toString(),
+                                          avgRating.isNaN
+                                              ? 0.toString()
+                                              : avgRating.toString(),
                                           style: MyTextTheme.productBottomText,
                                         ),
                                       ],

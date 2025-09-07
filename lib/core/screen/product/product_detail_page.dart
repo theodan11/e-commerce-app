@@ -23,7 +23,7 @@ class ProductDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     dynamic productItem;
     dynamic storeInfo;
-    User? user = FirebaseAuth.instance.currentUser;
+    // User? user = FirebaseAuth.instance.currentUser;
     Future<Map<String, dynamic>> fetchStoreInfo(
         Map<String, dynamic> productItem) async {
       try {
@@ -80,9 +80,9 @@ class ProductDetailPage extends StatelessWidget {
                 int rateAcc = snapShot.data!['reviews'].fold(0, (prev, item) {
                   return prev + item['rating'];
                 });
+                double avgRating = rateAcc / snapShot.data!['reviews'].length;
                 // double avgRating = rateAcc / snapShot.data!['reviews'].length;
                 // int rateAcc = 2;
-                double avgRating = rateAcc / snapShot.data!['reviews'].length;
 
                 productItem = ProductModel.fromJSON(snapShot.data!, productID);
                 // print(productItem);
@@ -170,7 +170,9 @@ class ProductDetailPage extends StatelessWidget {
                                 width: 6,
                               ),
                               Text(
-                                "4.6",
+                                avgRating.isNaN
+                                    ? 0.toString()
+                                    : avgRating.toString(),
                                 style: MyTextTheme.productBottomText,
                               ),
                               const SizedBox(
@@ -323,7 +325,8 @@ class ProductDetailPage extends StatelessWidget {
                     HeaderAndSeeAll(
                       headerTitle:
                           "Reviews (${snapShot.data!['reviews'].length})",
-                      btnTitle: avgRating.toString(),
+                      btnTitle:
+                          avgRating.isNaN ? 0.toString() : avgRating.toString(),
                     ),
                     GestureDetector(
                       onTap: () {},

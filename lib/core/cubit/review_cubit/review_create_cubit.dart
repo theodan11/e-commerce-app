@@ -14,6 +14,10 @@ class ReviewCreateCubit extends Cubit<ReviewCreateState> {
     emit(state.copyWith(customerExperience: review));
   }
 
+  void resetForm() {
+    emit(const ReviewCreateState());
+  }
+
   Future<void> saveReview(String productId) async {
     emit(state.copyWith(isLoading: true, isSuccess: false));
     try {

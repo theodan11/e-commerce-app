@@ -34,69 +34,71 @@ class UserProfilePage extends StatelessWidget {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomProfileButton(
-              onTapFunc: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => AddNewsPage()));
-              },
-              btnTitle: "Add News",
-              icon: Icons.post_add_outlined,
-              iconColor: MyThemeColors.primaryColor,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            CustomProfileButton(
-              onTapFunc: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const CreateSellerPage()));
-              },
-              btnTitle: "Become a seller",
-              icon: Icons.add,
-              iconColor: MyThemeColors.primaryColor,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            CustomProfileButton(
-              onTapFunc: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const AddProductPage()));
-              },
-              btnTitle: "Add Product",
-              icon: Icons.add,
-              iconColor: MyThemeColors.primaryColor,
-            ),
-            const Spacer(),
-            const Divider(
-              color: MyThemeColors.grayText,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            CustomProfileButton(
-              onTapFunc: () async {
-                await FirebaseAuthService().signOut();
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pop();
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const HomeLayout()));
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomProfileButton(
+                onTapFunc: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => AddNewsPage()));
+                },
+                btnTitle: "Add News",
+                icon: Icons.post_add_outlined,
+                iconColor: MyThemeColors.primaryColor,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              CustomProfileButton(
+                onTapFunc: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const CreateSellerPage()));
+                },
+                btnTitle: "Become a seller",
+                icon: Icons.add,
+                iconColor: MyThemeColors.primaryColor,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              CustomProfileButton(
+                onTapFunc: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AddProductPage()));
+                },
+                btnTitle: "Add Product",
+                icon: Icons.add,
+                iconColor: MyThemeColors.primaryColor,
+              ),
+              const Spacer(),
+              const Divider(
+                color: MyThemeColors.grayText,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              CustomProfileButton(
+                onTapFunc: () async {
+                  await FirebaseAuthService().signOut();
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pop();
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const HomeLayout()));
 
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Sign out successful")));
-              },
-              btnTitle: "Sign out",
-              icon: Icons.logout,
-              iconColor: MyThemeColors.productPriceColor,
-            ),
-          ],
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Sign out successful")));
+                },
+                btnTitle: "Sign out",
+                icon: Icons.logout,
+                iconColor: MyThemeColors.productPriceColor,
+              ),
+            ],
+          ),
         ),
       ),
     );

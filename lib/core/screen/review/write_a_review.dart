@@ -68,7 +68,7 @@ class WriteAReview extends StatelessWidget {
                                     color: Colors.amber,
                                   ),
                             const SizedBox(
-                              height: 8,
+                              width: 8,
                             ),
                             state.rating! < 2
                                 ? const Icon(Icons.star_border)
@@ -77,7 +77,7 @@ class WriteAReview extends StatelessWidget {
                                     color: Colors.amber,
                                   ),
                             const SizedBox(
-                              height: 8,
+                              width: 8,
                             ),
                             state.rating! < 3
                                 ? const Icon(Icons.star_border)
@@ -86,7 +86,7 @@ class WriteAReview extends StatelessWidget {
                                     color: Colors.amber,
                                   ),
                             const SizedBox(
-                              height: 8,
+                              width: 8,
                             ),
                             state.rating! < 4
                                 ? const Icon(Icons.star_border)
@@ -95,7 +95,7 @@ class WriteAReview extends StatelessWidget {
                                     color: Colors.amber,
                                   ),
                             const SizedBox(
-                              height: 8,
+                              width: 8,
                             ),
                             state.rating! < 5
                                 ? const Icon(Icons.star_border)
@@ -104,7 +104,7 @@ class WriteAReview extends StatelessWidget {
                                     color: Colors.amber,
                                   ),
                             const SizedBox(
-                              height: 8,
+                              width: 8,
                             ),
                             const Spacer(
                               flex: 1,
@@ -127,6 +127,9 @@ class WriteAReview extends StatelessWidget {
                                   .read<ReviewCreateCubit>()
                                   .updateRating(value.toInt());
                             }),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         GestureDetector(
                           onTap: state.customerExperience != ''
                               ? () {
@@ -143,9 +146,9 @@ class WriteAReview extends StatelessWidget {
                                             Color.fromARGB(255, 10, 207, 66),
                                       ),
                                     );
-
-                                    Navigator.of(context).pop();
                                   }
+                                  Navigator.of(context).pop();
+                                  context.read<ReviewCreateCubit>().resetForm();
                                 }
                               : null,
                           child: Container(
