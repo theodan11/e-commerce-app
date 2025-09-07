@@ -22,4 +22,7 @@ abstract class DatabaseActionRepository {
   Future<void>? deleteWishList(String userId, String productId);
 
   Future<Map<String, dynamic>>? fetchSingleNews(String newsId);
+
+  Future<dynamic> fetchStoreInfo(String storeId);
+  Future<dynamic> fetchProduct(String storeId);
 }

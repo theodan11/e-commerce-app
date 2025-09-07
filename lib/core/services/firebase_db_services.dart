@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/repository/database_action_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class FirebaseDbServices implements DatabaseActionRepository {
   @override
@@ -135,6 +136,49 @@ class FirebaseDbServices implements DatabaseActionRepository {
       }
     } on FirebaseException catch (e) {
       throw Exception("Something went wrong while fetching news. ${e.message}");
+    }
+  }
+
+  @override
+  Future<dynamic> fetchProduct(String storeId) async {
+    try {
+      var productsSnapshot = await FirebaseFirestore.instance
+          .collection("products")
+          .where("storeId", isEqualTo: storeId)
+          .get();
+      var products = productsSnapshot.docs.map((doc) {
+        var data = doc.data();
+        data['id'] = doc.id;
+        // print(data['id']);
+        return data;
+      }).toList();
+      return products;
+    } on FirebaseException catch (e) {
+      print(e.message);
+      return e.message.toString();
+    }
+  }
+
+  @override
+  Future<dynamic> fetchStoreInfo(String storeId) async {
+    dynamic storeInfo;
+    try {
+      DocumentSnapshot storeSnapshot = await FirebaseFirestore.instance
+          .collection("store")
+          .doc(storeId)
+          .get();
+      storeInfo = storeSnapshot.data() as Map<String, dynamic>;
+      Timestamp createdAt = storeInfo['createdAt'] as Timestamp;
+      DateTime date = createdAt.toDate();
+
+      String fomattedDate = DateFormat("MMM dd yyyy").format(date);
+      storeInfo['formattedDate'] = fomattedDate;
+      var products = await fetchProduct(storeId);
+      storeInfo['products'] = products;
+      return storeInfo;
+    } on FirebaseException catch (e) {
+      print(e.message);
+      return e.message.toString();
     }
   }
 }

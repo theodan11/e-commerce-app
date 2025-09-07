@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/common/discount_product_card.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
+import 'package:e_commerce_app/core/services/firebase_db_services.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class SellerDetailPage extends StatefulWidget {
   final String storeId;
@@ -20,46 +18,6 @@ class _SellerDetailPageState extends State<SellerDetailPage> {
 
   dynamic products;
 
-  Future<dynamic> fetchProduct() async {
-    try {
-      var productsSnapshot = await FirebaseFirestore.instance
-          .collection("products")
-          .where("storeId", isEqualTo: widget.storeId)
-          .get();
-      var products = productsSnapshot.docs.map((doc) {
-        var data = doc.data();
-        data['id'] = doc.id;
-        print(data['id']);
-        return data;
-      }).toList();
-      return products;
-    } on FirebaseException catch (e) {
-      print(e.message);
-      return e.message.toString();
-    }
-  }
-
-  Future<dynamic> fetchStoreInfo() async {
-    try {
-      DocumentSnapshot storeSnapshot = await FirebaseFirestore.instance
-          .collection("store")
-          .doc(widget.storeId)
-          .get();
-      storeInfo = storeSnapshot.data() as Map<String, dynamic>;
-      Timestamp createdAt = storeInfo['createdAt'] as Timestamp;
-      DateTime date = createdAt.toDate();
-
-      String fomattedDate = DateFormat("MMM dd yyyy").format(date);
-      storeInfo['formattedDate'] = fomattedDate;
-      var products = await fetchProduct();
-      storeInfo['products'] = products;
-      return storeInfo;
-    } on FirebaseException catch (e) {
-      print(e.message);
-      return e.message.toString();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +27,7 @@ class _SellerDetailPageState extends State<SellerDetailPage> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-          future: fetchStoreInfo(),
+          future: FirebaseDbServices().fetchStoreInfo(widget.storeId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting ||
                 !snapshot.hasData) {
@@ -82,7 +40,7 @@ class _SellerDetailPageState extends State<SellerDetailPage> {
 
             storeInfo = snapshot.data;
             products = snapshot.data['products'];
-            print(snapshot.data['products'][1]);
+            // print(snapshot.data['products'][1]);
             return SingleChildScrollView(
               child: Column(
                 children: [
