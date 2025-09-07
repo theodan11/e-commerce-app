@@ -350,7 +350,8 @@ class _HomePageState extends State<HomePage> {
           child: Text("No product"),
         );
       }
-      var productListS;
+      List<ProductModel> productListS = [];
+      ;
       if (isSpecial!) {
         productListS = state.productList.where((item) {
           return item.isDiscount == true;

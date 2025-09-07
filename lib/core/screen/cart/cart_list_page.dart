@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/cubit/cart_cubit/cart_cubit.dart';
 import 'package:e_commerce_app/core/cubit/cart_cubit/cart_state.dart';
-import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
 import 'package:e_commerce_app/core/screen/login/login_page.dart';
-
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_formatter/money_formatter.dart';
@@ -42,6 +39,7 @@ class CartListPage extends StatelessWidget {
                           var cartItem = state.cartItem[index];
                           MoneyFormatter itemPrice =
                               MoneyFormatter(amount: cartItem.product.price);
+
                           return Card(
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
@@ -184,7 +182,9 @@ class CartListPage extends StatelessWidget {
                               } else {
                                 throw Exception("Out of Stock");
                               }
-                            } on FirebaseException catch (e) {}
+                            } on FirebaseException catch (e) {
+                              print(e.message);
+                            }
                           }
 
                           for (int i = 0; i < state.cartItemCount; i++) {

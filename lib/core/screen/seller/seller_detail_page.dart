@@ -191,23 +191,11 @@ class _SellerDetailPageState extends State<SellerDetailPage> {
                             mainAxisExtent: 280,
                           ),
                           itemBuilder: (context, index) {
-                            var productItem = products[index];
+                            var productItem = ProductModel.fromJSON(
+                                products[index], products[index]!['id']);
                             // print(productItem);
                             return DiscountProductCard(
-                              productItem: ProductModel(
-                                id: productItem!['id'],
-                                imagePath: productItem!['imagePath'],
-                                title: productItem!['name'],
-                                price: productItem!['price'],
-                                stock: productItem!['stock'],
-                                storeId: productItem!['storeId'],
-                                desc: productItem!['desc'],
-                                reviews: productItem!['reviews'],
-                                isDiscount: productItem!['isDiscount'] ?? false,
-                                originalPrice:
-                                    productItem!['originalPrice'] ?? 0.0,
-                              ),
-                            );
+                                productItem: productItem);
                           }),
                     ),
                   )

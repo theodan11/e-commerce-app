@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/common/add_to_cart_button.dart';
+import 'package:e_commerce_app/core/common/discount_product_card.dart';
 import 'package:e_commerce_app/core/common/header_and_see_all.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_state.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
-import 'package:e_commerce_app/core/common/product_card.dart';
-import 'package:e_commerce_app/core/screen/login/login_page.dart';
+import 'package:e_commerce_app/core/screen/review/write_a_review.dart';
 import 'package:e_commerce_app/core/screen/seller/seller_detail_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
@@ -77,12 +77,21 @@ class ProductDetailPage extends StatelessWidget {
                     ),
                   );
                 }
+                int rateAcc = snapShot.data!['reviews'].fold(0, (prev, item) {
+                  return prev + item['rating'];
+                });
+                // double avgRating = rateAcc / snapShot.data!['reviews'].length;
+                // int rateAcc = 2;
+                double avgRating = rateAcc / snapShot.data!['reviews'].length;
 
                 productItem = ProductModel.fromJSON(snapShot.data!, productID);
                 // print(productItem);
                 MoneyFormatter money =
                     MoneyFormatter(amount: productItem.price);
                 snapShot.data!["formattedAmount"] = money;
+
+                MoneyFormatter discountpriceMoney =
+                    MoneyFormatter(amount: productItem.originalPrice);
                 // print("this is product: $productItem");
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +108,28 @@ class ProductDetailPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 12,
+                    ),
+                    (snapShot.data!['isDiscount'] != null &&
+                            snapShot.data!['isDiscount'] == true)
+                        ? Container(
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              color: MyThemeColors.productPriceColor,
+                            ),
+                            width: 40,
+                            height: 20,
+                            child: Center(
+                              child: Text(
+                                "SALE",
+                                style: MyTextTheme.discountProductSaleBadgeText,
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
+                    const SizedBox(
+                      height: 8,
                     ),
                     Text(
                       snapShot.data!['name'],
@@ -112,6 +142,17 @@ class ProductDetailPage extends StatelessWidget {
                       "৳ ${snapShot.data!['formattedAmount'].output.nonSymbol}",
                       style: MyTextTheme.productPrice.copyWith(fontSize: 16),
                     ),
+                    const SizedBox(
+                      height: 13,
+                    ),
+                    (snapShot.data!['isDiscount'] != null &&
+                            snapShot.data!['isDiscount'] == true)
+                        ? Text(
+                            "৳. ${discountpriceMoney.output.nonSymbol}",
+                            style: MyTextTheme.discountProductPrice
+                                .copyWith(fontSize: 14),
+                          )
+                        : const SizedBox(),
                     const SizedBox(
                       height: 13,
                     ),
@@ -141,23 +182,26 @@ class ProductDetailPage extends StatelessWidget {
                               )
                             ],
                           ),
-                          Text(
-                            "Available: ${snapShot.data!['stock']}",
-                            style: MyTextTheme.availableProductText,
-                          )
+                          snapShot.data!['stock'] >= 1
+                              ? Text(
+                                  "Available: ${snapShot.data!['stock']}",
+                                  style: MyTextTheme.availableProductText,
+                                )
+                              : Text("Out of stock",
+                                  style:
+                                      MyTextTheme.availableProductText.copyWith(
+                                    color: MyThemeColors.grayText,
+                                  ))
                         ]),
                     const SizedBox(
                       height: 30,
                     ),
                     const Divider(
-                      indent: 25,
-                      endIndent: 25,
+                      indent: 8,
+                      endIndent: 8,
                       thickness: .8,
                       height: 20,
                       color: MyThemeColors.grayText,
-                    ),
-                    const SizedBox(
-                      height: 30,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -212,12 +256,9 @@ class ProductDetailPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
                     const Divider(
-                      indent: 25,
-                      endIndent: 25,
+                      indent: 8,
+                      endIndent: 8,
                       thickness: .8,
                       height: 20,
                       color: MyThemeColors.grayText,
@@ -246,9 +287,43 @@ class ProductDetailPage extends StatelessWidget {
                       height: 20,
                       color: MyThemeColors.grayText,
                     ),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     const HeaderAndSeeAll(
-                      headerTitle: "Reviews (86)",
-                      btnTitle: "4.6",
+                      headerTitle: "Rate this Product",
+                      isSeeAllVis: false,
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      "Tell us what you think",
+                      style:
+                          MyTextTheme.newsDescText.copyWith(letterSpacing: -1),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                WriteAReview(productID: productID)));
+                      },
+                      child: Text(
+                        "Write a Review",
+                        style: MyTextTheme.loginPageSubHeaderText
+                            .copyWith(color: MyThemeColors.primaryColor),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    HeaderAndSeeAll(
+                      headerTitle:
+                          "Reviews (${snapShot.data!['reviews'].length})",
+                      btnTitle: avgRating.toString(),
                     ),
                     GestureDetector(
                       onTap: () {},
@@ -288,84 +363,9 @@ class ProductDetailPage extends StatelessWidget {
                           itemCount: state.productList.length,
                           itemBuilder: (context, index) {
                             ProductModel productItem = state.productList[index];
-
-                            return ProductCard(
-                              title: productItem.title,
-                              price: productItem.price,
-                              imgPath: productItem.imagePath,
-                              // rating: productItem.rating,
-                              // numOfReviews: productItem.numOfReviews,
-                              iconBtnFunc: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Product Action",
-                                        style:
-                                            MyTextTheme.latestNewsHeadterText,
-                                      ),
-                                      actionsAlignment: MainAxisAlignment.start,
-                                      actions: [
-                                        (user == null)
-                                            ? GestureDetector(
-                                                onTap: () {
-                                                  Navigator.of(context).pop();
-
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const LoginPage(),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Text(
-                                                  "Add to wishlist",
-                                                  style: MyTextTheme
-                                                      .latestNewsHeadterText,
-                                                ),
-                                              )
-                                            : GestureDetector(
-                                                onTap: () {
-                                                  FirebaseDbServices()
-                                                      .addWishList(
-                                                          FirebaseAuth.instance
-                                                              .currentUser!.uid,
-                                                          productItem.id);
-
-                                                  Navigator.of(context).pop();
-
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    const SnackBar(
-                                                        content: Text(
-                                                            "Added to wishlist"),
-                                                        backgroundColor:
-                                                            MyThemeColors
-                                                                .categoriesGreen),
-                                                  );
-                                                },
-                                                child: Text(
-                                                  "Add to wishlist",
-                                                  style: MyTextTheme
-                                                      .latestNewsHeadterText,
-                                                ),
-                                              )
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              onTapFunc: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ProductDetailPage(
-                                      productID: productItem.id,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
+                            // print(productItem.id);
+                            return DiscountProductCard(
+                                productItem: productItem);
                           },
                         ),
                       );

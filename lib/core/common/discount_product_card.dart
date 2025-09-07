@@ -18,9 +18,16 @@ class DiscountProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // MoneyFormatter priceMoney = MoneyFormatter(amount: 0);
     MoneyFormatter priceMoney = MoneyFormatter(amount: productItem.price);
     MoneyFormatter discountpriceMoney =
         MoneyFormatter(amount: productItem.originalPrice);
+
+    // double star = productItem.reviews!.fold(0, (prev, item) {
+    //   return prev + item.rating;
+    // });
+    // double rating = star / productItem.reviews!.length;
+    double rating = 9;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -142,7 +149,7 @@ class DiscountProductCard extends StatelessWidget {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        "${productItem.reviews.length} Reviews",
+                                        "${productItem.reviews!.length} Reviews",
                                         style: MyTextTheme.productBottomText,
                                         softWrap: true,
                                       ),
@@ -163,13 +170,13 @@ class DiscountProductCard extends StatelessWidget {
                                           width: 6,
                                         ),
                                         Text(
-                                          "0",
+                                          rating.toString(),
                                           style: MyTextTheme.productBottomText,
                                         ),
                                       ],
                                     ),
                                     Text(
-                                      "${productItem.reviews.length} Reviews",
+                                      "${productItem.reviews!.length} Reviews",
                                       style: MyTextTheme.productBottomText,
                                       softWrap: true,
                                     )

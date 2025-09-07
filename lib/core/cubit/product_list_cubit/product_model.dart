@@ -1,12 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ProductModel {
   final String id;
   final String imagePath;
   final String title;
   final double price;
-  final dynamic stock;
+  final int stock;
   final String storeId;
   final String desc;
-  final List<dynamic> reviews;
+  // final List<ReviewModel>? reviews;
+  final List<dynamic>? reviews;
   final bool isDiscount;
   final double originalPrice;
 
@@ -18,24 +21,90 @@ class ProductModel {
     required this.stock,
     required this.storeId,
     required this.desc,
-    required this.reviews,
+    this.reviews = const [],
     this.isDiscount = false,
-    this.originalPrice = 0,
+    this.originalPrice = 0.0,
   });
 
   factory ProductModel.fromJSON(Map<String, dynamic> json, String id) {
     return ProductModel(
       id: id,
       title: json['name'],
-      price: (json['price'] as num).toDouble(),
+      price: _toDouble(json['price']),
+      stock: _toInt(json['stock']),
       imagePath: json['imagePath'],
-      stock: json['stock'],
       // stock: int.parse(json['stock']),
       storeId: json['storeId'],
       desc: json['desc'],
-      reviews: json['reviews'],
+      reviews: json['reviews'] != null
+          ? (json['reviews'] as List).map((rev) {
+              return ReviewModel.fromJSON(rev);
+            }).toList()
+          : [],
       isDiscount: json['isDiscount'] ?? false,
-      originalPrice: json['originalPrice'] ?? 0.0,
+      originalPrice: _toDouble(json['originalPrice']),
     );
+  }
+
+  static double _toDouble(dynamic value) {
+    if (value == null) {
+      return 0.0;
+    } else if (value is double) {
+      return value;
+    } else if (value is int) {
+      return value.toDouble();
+    } else if (value is String) {
+      return double.tryParse(value) ?? 0.0;
+    } else {
+      return 0.0;
+    }
+  }
+
+  static int _toInt(dynamic value) {
+    if (value == null) {
+      return 0;
+    } else if (value is int) {
+      return value;
+    } else if (value is double) {
+      return value.toInt();
+    } else if (value is String) {
+      return int.tryParse(value) ?? 0;
+    }
+    return 0;
+  }
+}
+
+class ReviewModel {
+  final Timestamp createdAt;
+  final int rating;
+  final String review;
+  final String userName;
+
+  const ReviewModel({
+    required this.createdAt,
+    required this.rating,
+    required this.review,
+    required this.userName,
+  });
+
+  factory ReviewModel.fromJSON(Map<String, dynamic> json) {
+    return ReviewModel(
+      createdAt: json['createdAt'] as Timestamp,
+      rating: _toInt(json['rating']),
+      review: json['review'] as String,
+      userName: json['userName'] as String,
+    );
+  }
+  static int _toInt(dynamic value) {
+    if (value == null) {
+      return 0;
+    } else if (value is int) {
+      return value;
+    } else if (value is double) {
+      return value.toInt();
+    } else if (value is String) {
+      return int.tryParse(value) ?? 0;
+    }
+    return 0;
   }
 }
