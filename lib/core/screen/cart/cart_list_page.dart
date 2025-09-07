@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/cubit/cart_cubit/cart_cubit.dart';
 import 'package:e_commerce_app/core/cubit/cart_cubit/cart_state.dart';
+import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
 import 'package:e_commerce_app/core/screen/login/login_page.dart';
 
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
@@ -164,6 +165,51 @@ class CartListPage extends StatelessWidget {
                             "status": "PENDING"
                           });
 
+                          Future<void> updateStock(dynamic item) async {
+                            try {
+                              DocumentSnapshot productSnapshot =
+                                  await FirebaseFirestore.instance
+                                      .collection("products")
+                                      .doc(item.product.id)
+                                      .get();
+                              dynamic productServer = productSnapshot.data();
+                              int currentStock = productServer['stock'] as int;
+                              if (currentStock >= 1) {
+                                await FirebaseFirestore.instance
+                                    .collection("products")
+                                    .doc(item.product.id)
+                                    .update({
+                                  "stock": currentStock - item.quantity
+                                });
+                              } else {
+                                throw Exception("Out of Stock");
+                              }
+                            } on FirebaseException catch (e) {}
+                          }
+
+                          for (int i = 0; i < state.cartItemCount; i++) {
+                            await updateStock(state.cartItem[i]);
+                          }
+                          // state.cartItem.map((item) async {
+                          //   print("we are in the operation");
+                          //   DocumentSnapshot productSnapshot =
+                          //       await FirebaseFirestore.instance
+                          //           .collection("products")
+                          //           .doc(item.product.id)
+                          //           .get();
+                          //   dynamic productServer = productSnapshot.data();
+                          //   int currentStock = productServer['stock'] as int;
+                          //   if (currentStock >= 1) {
+                          //     await FirebaseFirestore.instance
+                          //         .collection("products")
+                          //         .doc(item.product.id)
+                          //         .update(
+                          //             {"stock": currentStock - item.quantity});
+                          //   } else {
+                          //     throw Exception("Out of Stock");
+                          //   }
+                          // });
+                          print(" operation finished");
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Checkout Successful"),

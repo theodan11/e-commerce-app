@@ -96,21 +96,35 @@ class AddToCartButton extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            context
-                                .read<CartCubit>()
-                                .addToCart(productItem, state.quantity);
-                            context.read<CartCubit>().cartCount();
+                            if (productItem.stock != 0) {
+                              context
+                                  .read<CartCubit>()
+                                  .addToCart(productItem, state.quantity);
+                              context.read<CartCubit>().cartCount();
 
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text(
-                                "Added to Cart",
-                              ),
-                              backgroundColor: MyThemeColors.categoriesGreen,
-                            ));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text(
+                                  "Added to Cart",
+                                ),
+                                backgroundColor: MyThemeColors.categoriesGreen,
+                              ));
 
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text(
+                                  "Product out of stock",
+                                ),
+                                backgroundColor:
+                                    MyThemeColors.productPriceColor,
+                              ));
+
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            }
                           },
                           child: Container(
                             width: 325,
