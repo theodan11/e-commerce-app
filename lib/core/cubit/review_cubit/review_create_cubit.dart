@@ -7,6 +7,7 @@ class ReviewCreateCubit extends Cubit<ReviewCreateState> {
   ReviewCreateCubit() : super(const ReviewCreateState());
 
   void updateRating(int value) {
+    print(value);
     emit(state.copyWith(rating: value));
   }
 

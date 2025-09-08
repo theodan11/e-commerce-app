@@ -137,18 +137,16 @@ class WriteAReview extends StatelessWidget {
                                       .read<ReviewCreateCubit>()
                                       .saveReview(productID);
 
-                                  if (state.isSuccess) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content:
-                                            Text("Review added successfully"),
-                                        backgroundColor:
-                                            Color.fromARGB(255, 10, 207, 66),
-                                      ),
-                                    );
-                                  }
-                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text("Review added successfully"),
+                                      backgroundColor:
+                                          Color.fromARGB(255, 10, 207, 66),
+                                    ),
+                                  );
                                   context.read<ReviewCreateCubit>().resetForm();
+                                  Navigator.of(context).pop();
                                 }
                               : null,
                           child: Container(
