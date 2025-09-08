@@ -131,4 +131,22 @@ class MyTextTheme {
     fontSize: 12,
     color: MyThemeColors.categoriesGreen,
   );
+
+  static final TextStyle reviewName = GoogleFonts.dmSans(
+    fontWeight: FontWeight.w500,
+    fontSize: 14,
+    color: MyThemeColors.textNaviColor,
+  );
+
+  static final TextStyle reviewContent = GoogleFonts.dmSans(
+    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    color: MyThemeColors.textNaviColor,
+  );
+
+  static final TextStyle reviewDate = GoogleFonts.dmSans(
+    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    color: MyThemeColors.grayText,
+  );
 }

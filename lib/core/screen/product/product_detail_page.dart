@@ -13,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce_app/core/services/firebase_db_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:money_formatter/money_formatter.dart';
 
 class ProductDetailPage extends StatelessWidget {
@@ -172,7 +173,7 @@ class ProductDetailPage extends StatelessWidget {
                               Text(
                                 avgRating.isNaN
                                     ? 0.toString()
-                                    : avgRating.toString(),
+                                    : avgRating.toStringAsFixed(2),
                                 style: MyTextTheme.productBottomText,
                               ),
                               const SizedBox(
@@ -325,9 +326,67 @@ class ProductDetailPage extends StatelessWidget {
                     HeaderAndSeeAll(
                       headerTitle:
                           "Reviews (${snapShot.data!['reviews'].length})",
-                      btnTitle:
-                          avgRating.isNaN ? 0.toString() : avgRating.toString(),
+                      btnTitle: avgRating.isNaN
+                          ? 0.toString()
+                          : avgRating.toStringAsFixed(2),
                     ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                        height: 400,
+                        child: ListView.builder(
+                          itemCount: snapShot.data!['reviews'].length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            ReviewModel review = ReviewModel.fromJSON(
+                                snapShot.data!['reviews'][index]);
+
+                            DateTime dt = review.createdAt.toDate();
+                            dynamic fomdt =
+                                DateFormat("MMM dd yyyy").format(dt);
+                            return SizedBox(
+                              height: 110,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 40,
+                                        height: 40,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          child: CircleAvatar(
+                                            child: (review.imagePath == '')
+                                                ? Image.asset(
+                                                    'assets/images/b_1.png',
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                : Image.network(
+                                                    review.imagePath!),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 6,
+                                      ),
+                                      Text(
+                                        review.userName,
+                                        style: MyTextTheme.reviewName,
+                                      ),
+                                      const Spacer(
+                                        flex: 1,
+                                      ),
+                                      Text(
+                                        fomdt,
+                                        style: MyTextTheme.reviewName,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        )),
                     GestureDetector(
                       onTap: () {},
                       child: Container(

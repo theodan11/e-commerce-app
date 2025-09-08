@@ -79,12 +79,14 @@ class ReviewModel {
   final int rating;
   final String review;
   final String userName;
+  final String? imagePath;
 
   const ReviewModel({
     required this.createdAt,
     required this.rating,
     required this.review,
     required this.userName,
+    this.imagePath,
   });
 
   factory ReviewModel.fromJSON(Map<String, dynamic> json) {
@@ -93,6 +95,7 @@ class ReviewModel {
       rating: _toInt(json['rating']),
       review: json['review'] as String,
       userName: json['userName'] as String,
+      imagePath: json['imagePath'] ?? '',
     );
   }
   static int _toInt(dynamic value) {
