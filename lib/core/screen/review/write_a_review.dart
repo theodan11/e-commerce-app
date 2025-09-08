@@ -2,8 +2,10 @@ import 'package:e_commerce_app/core/common/text_field.dart';
 
 import 'package:e_commerce_app/core/cubit/review_cubit/review_create_cubit.dart';
 import 'package:e_commerce_app/core/cubit/review_cubit/review_create_state.dart';
+import 'package:e_commerce_app/core/screen/login/login_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,6 +48,7 @@ class WriteAReview extends StatelessWidget {
                             context
                                 .read<ReviewCreateCubit>()
                                 .updateCustomerExperience(value);
+                            print(state.customerExperience);
                           },
                         ),
                         const SizedBox(
@@ -126,6 +129,8 @@ class WriteAReview extends StatelessWidget {
                               context
                                   .read<ReviewCreateCubit>()
                                   .updateRating(value.toInt());
+
+                              print(state.rating);
                             }),
                         const SizedBox(
                           height: 20,
@@ -133,20 +138,30 @@ class WriteAReview extends StatelessWidget {
                         GestureDetector(
                           onTap: state.customerExperience != ''
                               ? () {
-                                  context
-                                      .read<ReviewCreateCubit>()
-                                      .saveReview(productID);
+                                  if (FirebaseAuth.instance.currentUser !=
+                                      null) {
+                                    context
+                                        .read<ReviewCreateCubit>()
+                                        .saveReview(productID);
+                                    if (state.isSuccess) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content:
+                                              Text("Review added successfully"),
+                                          backgroundColor:
+                                              Color.fromARGB(255, 10, 207, 66),
+                                        ),
+                                      );
 
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text("Review added successfully"),
-                                      backgroundColor:
-                                          Color.fromARGB(255, 10, 207, 66),
-                                    ),
-                                  );
-                                  context.read<ReviewCreateCubit>().resetForm();
-                                  Navigator.of(context).pop();
+                                      Navigator.of(context).pop();
+                                    }
+                                  } else {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginPage()));
+                                  }
                                 }
                               : null,
                           child: Container(

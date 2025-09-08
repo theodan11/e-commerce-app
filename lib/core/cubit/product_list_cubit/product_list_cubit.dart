@@ -18,21 +18,28 @@ class ProductListCubit extends Cubit<ProductListState> {
         return ProductModel.fromJSON(doc.data(), doc.id);
       }).toList();
       // print(plist);
-      emit(state.copyWith(
-          productList: plist, isLoading: false, isSuccess: true));
+      emit(
+        state.copyWith(
+          productList: plist,
+          isLoading: false,
+          isSuccess: true,
+        ),
+      );
     } on FirebaseException catch (e) {
       print(e.message.toString());
-      emit(state.copyWith(
-          isSuccess: false,
-          isLoading: false,
-          error: "message from cubit product list ${e.message}"));
+      emit(
+        state.copyWith(
+            isSuccess: false,
+            isLoading: false,
+            error: "message from cubit product list ${e.message}"),
+      );
     } catch (e) {
       print(e);
 
       emit(state.copyWith(
           isSuccess: false,
           isLoading: false,
-          error: "message from cubit product list ${e}"));
+          error: "message from cubit product list $e"));
     }
   }
 }

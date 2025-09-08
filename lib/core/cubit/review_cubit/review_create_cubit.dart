@@ -28,7 +28,7 @@ class ReviewCreateCubit extends Cubit<ReviewCreateState> {
           .get();
 
       Map<String, dynamic> data = user.data() as Map<String, dynamic>;
-      print("on");
+      // print("on");
       await FirebaseFirestore.instance
           .collection("products")
           .doc(productId)
@@ -38,14 +38,18 @@ class ReviewCreateCubit extends Cubit<ReviewCreateState> {
             "userName": data['fullname'],
             "imagePath": FirebaseAuth.instance.currentUser!.photoURL,
             "rating": state.rating ?? 0,
-            "review": state.customerExperience,
+            "review": state.customerExperience ?? '',
             "createdAt": Timestamp.now(),
           }
         ])
       });
-      print("off");
+      // print("off");
 
-      emit(state.copyWith(isLoading: false, isSuccess: true));
+      emit(state.copyWith(
+          isLoading: false,
+          isSuccess: true,
+          rating: 0,
+          customerExperience: ''));
     } on FirebaseException catch (e) {
       print(e.message.toString());
       emit(state.copyWith(isLoading: false, isSuccess: false));
