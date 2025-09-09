@@ -65,45 +65,70 @@ class WriteAReview extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             (state.rating! < 1)
-                                ? const Icon(Icons.star_border)
+                                ? const Icon(
+                                    Icons.star_border,
+                                    size: 32,
+                                    color: MyThemeColors.grayText,
+                                  )
                                 : const Icon(
                                     Icons.star_rate,
+                                    size: 32,
                                     color: Colors.amber,
                                   ),
                             const SizedBox(
                               width: 8,
                             ),
                             state.rating! < 2
-                                ? const Icon(Icons.star_border)
+                                ? const Icon(
+                                    Icons.star_border,
+                                    size: 32,
+                                    color: MyThemeColors.grayText,
+                                  )
                                 : const Icon(
                                     Icons.star_rate,
+                                    size: 32,
                                     color: Colors.amber,
                                   ),
                             const SizedBox(
                               width: 8,
                             ),
                             state.rating! < 3
-                                ? const Icon(Icons.star_border)
+                                ? const Icon(
+                                    Icons.star_border,
+                                    size: 32,
+                                    color: MyThemeColors.grayText,
+                                  )
                                 : const Icon(
                                     Icons.star_rate,
+                                    size: 32,
                                     color: Colors.amber,
                                   ),
                             const SizedBox(
                               width: 8,
                             ),
                             state.rating! < 4
-                                ? const Icon(Icons.star_border)
+                                ? const Icon(
+                                    Icons.star_border,
+                                    size: 32,
+                                    color: MyThemeColors.grayText,
+                                  )
                                 : const Icon(
                                     Icons.star_rate,
+                                    size: 32,
                                     color: Colors.amber,
                                   ),
                             const SizedBox(
                               width: 8,
                             ),
                             state.rating! < 5
-                                ? const Icon(Icons.star_border)
+                                ? const Icon(
+                                    Icons.star_border,
+                                    size: 32,
+                                    color: MyThemeColors.grayText,
+                                  )
                                 : const Icon(
                                     Icons.star_rate,
+                                    size: 32,
                                     color: Colors.amber,
                                   ),
                             const SizedBox(

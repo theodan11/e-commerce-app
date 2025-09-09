@@ -337,157 +337,16 @@ class ProductDetailPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       SizedBox(
-                          height: snapShot.data!['reviews'].length > 3
-                              ? 330
-                              : snapShot.data!['reviews'].length * 110,
-                          child: ReviewBuilder(
-                            reviewList: snapShot.data!['reviews'],
-                            itemC: snapShot.data!['reviews'].length > 3
-                                ? 3
-                                : snapShot.data!['reviews'].length,
-                          )
-                          // ListView.builder(
-                          //   itemCount: snapShot.data!['reviews'].length > 3
-                          //       ? 3
-                          //       : snapShot.data!['reviews'].length,
-                          //   physics: const NeverScrollableScrollPhysics(),
-                          //   itemBuilder: (context, index) {
-                          //     ReviewModel review = ReviewModel.fromJSON(
-                          //         snapShot.data!['reviews'][index]);
-
-                          //     DateTime dt = review.createdAt.toDate();
-                          //     dynamic fomdt =
-                          //         DateFormat("MMM dd yyyy").format(dt);
-                          //     return SizedBox(
-                          //       height: 110,
-                          //       child: Column(
-                          //         crossAxisAlignment: CrossAxisAlignment.start,
-                          //         children: [
-                          //           Row(
-                          //             children: [
-                          //               SizedBox(
-                          //                 width: 40,
-                          //                 height: 40,
-                          //                 child: ClipRRect(
-                          //                   borderRadius:
-                          //                       BorderRadius.circular(50),
-                          //                   child: CircleAvatar(
-                          //                     child: (review.imagePath == '')
-                          //                         ? Image.asset(
-                          //                             'assets/images/b_1.png',
-                          //                             fit: BoxFit.cover,
-                          //                           )
-                          //                         : Image.network(
-                          //                             review.imagePath!),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //               const SizedBox(
-                          //                 width: 6,
-                          //               ),
-                          //               Expanded(
-                          //                 child: Text(
-                          //                   review.userName,
-                          //                   style: MyTextTheme.reviewName,
-                          //                 ),
-                          //               ),
-                          //               Text(
-                          //                 fomdt,
-                          //                 style: MyTextTheme.reviewName,
-                          //               ),
-                          //             ],
-                          //           ),
-                          //           const SizedBox(height: 5),
-                          //           Row(
-                          //             mainAxisAlignment:
-                          //                 MainAxisAlignment.start,
-                          //             children: [
-                          //               const SizedBox(
-                          //                 width: 45,
-                          //               ),
-                          //               (review.rating < 1)
-                          //                   ? const Icon(
-                          //                       Icons.star_border,
-                          //                       color: MyThemeColors.grayText,
-                          //                     )
-                          //                   : const Icon(
-                          //                       Icons.star_rate,
-                          //                       color: Colors.amber,
-                          //                     ),
-                          //               const SizedBox(
-                          //                 width: 8,
-                          //               ),
-                          //               review.rating < 2
-                          //                   ? const Icon(
-                          //                       Icons.star_border,
-                          //                       color: MyThemeColors.grayText,
-                          //                     )
-                          //                   : const Icon(
-                          //                       Icons.star_rate,
-                          //                       color: Colors.amber,
-                          //                     ),
-                          //               const SizedBox(
-                          //                 width: 8,
-                          //               ),
-                          //               review.rating < 3
-                          //                   ? const Icon(
-                          //                       Icons.star_border,
-                          //                       color: MyThemeColors.grayText,
-                          //                     )
-                          //                   : const Icon(
-                          //                       Icons.star_rate,
-                          //                       color: Colors.amber,
-                          //                     ),
-                          //               const SizedBox(
-                          //                 width: 8,
-                          //               ),
-                          //               review.rating < 4
-                          //                   ? const Icon(
-                          //                       Icons.star_border,
-                          //                       color: MyThemeColors.grayText,
-                          //                     )
-                          //                   : const Icon(
-                          //                       Icons.star_rate,
-                          //                       color: Colors.amber,
-                          //                     ),
-                          //               const SizedBox(
-                          //                 width: 8,
-                          //               ),
-                          //               review.rating < 5
-                          //                   ? const Icon(
-                          //                       Icons.star_border,
-                          //                       color: MyThemeColors.grayText,
-                          //                     )
-                          //                   : const Icon(
-                          //                       Icons.star_rate,
-                          //                       color: Colors.amber,
-                          //                     ),
-                          //               const SizedBox(
-                          //                 width: 8,
-                          //               ),
-                          //               const Spacer(
-                          //                 flex: 1,
-                          //               ),
-                          //               Text(review.rating.toString()),
-                          //             ],
-                          //           ),
-                          //           const SizedBox(
-                          //             height: 10,
-                          //           ),
-                          //           Padding(
-                          //             padding: const EdgeInsets.only(left: 45),
-                          //             child: Text(
-                          //               review.review,
-                          //               style: MyTextTheme.reviewContent,
-                          //               maxLines: 3,
-                          //             ),
-                          //           )
-                          //         ],
-                          //       ),
-                          //     );
-                          //   },
-                          // )
-                          ),
+                        height: snapShot.data!['reviews'].length > 3
+                            ? 360
+                            : snapShot.data!['reviews'].length * 120,
+                        child: ReviewBuilder(
+                          reviewList: snapShot.data!['reviews'],
+                          itemC: snapShot.data!['reviews'].length > 3
+                              ? 3
+                              : snapShot.data!['reviews'].length,
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
