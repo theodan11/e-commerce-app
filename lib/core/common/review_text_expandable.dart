@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
-import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class ReviewTextExpandable extends StatefulWidget {
@@ -42,13 +41,13 @@ class _ReviewTextExpandableState extends State<ReviewTextExpandable> {
                       ? Text(
                           "Show less",
                           style: MyTextTheme.loginPageSubHeaderText
-                              .copyWith(color: MyThemeColors.grayText),
+                              .copyWith(color: const Color(0xFF8D8D8D)),
                         )
                       : widget.textContent.length >= 51
                           ? Text(
                               "Show more",
                               style: MyTextTheme.loginPageSubHeaderText
-                                  .copyWith(color: MyThemeColors.grayText),
+                                  .copyWith(color: const Color(0xFF8D8D8D)),
                             )
                           : const SizedBox(),
                 ),

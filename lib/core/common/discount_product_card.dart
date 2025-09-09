@@ -181,7 +181,7 @@ class DiscountProductCard extends StatelessWidget {
                                         Text(
                                           avgRating.isNaN
                                               ? 0.toString()
-                                              : avgRating.toStringAsFixed(2),
+                                              : avgRating.toStringAsFixed(1),
                                           style: MyTextTheme.productBottomText,
                                         ),
                                       ],

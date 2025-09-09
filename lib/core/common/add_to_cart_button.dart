@@ -88,7 +88,7 @@ class AddToCartButton extends StatelessWidget {
                         const SizedBox(
                           height: 8,
                         ),
-                        Text("\$ ${totalPriceLocal.toString()}",
+                        Text("৳. ${totalPriceLocal.toString()}",
                             style: MyTextTheme.productPrice
                                 .copyWith(color: Colors.black87)),
                         const SizedBox(

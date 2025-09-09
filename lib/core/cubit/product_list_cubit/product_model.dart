@@ -11,6 +11,7 @@ class ProductModel {
   // final List<ReviewModel>? reviews;
   final List<dynamic>? reviews;
   final bool isDiscount;
+  final bool? isFeatured;
   final double originalPrice;
 
   const ProductModel({
@@ -23,6 +24,7 @@ class ProductModel {
     required this.desc,
     this.reviews = const [],
     this.isDiscount = false,
+    this.isFeatured,
     this.originalPrice = 0.0,
   });
 
@@ -36,6 +38,7 @@ class ProductModel {
       // stock: int.parse(json['stock']),
       storeId: json['storeId'],
       desc: json['desc'],
+      isFeatured: json['isFeatured'] ?? false,
       reviews: json['reviews'] != null
           ? (json['reviews'] as List).map((rev) {
               return ReviewModel.fromJSON(rev);

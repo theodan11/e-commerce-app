@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 24,
                 ),
-                _fBuilder(),
+                _fBuilder(isFeatured: true),
                 const SizedBox(
                   height: 36,
                 ),
@@ -329,7 +329,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _fBuilder({bool? isSpecial = false}) {
+  Widget _fBuilder({bool? isSpecial = false, bool? isFeatured = false}) {
     return BlocBuilder<ProductListCubit, ProductListState>(
         builder: (context, state) {
       if (state.isLoading) {
@@ -351,7 +351,12 @@ class _HomePageState extends State<HomePage> {
         );
       }
       List<ProductModel> productListS = [];
-      ;
+      List<ProductModel> productListF = [];
+      if (isFeatured!) {
+        productListF = state.productList.where((item) {
+          return item.isFeatured == true;
+        }).toList();
+      }
       if (isSpecial!) {
         productListS = state.productList.where((item) {
           return item.isDiscount == true;
@@ -362,10 +367,19 @@ class _HomePageState extends State<HomePage> {
         height: 280,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: isSpecial ? productListS.length : state.productList.length,
+          itemCount: isSpecial
+              ? productListS.length
+              : isFeatured
+                  ? productListF.length
+                  : state.productList.length,
           itemBuilder: (context, index) {
             if (isSpecial) {
               ProductModel productItem = productListS[index];
+              return DiscountProductCard(
+                productItem: productItem,
+              );
+            } else if (isFeatured) {
+              ProductModel productItem = productListF[index];
               return DiscountProductCard(
                 productItem: productItem,
               );
