@@ -11,10 +11,9 @@ import 'package:money_formatter/money_formatter.dart';
 
 class DiscountProductCard extends StatelessWidget {
   final ProductModel productItem;
-  const DiscountProductCard({
-    super.key,
-    required this.productItem,
-  });
+  final bool isTopRated;
+  const DiscountProductCard(
+      {super.key, required this.productItem, this.isTopRated = false});
 
   @override
   Widget build(BuildContext context) {

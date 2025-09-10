@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20,
                 ),
-                _fBuilder(),
+                _fBuilder(isTopRated: true),
                 const SizedBox(
                   height: 36,
                 ),
@@ -329,7 +329,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _fBuilder({bool? isSpecial = false, bool? isFeatured = false}) {
+  Widget _fBuilder(
+      {bool? isSpecial = false,
+      bool? isFeatured = false,
+      bool? isTopRated = false}) {
     return BlocBuilder<ProductListCubit, ProductListState>(
         builder: (context, state) {
       if (state.isLoading) {
@@ -352,11 +355,34 @@ class _HomePageState extends State<HomePage> {
       }
       List<ProductModel> productListS = [];
       List<ProductModel> productListF = [];
+      List<ProductModel> productListT = [];
       if (isFeatured!) {
         productListF = state.productList.where((item) {
           return item.isFeatured == true;
         }).toList();
       }
+      if (isTopRated!) {
+        List<ProductModel> productListOfProductModel =
+            state.productList.map((product) {
+          return ProductModel(
+              id: product.id,
+              imagePath: product.imagePath,
+              title: product.title,
+              price: product.price,
+              stock: product.stock,
+              storeId: product.storeId,
+              desc: product.desc,
+              reviews: product.reviews);
+        }).toList();
+
+        productListT = productListOfProductModel.where((item) {
+          double a = item.reviews!.fold(0, (acc, ele) {
+            return acc + ele.rating;
+          });
+          return a / item.reviews!.length >= 3.0;
+        }).toList();
+      }
+
       if (isSpecial!) {
         productListS = state.productList.where((item) {
           return item.isDiscount == true;
@@ -371,7 +397,9 @@ class _HomePageState extends State<HomePage> {
               ? productListS.length
               : isFeatured
                   ? productListF.length
-                  : state.productList.length,
+                  : isTopRated
+                      ? productListT.length
+                      : state.productList.length,
           itemBuilder: (context, index) {
             if (isSpecial) {
               ProductModel productItem = productListS[index];
@@ -380,6 +408,11 @@ class _HomePageState extends State<HomePage> {
               );
             } else if (isFeatured) {
               ProductModel productItem = productListF[index];
+              return DiscountProductCard(
+                productItem: productItem,
+              );
+            } else if (isTopRated) {
+              ProductModel productItem = productListT[index];
               return DiscountProductCard(
                 productItem: productItem,
               );
