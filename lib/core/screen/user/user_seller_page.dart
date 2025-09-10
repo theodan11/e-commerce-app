@@ -2,6 +2,7 @@ import 'package:e_commerce_app/core/common/custom_profile_button.dart';
 import 'package:e_commerce_app/core/screen/home/home_layout.dart';
 import 'package:e_commerce_app/core/screen/product/add_product_page.dart';
 import 'package:e_commerce_app/core/screen/seller/create_seller_page.dart';
+import 'package:e_commerce_app/core/screen/user/user_update_productlist.dart';
 import 'package:e_commerce_app/core/services/firebase_auth_service.dart';
 import 'package:e_commerce_app/core/services/firebase_db_services.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
@@ -40,25 +41,15 @@ class UserSellerPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              (FirebaseDbServices().checkIfSeller() == false)
-                  ? CustomProfileButton(
-                      onTapFunc: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const CreateSellerPage()));
-                      },
-                      btnTitle: "Update a product",
-                      icon: Icons.update_outlined,
-                      iconColor: MyThemeColors.primaryColor,
-                    )
-                  : CustomProfileButton(
-                      onTapFunc: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const CreateSellerPage()));
-                      },
-                      btnTitle: "Check products",
-                      icon: Icons.add,
-                      iconColor: MyThemeColors.primaryColor,
-                    ),
+              CustomProfileButton(
+                onTapFunc: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const CreateSellerPage()));
+                },
+                btnTitle: "Check products",
+                icon: Icons.store_mall_directory_outlined,
+                iconColor: MyThemeColors.primaryColor,
+              ),
               const SizedBox(
                 height: 24,
               ),
@@ -70,6 +61,21 @@ class UserSellerPage extends StatelessWidget {
                 btnTitle: "Add Product",
                 icon: Icons.add,
                 iconColor: MyThemeColors.primaryColor,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              CustomProfileButton(
+                onTapFunc: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const UserUpdateProductlist()));
+                },
+                btnTitle: "Update a product",
+                icon: Icons.update_outlined,
+                iconColor: MyThemeColors.primaryColor,
+              ),
+              const SizedBox(
+                height: 24,
               ),
               const Spacer(),
               const Divider(

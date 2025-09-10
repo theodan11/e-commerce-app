@@ -140,6 +140,26 @@ class FirebaseDbServices implements DatabaseActionRepository {
     }
   }
 
+  // @override
+  Future<dynamic> fetchOwnerStore() async {
+    try {
+      QuerySnapshot storeSnapshot =
+          await FirebaseFirestore.instance.collection("store").get();
+
+      Map<String, dynamic> storeInfo = storeSnapshot.docs.map((doc) {
+        if (doc['storeOwner'] == FirebaseAuth.instance.currentUser!.uid) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+          data['id'] = doc.id;
+          return data;
+        }
+      }) as Map<String, dynamic>;
+
+      return storeInfo;
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
   @override
   Future<dynamic> fetchProduct(String storeId) async {
     try {
