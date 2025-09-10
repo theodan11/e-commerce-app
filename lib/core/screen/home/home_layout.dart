@@ -58,6 +58,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                     userSnapshot.data!.data() as Map<String, dynamic>;
 
                 String fullname = user['fullname'];
+                String imagePath = user['imagePath'];
                 return Scaffold(
                   appBar: const AppBarCustom(),
                   body: screenList[_selectedIndex],
@@ -93,7 +94,21 @@ class _HomeLayoutState extends State<HomeLayout> {
                         label: "ORDER",
                       ),
                       BottomNavigationBarItem(
-                        icon: const Icon(Icons.person),
+                        icon: imagePath != ''
+                            ? CircleAvatar(
+                                child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.network(
+                                      imagePath,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : const Icon(Icons.person),
                         label: fullname,
                       ),
                     ],

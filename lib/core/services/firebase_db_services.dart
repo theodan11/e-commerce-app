@@ -11,6 +11,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
     await db.doc(userCred.user!.uid).set({
       "email": userCred.user!.email,
       "fullname": fullname,
+      "imagePath": '',
     });
   }
 

@@ -36,7 +36,7 @@ class ReviewCreateCubit extends Cubit<ReviewCreateState> {
         "reviews": FieldValue.arrayUnion([
           {
             "userName": data['fullname'],
-            "imagePath": FirebaseAuth.instance.currentUser!.photoURL,
+            "imagePath": data['imagePath'],
             "rating": state.rating ?? 0,
             "review": state.customerExperience ?? '',
             "createdAt": Timestamp.now(),

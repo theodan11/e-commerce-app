@@ -52,7 +52,15 @@ class ReviewBuilder extends StatelessWidget {
                                   color: Colors.white,
                                   size: 35,
                                 )
-                              : Image.network(review.imagePath!),
+                              : SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: Image.network(
+                                        review.imagePath!,
+                                        fit: BoxFit.cover,
+                                      ))),
                         ),
                       ),
                     ),

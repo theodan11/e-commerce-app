@@ -17,7 +17,27 @@ class UserEditPage extends StatelessWidget {
             style: MyTextTheme.appBarTitle.copyWith(color: Colors.black87)),
         centerTitle: true,
       ),
-      body: BlocBuilder<UserUpdateCubit, UserUpdateState>(
+      body: BlocConsumer<UserUpdateCubit, UserUpdateState>(
+          listener: (context, state) {
+            if (state.isSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("User updated successfully"),
+                  backgroundColor: Color.fromARGB(255, 10, 207, 66),
+                ),
+              );
+              context.read<UserUpdateCubit>().resetForm();
+              Navigator.of(context).pop();
+            }
+            if (!state.isSuccess && state.error != '') {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  state.error,
+                ),
+                backgroundColor: MyThemeColors.productPriceColor,
+              ));
+            }
+          },
           builder: (context, state) => SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -75,7 +95,7 @@ class UserEditPage extends StatelessWidget {
                         height: 20,
                       ),
                       Text(
-                        "Title",
+                        "Full Name",
                         style: MyTextTheme.loginPageLabel,
                       ),
                       const SizedBox(
@@ -95,50 +115,7 @@ class UserEditPage extends StatelessWidget {
                       GestureDetector(
                         onTap: state.fullname != '' || state.imagePath != ''
                             ? () {
-                                try {
-                                  if (state.isSuccess) {
-                                    // ignore: use_build_context_synchronously
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content:
-                                            Text("News added successfully"),
-                                        backgroundColor:
-                                            Color.fromARGB(255, 10, 207, 66),
-                                      ),
-                                    );
-                                    // ignore: use_build_context_synchronously
-                                    // context.read<UserUpdateCubit>().resetForm();
-
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.of(context).pop();
-                                    // ignore: use_build_context_synchronously
-                                    // Navigator.of(context).push(
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => const NewsPage(),
-                                    //   ),
-                                    // );
-                                  }
-
-                                  // ignore: use_build_context_synchronously
-
-                                  // ignore: use_build_context_synchronously
-                                } catch (e) {
-                                  // ignore: use_build_context_synchronously
-                                  // context
-                                  //     .read<UserUpdateCubit>()
-                                  //     .loadingSuccess();
-                                  // print(e);
-
-                                  // ignore: use_build_context_synchronously
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text(
-                                      e.toString(),
-                                    ),
-                                    backgroundColor:
-                                        MyThemeColors.productPriceColor,
-                                  ));
-                                }
+                                context.read<UserUpdateCubit>().updateUser();
                               }
                             : null,
                         child: Container(

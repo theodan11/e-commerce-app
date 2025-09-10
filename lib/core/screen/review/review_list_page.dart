@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 
 class ReviewListPage extends StatelessWidget {
   final List<dynamic> reviews;
-  ReviewListPage({super.key, required this.reviews});
-
-  double ratingTotal = 0;
+  const ReviewListPage({super.key, required this.reviews});
 
   @override
   Widget build(BuildContext context) {
+    double ratingTotal = 0;
     ratingTotal = reviews.fold(0, (acc, item) {
       return acc + item['rating'];
     });
