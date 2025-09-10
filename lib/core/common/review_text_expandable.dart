@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class ReviewTextExpandable extends StatefulWidget {
   final String textContent;
-  int trimLine;
-  bool canExpandable;
+  final int trimLine;
+  final bool canExpandable;
   bool isExpanded = false;
   ReviewTextExpandable({
     super.key,

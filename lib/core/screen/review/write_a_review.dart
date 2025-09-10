@@ -20,7 +20,19 @@ class WriteAReview extends StatelessWidget {
             style: MyTextTheme.appBarTitle.copyWith(color: Colors.black87)),
         centerTitle: true,
       ),
-      body: BlocBuilder<ReviewCreateCubit, ReviewCreateState>(
+      body: BlocConsumer<ReviewCreateCubit, ReviewCreateState>(
+          listener: (context, state) {
+            if (state.isSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Review added successfully"),
+                  backgroundColor: Color.fromARGB(255, 10, 207, 66),
+                ),
+              );
+
+              Navigator.pop(context, true);
+            }
+          },
           builder: (context, state) => SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -47,7 +59,7 @@ class WriteAReview extends StatelessWidget {
                             context
                                 .read<ReviewCreateCubit>()
                                 .updateCustomerExperience(value);
-                            print(state.customerExperience);
+                            // print(state.customerExperience);
                           },
                         ),
                         const SizedBox(
@@ -154,7 +166,7 @@ class WriteAReview extends StatelessWidget {
                                   .read<ReviewCreateCubit>()
                                   .updateRating(value.toInt());
 
-                              print(state.rating);
+                              // print(state.rating);
                             }),
                         const SizedBox(
                           height: 20,
@@ -167,19 +179,6 @@ class WriteAReview extends StatelessWidget {
                                     context
                                         .read<ReviewCreateCubit>()
                                         .saveReview(productID);
-                                    if (state.isSuccess) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content:
-                                              Text("Review added successfully"),
-                                          backgroundColor:
-                                              Color.fromARGB(255, 10, 207, 66),
-                                        ),
-                                      );
-
-                                      Navigator.of(context).pop();
-                                    }
                                   } else {
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(

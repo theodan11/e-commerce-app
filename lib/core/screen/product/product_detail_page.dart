@@ -19,43 +19,45 @@ import 'package:money_formatter/money_formatter.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final String productID;
-  const ProductDetailPage({super.key, required this.productID});
+  ProductDetailPage({super.key, required this.productID});
+
+  dynamic productItem;
+
+  dynamic storeInfo;
+
+  Future<Map<String, dynamic>> fetchStoreInfo(
+      Map<String, dynamic> productItem) async {
+    try {
+      DocumentSnapshot result = await FirebaseFirestore.instance
+          .collection("store")
+          .doc(productItem['storeId'])
+          .get();
+      Map<String, dynamic> storeInfo = result.data() as Map<String, dynamic>;
+      storeInfo['id'] = result.id;
+      return storeInfo;
+    } on FirebaseException catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<Map<String, dynamic>> fetchSingleProduct() async {
+    try {
+      DocumentSnapshot result = await FirebaseFirestore.instance
+          .collection("products")
+          .doc(productID)
+          .get();
+
+      Map<String, dynamic> productItem = result.data() as Map<String, dynamic>;
+      storeInfo = await fetchStoreInfo(productItem);
+      return productItem;
+    } on FirebaseException catch (e) {
+      throw Exception(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    dynamic productItem;
-    dynamic storeInfo;
     // User? user = FirebaseAuth.instance.currentUser;
-    Future<Map<String, dynamic>> fetchStoreInfo(
-        Map<String, dynamic> productItem) async {
-      try {
-        DocumentSnapshot result = await FirebaseFirestore.instance
-            .collection("store")
-            .doc(productItem['storeId'])
-            .get();
-        Map<String, dynamic> storeInfo = result.data() as Map<String, dynamic>;
-        storeInfo['id'] = result.id;
-        return storeInfo;
-      } on FirebaseException catch (e) {
-        throw Exception(e);
-      }
-    }
-
-    Future<Map<String, dynamic>> fetchSingleProduct() async {
-      try {
-        DocumentSnapshot result = await FirebaseFirestore.instance
-            .collection("products")
-            .doc(productID)
-            .get();
-
-        Map<String, dynamic> productItem =
-            result.data() as Map<String, dynamic>;
-        storeInfo = await fetchStoreInfo(productItem);
-        return productItem;
-      } on FirebaseException catch (e) {
-        throw Exception(e);
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
