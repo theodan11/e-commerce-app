@@ -25,9 +25,11 @@ class _OrderPageState extends State<OrderPage> {
       body: SafeArea(
         child: BlocBuilder<OrderCubit, OrderState>(
           builder: (context, state) {
-            if (state.isLoading) {
-              return const CircularProgressIndicator(
-                color: MyThemeColors.primaryColor,
+            if (state.orderLists.isNotEmpty) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: MyThemeColors.primaryColor,
+                ),
               );
             }
             return ListView.builder(

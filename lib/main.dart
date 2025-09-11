@@ -2,6 +2,7 @@ import 'package:e_commerce_app/core/cubit/cart_cubit/cart_cubit.dart';
 import 'package:e_commerce_app/core/cubit/login_form_cubit/login_form_cubit.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/add_news_cubit.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/news_list_cubit.dart';
+import 'package:e_commerce_app/core/cubit/order_cubit/order_cubit.dart';
 import 'package:e_commerce_app/core/cubit/product_cubit/product_cubit.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/review_cubit/review_create_cubit.dart';
@@ -34,6 +35,7 @@ void main() async {
     BlocProvider(create: (_) => ReviewCreateCubit()),
     BlocProvider(create: (_) => UserUpdateCubit()),
     BlocProvider(create: (_) => UserStoreProductListCubit()),
+    BlocProvider(create: (_) => OrderCubit()),
   ], child: const MyApp()));
 }
 
