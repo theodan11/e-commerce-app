@@ -149,4 +149,9 @@ class MyTextTheme {
     fontSize: 12,
     color: MyThemeColors.grayText,
   );
+  static final TextStyle productUpdateOriginal = GoogleFonts.dmSans(
+    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    color: const Color.fromARGB(255, 32, 32, 32),
+  );
 }

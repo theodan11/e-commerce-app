@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
 import 'package:e_commerce_app/core/cubit/user_store_product_cubit/user_store_product_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/user_store_product_cubit/user_store_product_list_state.dart';
+import 'package:e_commerce_app/core/screen/user/user_update_product.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';
@@ -101,41 +102,47 @@ class _UserUpdateProductlistState extends State<UserUpdateProductlist> {
                                       return AlertDialog(
                                         content: const Text("Are you sure?"),
                                         actions: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  context
-                                                      .read<
-                                                          UserStoreProductListCubit>()
-                                                      .deleteProduct(
-                                                          product.id);
-                                                  Navigator.of(context).pop();
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    const SnackBar(
-                                                      content: Text(
-                                                          "Product deleted successfully"),
-                                                      backgroundColor:
-                                                          Color.fromARGB(
-                                                              255, 10, 207, 66),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Text("Delete",
-                                                    style: TextStyle(
-                                                        color: Colors
-                                                            .red.shade600)),
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text("Cancel"),
-                                              )
-                                            ],
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    context
+                                                        .read<
+                                                            UserStoreProductListCubit>()
+                                                        .deleteProduct(
+                                                            product.id);
+                                                    Navigator.of(context).pop();
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text(
+                                                            "Product deleted successfully"),
+                                                        backgroundColor:
+                                                            Color.fromARGB(255,
+                                                                10, 207, 66),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Text("Delete",
+                                                      style: TextStyle(
+                                                          color: Colors
+                                                              .red.shade600)),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text("Cancel"),
+                                                )
+                                              ],
+                                            ),
                                           )
                                         ],
                                       );
@@ -148,10 +155,15 @@ class _UserUpdateProductlistState extends State<UserUpdateProductlist> {
                               ),
                             ),
                             const SizedBox(
-                              width: 8,
+                              width: 2,
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => UserUpdateProduct(
+                                          product: product,
+                                        )));
+                              },
                               icon: Icon(
                                 Icons.system_update_alt,
                                 color: Colors.blue.shade500,
