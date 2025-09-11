@@ -18,11 +18,12 @@ class OrderCubit extends Cubit<OrderState> {
 
     List<OrderModel> ordersList = ordersnapshot.docs.map((doc) {
       return OrderModel(
-          createdAt: doc['createdAt'],
-          items: doc["items"],
-          orderId: doc.id,
-          status: doc["status"],
-          totalPrice: doc["totalPrice"]);
+        createdAt: doc['createdAt'],
+        items: doc["items"],
+        orderId: doc.id,
+        status: doc["status"],
+        totalPrice: doc["totalPrice"],
+      );
     }).toList();
 
     emit(state.copyWith(

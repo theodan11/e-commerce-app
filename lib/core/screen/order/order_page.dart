@@ -26,7 +26,7 @@ class _OrderPageState extends State<OrderPage> {
         child: BlocBuilder<OrderCubit, OrderState>(
           builder: (context, state) {
             if (state.orderLists.isNotEmpty) {
-              return const Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: MyThemeColors.primaryColor,
                 ),

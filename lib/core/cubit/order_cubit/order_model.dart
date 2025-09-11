@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class OrderModel {
   final String orderId;
   final Timestamp createdAt;
-  final List<OrderItem> items;
+  final List<dynamic> items;
   final String status;
-  final double totalPrice;
+  final dynamic totalPrice;
 
   const OrderModel(
       {required this.createdAt,
