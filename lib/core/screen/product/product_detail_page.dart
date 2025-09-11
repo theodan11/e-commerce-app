@@ -433,16 +433,18 @@ class ProductDetailPage extends StatelessWidget {
                                     color: MyThemeColors.productPriceColor),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 15),
+                                      horizontal: 6, vertical: 8),
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Add to wishlist",
-                                          style: MyTextTheme.searchHintText
-                                              .copyWith(
-                                            color: Colors.white,
+                                        Expanded(
+                                          child: Text(
+                                            "Add to wishlist",
+                                            style: MyTextTheme.searchHintText
+                                                .copyWith(
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                         const Icon(

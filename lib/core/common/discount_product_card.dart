@@ -155,12 +155,10 @@ class DiscountProductCard extends StatelessWidget {
                                     const SizedBox(
                                       width: 6,
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        "${productItem.reviews!.length} Reviews",
-                                        style: MyTextTheme.productBottomText,
-                                        softWrap: true,
-                                      ),
+                                    Text(
+                                      "${productItem.reviews!.length} Reviews",
+                                      style: MyTextTheme.productBottomText,
+                                      softWrap: true,
                                     )
                                   ],
                                 )
