@@ -8,6 +8,7 @@ import 'package:e_commerce_app/core/cubit/review_cubit/review_create_cubit.dart'
 import 'package:e_commerce_app/core/cubit/seller_cubit/seller_create_cubit.dart';
 
 import 'package:e_commerce_app/core/cubit/sign_up_form_cubit/sign_up_form_cubit.dart';
+import 'package:e_commerce_app/core/cubit/user_store_product_cubit/user_store_product_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/user_update_cubit/user_update_cubit.dart';
 import 'package:e_commerce_app/core/screen/home/home_layout.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
@@ -32,6 +33,7 @@ void main() async {
     BlocProvider(create: (_) => SellerCreateCubit()),
     BlocProvider(create: (_) => ReviewCreateCubit()),
     BlocProvider(create: (_) => UserUpdateCubit()),
+    BlocProvider(create: (_) => UserStoreProductListCubit()),
   ], child: const MyApp()));
 }
 

@@ -4,7 +4,6 @@ import 'package:e_commerce_app/core/screen/product/add_product_page.dart';
 import 'package:e_commerce_app/core/screen/seller/create_seller_page.dart';
 import 'package:e_commerce_app/core/screen/user/user_update_productlist.dart';
 import 'package:e_commerce_app/core/services/firebase_auth_service.dart';
-import 'package:e_commerce_app/core/services/firebase_db_services.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
 import 'package:e_commerce_app/core/repository/database_action_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
@@ -140,11 +141,16 @@ class FirebaseDbServices implements DatabaseActionRepository {
     }
   }
 
-  // @override
+  @override
   Future<dynamic> fetchOwnerStore() async {
     try {
-      QuerySnapshot storeSnapshot =
-          await FirebaseFirestore.instance.collection("store").get();
+      QuerySnapshot storeSnapshot = await FirebaseFirestore.instance
+          .collection("store")
+          .where('storeOwner',
+              isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .get();
+
+      print(storeSnapshot);
 
       Map<String, dynamic> storeInfo = storeSnapshot.docs.map((doc) {
         if (doc['storeOwner'] == FirebaseAuth.instance.currentUser!.uid) {
@@ -163,7 +169,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
   @override
   Future<dynamic> fetchProduct(String storeId) async {
     try {
-      var productsSnapshot = await FirebaseFirestore.instance
+      final productsSnapshot = await FirebaseFirestore.instance
           .collection("products")
           .where("storeId", isEqualTo: storeId)
           .get();
@@ -171,7 +177,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
         var data = doc.data();
         data['id'] = doc.id;
         // print(data['id']);
-        return data;
+        return ProductModel.fromJSON(doc.data(), doc.id);
       }).toList();
       return products;
     } on FirebaseException catch (e) {

@@ -27,4 +27,5 @@ abstract class DatabaseActionRepository {
   Future<dynamic> fetchProduct(String storeId);
   Future<bool> checkIfSeller();
   Future<Map<String, dynamic>> fetchUserData();
+  Future<dynamic> fetchOwnerStore();
 }
