@@ -56,24 +56,32 @@ class _UserUpdateProductlistState extends State<UserUpdateProductlist> {
           // if (state.productList.isEmpty) {
           //   return const Text("No product");
           // }
-          if (state.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: MyThemeColors.primaryColor,
-              ),
-            );
-          }
-          return ListView.builder(
+          // if (state.isLoading) {
+          //   return const Center(
+          //     child: CircularProgressIndicator(
+          //       color: MyThemeColors.primaryColor,
+          //     ),
+          //   );
+          // }
+          return ListView.separated(
               itemCount: state.productList.length,
+              separatorBuilder: (context, index) {
+                return const SizedBox(
+                  height: 8,
+                );
+              },
               itemBuilder: (context, index) {
                 ProductModel product = state.productList[index];
-                return ListTile(
-                    leading: Text(product.title),
-                    subtitle: Text(product.price.toString()));
+                return Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: MyThemeColors.primaryColor),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Column(children: [
+                      Text(product.title),
+                    ]));
               });
-          // return ListView.builder(itemBuilder: (context, index) {
-          //   ProductModel product = state.productList[index];
-          // });
         },
       ),
     );

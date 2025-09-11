@@ -150,7 +150,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
               isEqualTo: FirebaseAuth.instance.currentUser!.uid)
           .get();
 
-      print(storeSnapshot);
+      // print(storeSnapshot);
 
       Map<String, dynamic> storeInfo = storeSnapshot.docs.map((doc) {
         if (doc['storeOwner'] == FirebaseAuth.instance.currentUser!.uid) {
@@ -181,7 +181,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
       }).toList();
       return products;
     } on FirebaseException catch (e) {
-      print(e.message);
+      // print(e.message);
       return e.message.toString();
     }
   }
@@ -204,7 +204,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
       storeInfo['products'] = products;
       return storeInfo;
     } on FirebaseException catch (e) {
-      print(e.message);
+      // print(e.message);
       return e.message.toString();
     }
   }
@@ -227,7 +227,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
         return false;
       }
     } on FirebaseException catch (e) {
-      print(e.message);
+      // print(e.message);
       return false;
     }
   }
@@ -244,7 +244,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
           userSnapshot.data() as Map<String, dynamic>;
       return userData;
     } on FirebaseException catch (e) {
-      print(e.message);
+      // print(e.message);
       throw Exception(e.message);
     }
   }

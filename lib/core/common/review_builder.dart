@@ -8,8 +8,8 @@ import 'package:intl/intl.dart';
 class ReviewBuilder extends StatelessWidget {
   final dynamic reviewList;
   final int itemC;
-  final isPhyOn;
-  final canExpanded;
+  final bool isPhyOn;
+  final bool canExpanded;
   const ReviewBuilder({
     super.key,
     required this.reviewList,

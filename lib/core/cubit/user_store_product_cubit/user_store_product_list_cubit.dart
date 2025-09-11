@@ -19,7 +19,7 @@ class UserStoreProductListCubit extends Cubit<UserStoreProductListState> {
       final storeSnapshot =
           await FirebaseFirestore.instance.collection("store").get();
 
-      print(storeSnapshot);
+      // print(storeSnapshot);
 // final storeData = storeSnapshot.docs.where((item) {
 //         return item['storeOwner'] == user;
 //       });
@@ -65,7 +65,7 @@ class UserStoreProductListCubit extends Cubit<UserStoreProductListState> {
             productList: products, isLoading: false, isSuccess: true));
       }
     } on FirebaseException catch (e) {
-      print(e.message);
+      // print(e.message);
     }
   }
 }

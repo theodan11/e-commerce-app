@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserUpdateCubit extends Cubit<UserUpdateState> {
-  UserUpdateCubit() : super(UserUpdateState(fullname: '', imagePath: ''));
+  UserUpdateCubit() : super(const UserUpdateState(fullname: '', imagePath: ''));
 
   void updateImagePath(String imagePath) {
     emit(state.copyWith(imagePath: imagePath));
@@ -67,6 +67,6 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
   }
 
   void resetForm() {
-    emit(UserUpdateState(imagePath: '', fullname: ''));
+    emit(const UserUpdateState(imagePath: '', fullname: ''));
   }
 }

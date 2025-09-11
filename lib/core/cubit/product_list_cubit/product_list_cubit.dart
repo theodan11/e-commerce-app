@@ -26,7 +26,7 @@ class ProductListCubit extends Cubit<ProductListState> {
         ),
       );
     } on FirebaseException catch (e) {
-      print(e.message.toString());
+      // print(e.message.toString());
       emit(
         state.copyWith(
             isSuccess: false,
@@ -34,7 +34,7 @@ class ProductListCubit extends Cubit<ProductListState> {
             error: "message from cubit product list ${e.message}"),
       );
     } catch (e) {
-      print(e);
+      // print(e);
 
       emit(state.copyWith(
           isSuccess: false,

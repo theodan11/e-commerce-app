@@ -183,7 +183,7 @@ class CartListPage extends StatelessWidget {
                                 throw Exception("Out of Stock");
                               }
                             } on FirebaseException catch (e) {
-                              print(e.message);
+                              // print(e.message);
                             }
                           }
 
@@ -209,7 +209,7 @@ class CartListPage extends StatelessWidget {
                           //     throw Exception("Out of Stock");
                           //   }
                           // });
-                          print(" operation finished");
+                          // print(" operation finished");
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Checkout Successful"),

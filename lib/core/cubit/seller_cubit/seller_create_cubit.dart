@@ -48,7 +48,7 @@ class SellerCreateCubit extends Cubit<SellerCreateState> {
 
       emit(state.copyWith(isLoading: false, isSuccess: true));
     } on FirebaseException catch (e) {
-      print(e.message);
+      // print(e.message);
     }
   }
 }
