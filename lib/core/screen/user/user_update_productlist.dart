@@ -53,35 +53,114 @@ class _UserUpdateProductlistState extends State<UserUpdateProductlist> {
           }
         },
         builder: (context, state) {
-          // if (state.productList.isEmpty) {
-          //   return const Text("No product");
-          // }
-          // if (state.isLoading) {
-          //   return const Center(
-          //     child: CircularProgressIndicator(
-          //       color: MyThemeColors.primaryColor,
-          //     ),
-          //   );
-          // }
-          return ListView.separated(
-              itemCount: state.productList.length,
-              separatorBuilder: (context, index) {
-                return const SizedBox(
-                  height: 8,
-                );
-              },
-              itemBuilder: (context, index) {
-                ProductModel product = state.productList[index];
-                return Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: MyThemeColors.primaryColor),
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Column(children: [
-                      Text(product.title),
-                    ]));
-              });
+          if (state.productList.isEmpty) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: MyThemeColors.primaryColor,
+              ),
+            );
+          }
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: ListView.separated(
+                itemCount: state.productList.length,
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 8,
+                  );
+                },
+                itemBuilder: (context, index) {
+                  ProductModel product = state.productList[index];
+                  return Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: MyThemeColors.primaryColor),
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Expanded(
+                              child: Text(
+                                product.title,
+                                style: MyTextTheme.productTitle,
+                                softWrap: true,
+                                maxLines: 1,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        content: const Text("Are you sure?"),
+                                        actions: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  context
+                                                      .read<
+                                                          UserStoreProductListCubit>()
+                                                      .deleteProduct(
+                                                          product.id);
+                                                  Navigator.of(context).pop();
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    const SnackBar(
+                                                      content: Text(
+                                                          "Product deleted successfully"),
+                                                      backgroundColor:
+                                                          Color.fromARGB(
+                                                              255, 10, 207, 66),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Text("Delete",
+                                                    style: TextStyle(
+                                                        color: Colors
+                                                            .red.shade600)),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text("Cancel"),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      );
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.delete_forever_outlined,
+                                color: Colors.red.shade500,
+                                size: 24,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.system_update_alt,
+                                color: Colors.blue.shade500,
+                                size: 24,
+                              ),
+                            )
+                          ]));
+                }),
+          );
         },
       ),
     );

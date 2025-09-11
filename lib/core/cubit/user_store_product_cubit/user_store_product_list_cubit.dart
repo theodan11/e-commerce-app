@@ -65,7 +65,18 @@ class UserStoreProductListCubit extends Cubit<UserStoreProductListState> {
             productList: products, isLoading: false, isSuccess: true));
       }
     } on FirebaseException catch (e) {
-      // print(e.message);
+      print(e.message);
     }
+  }
+
+  Future<void> deleteProduct(String productId) async {
+
+    await FirebaseFirestore.instance
+        .collection("products")
+        .doc(productId)
+        .delete();
+
+    fetchProductWithStoreId();
+    // print("done delete");
   }
 }
