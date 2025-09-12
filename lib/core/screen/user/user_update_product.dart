@@ -17,7 +17,7 @@ class UserUpdateProduct extends StatefulWidget {
 
 class _UserUpdateProductState extends State<UserUpdateProduct> {
   @override
-  initState() {
+  void initState() {
     super.initState();
     context.read<ProductCubit>().updateAll(
         widget.product.title,
@@ -33,296 +33,317 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Product",
+        title: Text("Update Product",
             style: MyTextTheme.appBarTitle.copyWith(color: Colors.black87)),
         centerTitle: true,
       ),
-      body: BlocBuilder<ProductCubit, ProductState>(
-          builder: (context, state) => SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 25.0, vertical: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 72,
+              ),
+              Text(
+                "Pick an Image",
+                style: MyTextTheme.loginPageLabel,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  return Row(
                     children: [
-                      const SizedBox(
-                        height: 72,
-                      ),
-                      Text(
-                        "Pick an Image",
-                        style: MyTextTheme.loginPageLabel,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 150,
-                            height: 150,
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                                color: MyThemeColors.grayText),
-                            child: _imageDisplay(context, state),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                if (state.imagePath != '') {
-                                  // context.read<ProductCubit>().clearimage();
-                                }
-                              },
-                              icon: const Icon(Icons.restart_alt_outlined))
-                        ],
+                      Container(
+                        width: 150,
+                        height: 150,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            color: MyThemeColors.grayText),
+                        child: _imageDisplay(context, state),
                       ),
                       const SizedBox(
-                        height: 20,
+                        width: 20,
                       ),
-                      MyTextField(
-                        value: state.imagePath,
-                        hintText: "Image link",
-                        onChanged: (value) {
-                          context.read<ProductCubit>().updateImagePath(value);
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Name",
-                        style: MyTextTheme.loginPageLabel,
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        widget.product.title,
-                        style: MyTextTheme.productUpdateOriginal,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyTextField(
-                        value: state.title,
-                        hintText: "Product name",
-                        onChanged: (value) {
-                          context.read<ProductCubit>().updateTitle(value);
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Price",
-                        style: MyTextTheme.loginPageLabel,
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        widget.product.price.toString(),
-                        style: MyTextTheme.productUpdateOriginal,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyTextField(
-                        value: state.price.toString(),
-                        hintText: "Product Price",
-                        isNumber: TextInputType.number,
-                        onChanged: (value) {
-                          context
-                              .read<ProductCubit>()
-                              .updatePrice(double.parse(value));
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Special Offer",
-                              style: MyTextTheme.loginPageLabel,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Checkbox(
-                                value: widget.product.isDiscount,
-                                focusColor: MyThemeColors.primaryColor,
-                                side: const BorderSide(
-                                    color: MyThemeColors.primaryColor),
-                                onChanged: (value) {
-                                  context
-                                      .read<ProductCubit>()
-                                      .updateIsDiscount(value!);
-                                })
-                          ]),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Original Price",
-                        style: MyTextTheme.loginPageLabel,
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        widget.product.originalPrice.toString(),
-                        style: MyTextTheme.productUpdateOriginal,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyTextField(
-                        value: state.price.toString(),
-                        hintText: "Product Original Price",
-                        isNumber: TextInputType.number,
-                        onChanged: (value) {
-                          context
-                              .read<ProductCubit>()
-                              .updateOriginalPrice(double.parse(value));
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Stock",
-                        style: MyTextTheme.loginPageLabel,
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        widget.product.stock.toString(),
-                        style: MyTextTheme.productUpdateOriginal,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyTextField(
-                        value: state.stock.toString(),
-                        hintText: "Product stock",
-                        isNumber: TextInputType.number,
-                        onChanged: (value) {
-                          context
-                              .read<ProductCubit>()
-                              .updateStock(int.parse(value));
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Description",
-                        style: MyTextTheme.loginPageLabel,
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        widget.product.desc,
-                        style: MyTextTheme.productUpdateOriginal,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyTextField(
-                        value: state.desc,
-                        maxLine: 5,
-                        hintText: "Product description...",
-                        onChanged: (value) {
-                          context.read<ProductCubit>().updateDesc(value);
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      GestureDetector(
-                        onTap: state.title != widget.product.title ||
-                                state.desc != widget.product.desc ||
-                                state.imagePath != widget.product.imagePath ||
-                                state.originalPrice !=
-                                    widget.product.originalPrice ||
-                                state.price != widget.product.price ||
-                                state.stock != widget.product.stock
-                            ? () {
-                                try {
-                                  context
-                                      .read<ProductCubit>()
-                                      .loadingInProgress();
-
-                                  // if (widget.product.isDiscount ==
-                                  //     state.isDiscount) {}
-
-                                  context
-                                      .read<ProductCubit>()
-                                      .updateProduct(widget.product.id);
-
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text("Product updated successfully"),
-                                      backgroundColor:
-                                          Color.fromARGB(255, 10, 207, 66),
-                                    ),
-                                  );
-
-                                  context
-                                      .read<ProductCubit>()
-                                      .resetProductForm();
-
-                                  Navigator.of(context).pop();
-                                } catch (e) {
-                                  context.read<ProductCubit>().loadingSuccess();
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text(
-                                      e.toString(),
-                                    ),
-                                    backgroundColor:
-                                        MyThemeColors.productPriceColor,
-                                  ));
-                                }
-                              }
-                            : null,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: state.title!.isNotEmpty &&
-                                    state.desc!.isNotEmpty
-                                ? MyThemeColors.primaryColor
-                                : MyThemeColors.grayText,
-                          ),
-                          child: state.isLoading && !state.isSuccess
-                              ? const Center(
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : Center(
-                                  child: Text(
-                                    "Publish Product",
-                                    style: MyTextTheme.searchHintText.copyWith(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                        ),
-                      ),
+                      IconButton(
+                          onPressed: () {
+                            if (state.imagePath != '') {
+                              // context.read<ProductCubit>().clearimage();
+                            }
+                          },
+                          icon: const Icon(Icons.restart_alt_outlined))
                     ],
-                  ),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  return MyTextField(
+                    value: state.imagePath,
+                    hintText: "Image link",
+                    onChanged: (value) {
+                      context.read<ProductCubit>().updateImagePath(value);
+                    },
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Name",
+                style: MyTextTheme.loginPageLabel,
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                widget.product.title,
+                style: MyTextTheme.productUpdateOriginal,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  return MyTextField(
+                    value: state.title,
+                    hintText: "Product name",
+                    onChanged: (value) {
+                      context.read<ProductCubit>().updateTitle(value);
+                    },
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Price",
+                style: MyTextTheme.loginPageLabel,
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                widget.product.price.toString(),
+                style: MyTextTheme.productUpdateOriginal,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  return MyTextField(
+                    value: state.price.toString(),
+                    hintText: "Product Price",
+                    isNumber: TextInputType.number,
+                    onChanged: (value) {
+                      context.read<ProductCubit>().updatePrice(value as double);
+                    },
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  "Special Offer",
+                  style: MyTextTheme.loginPageLabel,
                 ),
-              )),
+                const SizedBox(
+                  height: 20,
+                ),
+                BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state) {
+                    return Checkbox(
+                        value: state.isDiscount,
+                        focusColor: MyThemeColors.primaryColor,
+                        side:
+                            const BorderSide(color: MyThemeColors.primaryColor),
+                        onChanged: (value) {
+                          context.read<ProductCubit>().updateIsDiscount(value!);
+                        });
+                  },
+                )
+              ]),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Original Price",
+                style: MyTextTheme.loginPageLabel,
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                widget.product.originalPrice.toString(),
+                style: MyTextTheme.productUpdateOriginal,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  return MyTextField(
+                    value: state.originalPrice.toString(),
+                    hintText: "Product Original Price",
+                    isNumber: TextInputType.number,
+                    onChanged: (value) {
+                      context
+                          .read<ProductCubit>()
+                          .updateOriginalPrice(double.parse(value));
+                    },
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Stock",
+                style: MyTextTheme.loginPageLabel,
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                widget.product.stock.toString(),
+                style: MyTextTheme.productUpdateOriginal,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  return MyTextField(
+                    value: state.stock.toString(),
+                    hintText: "Product stock",
+                    isNumber: TextInputType.number,
+                    onChanged: (value) {
+                      context
+                          .read<ProductCubit>()
+                          .updateStock(int.parse(value));
+                    },
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Description",
+                style: MyTextTheme.loginPageLabel,
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                widget.product.desc,
+                style: MyTextTheme.productUpdateOriginal,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  return MyTextField(
+                    value: state.desc,
+                    maxLine: 5,
+                    hintText: "Product description...",
+                    onChanged: (value) {
+                      context.read<ProductCubit>().updateDesc(value);
+                    },
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  return GestureDetector(
+                    onTap: state.title != widget.product.title ||
+                            state.desc != widget.product.desc ||
+                            state.imagePath != widget.product.imagePath ||
+                            state.originalPrice !=
+                                widget.product.originalPrice ||
+                            state.price != widget.product.price ||
+                            state.stock != widget.product.stock
+                        ? () {
+                            try {
+                              context.read<ProductCubit>().loadingInProgress();
+
+                              // if (widget.product.isDiscount ==
+                              //     state.isDiscount) {}
+
+                              context
+                                  .read<ProductCubit>()
+                                  .updateProduct(widget.product.id);
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Product updated successfully"),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 10, 207, 66),
+                                ),
+                              );
+
+                              context.read<ProductCubit>().resetProductForm();
+
+                              Navigator.of(context).pop();
+                            } catch (e) {
+                              context.read<ProductCubit>().loadingSuccess();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                  e.toString(),
+                                ),
+                                backgroundColor:
+                                    MyThemeColors.productPriceColor,
+                              ));
+                            }
+                          }
+                        : null,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: state.title!.isNotEmpty && state.desc!.isNotEmpty
+                            ? MyThemeColors.primaryColor
+                            : MyThemeColors.grayText,
+                      ),
+                      child: state.isLoading && !state.isSuccess
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                "Publish Product",
+                                style: MyTextTheme.searchHintText.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
