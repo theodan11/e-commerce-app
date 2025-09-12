@@ -54,6 +54,8 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
                 height: 20,
               ),
               BlocBuilder<ProductCubit, ProductState>(
+                buildWhen: (previous, current) =>
+                    previous.imagePath != current.imagePath,
                 builder: (context, state) {
                   return Row(
                     children: [
@@ -83,6 +85,8 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
                 height: 20,
               ),
               BlocBuilder<ProductCubit, ProductState>(
+                buildWhen: (previous, current) =>
+                    previous.imagePath != current.imagePath,
                 builder: (context, state) {
                   return MyTextField(
                     value: state.imagePath,
@@ -111,6 +115,8 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
                 height: 20,
               ),
               BlocBuilder<ProductCubit, ProductState>(
+                buildWhen: (previous, current) =>
+                    previous.title != current.title,
                 builder: (context, state) {
                   return MyTextField(
                     value: state.title,
@@ -139,13 +145,18 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
                 height: 20,
               ),
               BlocBuilder<ProductCubit, ProductState>(
+                buildWhen: (previous, current) =>
+                    previous.price != current.price,
                 builder: (context, state) {
                   return MyTextField(
                     value: state.price.toString(),
                     hintText: "Product Price",
                     isNumber: TextInputType.number,
                     onChanged: (value) {
-                      context.read<ProductCubit>().updatePrice(value as double);
+                      final parse = double.tryParse(value);
+                      if (parse != null) {
+                        context.read<ProductCubit>().updatePrice(parse);
+                      }
                     },
                   );
                 },
@@ -162,6 +173,8 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
                   height: 20,
                 ),
                 BlocBuilder<ProductCubit, ProductState>(
+                  buildWhen: (previous, current) =>
+                      previous.isDiscount != current.isDiscount,
                   builder: (context, state) {
                     return Checkbox(
                         value: state.isDiscount,
@@ -192,15 +205,16 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
                 height: 20,
               ),
               BlocBuilder<ProductCubit, ProductState>(
+                buildWhen: (previous, current) =>
+                    previous.originalPrice != current.originalPrice,
                 builder: (context, state) {
                   return MyTextField(
                     value: state.originalPrice.toString(),
                     hintText: "Product Original Price",
                     isNumber: TextInputType.number,
                     onChanged: (value) {
-                      context
-                          .read<ProductCubit>()
-                          .updateOriginalPrice(double.parse(value));
+                      final parse = double.parse(value);
+                      context.read<ProductCubit>().updateOriginalPrice(parse);
                     },
                   );
                 },
@@ -223,6 +237,8 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
                 height: 20,
               ),
               BlocBuilder<ProductCubit, ProductState>(
+                buildWhen: (previous, current) =>
+                    previous.stock != current.stock,
                 builder: (context, state) {
                   return MyTextField(
                     value: state.stock.toString(),
@@ -254,6 +270,7 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
                 height: 20,
               ),
               BlocBuilder<ProductCubit, ProductState>(
+                buildWhen: (previous, current) => previous.desc != current.desc,
                 builder: (context, state) {
                   return MyTextField(
                     value: state.desc,
@@ -339,7 +356,7 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
                     ),
                   );
                 },
-              ),
+              )
             ],
           ),
         ),

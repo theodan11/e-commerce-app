@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/core/common/discount_product_card.dart';
-import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
 import 'package:e_commerce_app/core/services/firebase_db_services.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';

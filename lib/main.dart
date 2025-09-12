@@ -7,7 +7,6 @@ import 'package:e_commerce_app/core/cubit/product_cubit/product_cubit.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/review_cubit/review_create_cubit.dart';
 import 'package:e_commerce_app/core/cubit/seller_cubit/seller_create_cubit.dart';
-
 import 'package:e_commerce_app/core/cubit/sign_up_form_cubit/sign_up_form_cubit.dart';
 import 'package:e_commerce_app/core/cubit/user_store_product_cubit/user_store_product_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/user_update_cubit/user_update_cubit.dart';

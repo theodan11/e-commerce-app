@@ -227,7 +227,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
         return false;
       }
     } on FirebaseException catch (e) {
-      // print(e.message);
+      print(e.message);
       return false;
     }
   }

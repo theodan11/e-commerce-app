@@ -18,7 +18,13 @@ class _UserUpdateProductlistState extends State<UserUpdateProductlist> {
   @override
   initState() {
     super.initState();
-    context.read<UserStoreProductListCubit>().fetchStoreInfo();
+    final cubit = context.read<UserStoreProductListCubit>();
+    cubit.fetchStoreInfo().then((_) {
+      final storeId = cubit.state.storeInfo['id'];
+      if (storeId != null) {
+        cubit.fetchProductWithStoreId();
+      }
+    });
   }
 
   @override
@@ -44,18 +50,18 @@ class _UserUpdateProductlistState extends State<UserUpdateProductlist> {
           )
         ],
       ),
-      body: BlocConsumer<UserStoreProductListCubit, UserStoreProductListState>(
-        listener: (context, state) {
-          if (state.storeInfo["id"] != null) {
-            context.read<UserStoreProductListCubit>().fetchProductWithStoreId();
-          }
-          if (state.storeInfo.isEmpty) {
-            context.read<UserStoreProductListCubit>().fetchStoreInfo();
-          }
-        },
+      body: BlocBuilder<UserStoreProductListCubit, UserStoreProductListState>(
+        // listener: (context, state) {
+        //   if (state.storeInfo["id"] != null) {
+        //     context.read<UserStoreProductListCubit>().fetchProductWithStoreId();
+        //   }
+        //   if (state.storeInfo.isEmpty) {
+        //     context.read<UserStoreProductListCubit>().fetchStoreInfo();
+        //   }
+        // },
         builder: (context, state) {
           if (state.productList.isEmpty) {
-            return const Center(
+            const Center(
               child: CircularProgressIndicator(
                 color: MyThemeColors.primaryColor,
               ),
