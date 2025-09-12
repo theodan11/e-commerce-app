@@ -40,18 +40,7 @@ class UserSellerPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomProfileButton(
-                onTapFunc: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const CreateSellerPage()));
-                },
-                btnTitle: "Check products",
-                icon: Icons.store_mall_directory_outlined,
-                iconColor: MyThemeColors.primaryColor,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
+            
               CustomProfileButton(
                 onTapFunc: () {
                   Navigator.of(context).push(MaterialPageRoute(

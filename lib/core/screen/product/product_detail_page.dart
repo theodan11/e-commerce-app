@@ -19,11 +19,11 @@ import 'package:money_formatter/money_formatter.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final String productID;
+  dynamic productItem = [];
+
+  dynamic storeInfo = {};
+
   ProductDetailPage({super.key, required this.productID});
-
-  dynamic productItem;
-
-  dynamic storeInfo;
 
   Future<Map<String, dynamic>> fetchStoreInfo(
       Map<String, dynamic> productItem) async {
@@ -76,11 +76,9 @@ class ProductDetailPage extends StatelessWidget {
                   builder: (context, snapShot) {
                     if (snapShot.connectionState == ConnectionState.waiting ||
                         !snapShot.hasData) {
-                      return const Expanded(
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: MyThemeColors.primaryColor,
-                          ),
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: MyThemeColors.primaryColor,
                         ),
                       );
                     }

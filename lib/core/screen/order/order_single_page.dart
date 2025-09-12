@@ -15,7 +15,7 @@ class OrderSinglePage extends StatelessWidget {
             style: MyTextTheme.appBarTitle.copyWith(color: Colors.black87)),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
           child: Column(
@@ -60,7 +60,7 @@ class OrderSinglePage extends StatelessWidget {
                     style: MyTextTheme.latestNewsHeadterText,
                   ),
                   const SizedBox(
-                    width: 6,
+                    width: 16,
                   ),
                   Text(
                     "Price",
@@ -73,7 +73,7 @@ class OrderSinglePage extends StatelessWidget {
                 color: MyThemeColors.grayText,
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.52,
+                height: MediaQuery.of(context).size.height * 0.48,
                 child: ListView.separated(
                     separatorBuilder: (context, index) => const SizedBox(
                           height: 14,
