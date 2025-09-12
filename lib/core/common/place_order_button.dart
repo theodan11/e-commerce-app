@@ -5,7 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CheckOutButton extends StatelessWidget {
-  const CheckOutButton({super.key});
+  final String buttonTitle;
+  const CheckOutButton({super.key, this.buttonTitle = "Checkout"});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class CheckOutButton extends StatelessWidget {
             color: MyThemeColors.primaryColor),
         child: Center(
           child: Text(
-            "Checkout",
+            buttonTitle,
             style: MyTextTheme.searchHintText.copyWith(
               color: Colors.white,
             ),

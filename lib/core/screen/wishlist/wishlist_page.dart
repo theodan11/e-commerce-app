@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/core/common/login_please.dart';
+import 'package:e_commerce_app/core/common/place_order_button.dart';
 import 'package:e_commerce_app/core/screen/product/product_detail_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,8 +24,8 @@ class WishlistPage extends StatelessWidget {
         }
 
         if (!snapshot.hasData) {
-          return const Center(
-            child: Text("login please"),
+          return const LoginPlease(
+            buttonTitle: "Login",
           );
         }
 
@@ -42,10 +44,10 @@ class WishlistPage extends StatelessWidget {
               var wishListarr = wishSnapshot.data ?? [];
               if (wishListarr.isEmpty) {
                 return Center(
-                  child: Text(
-                    "Your wishlist is empty",
-                    style: MyTextTheme.latestNewsHeadterText,
-                  ),
+                  child: Text("Your wishlist is empty",
+                      textAlign: TextAlign.center,
+                      style: MyTextTheme.latestNewsHeadterText
+                          .copyWith(fontSize: 36)),
                 );
               }
               // print(wishListarr);

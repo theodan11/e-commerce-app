@@ -1,9 +1,11 @@
+import 'package:e_commerce_app/core/common/login_please.dart';
 import 'package:e_commerce_app/core/cubit/order_cubit/order_cubit.dart';
 import 'package:e_commerce_app/core/cubit/order_cubit/order_model.dart';
 import 'package:e_commerce_app/core/cubit/order_cubit/order_state.dart';
 import 'package:e_commerce_app/core/screen/order/order_single_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +20,9 @@ class _OrderPageState extends State<OrderPage> {
   @override
   void initState() {
     super.initState();
-    context.read<OrderCubit>().fetchOrders();
+    if (FirebaseAuth.instance.currentUser?.uid != null) {
+      context.read<OrderCubit>().fetchOrders();
+    }
   }
 
   @override
@@ -39,6 +43,13 @@ class _OrderPageState extends State<OrderPage> {
                 ),
               );
             }
+
+            if (FirebaseAuth.instance.currentUser?.uid == null) {
+              return const LoginPlease(
+                buttonTitle: "Login",
+              );
+            }
+
             return Padding(
               padding: const EdgeInsets.all(25),
               child: ListView.separated(
@@ -60,8 +71,9 @@ class _OrderPageState extends State<OrderPage> {
                         width: MediaQuery.of(context).size.width,
                         height: 80,
                         decoration: BoxDecoration(
-                            border:
-                                Border.all(color: MyThemeColors.primaryColor),
+                            border: Border.all(
+                                color: MyThemeColors.primaryColor
+                                    .withValues(alpha: 0.5)),
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(12))),
                         child: Padding(
