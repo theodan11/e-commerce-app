@@ -34,9 +34,10 @@ class AddToCartButton extends StatelessWidget {
                           color: MyThemeColors.grayText,
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text("Quantity"),
-                            const Spacer(),
+                         
                             IconButton(
                               onPressed: () {
                                 totalPriceLocal =

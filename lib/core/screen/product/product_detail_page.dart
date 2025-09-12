@@ -66,38 +66,42 @@ class ProductDetailPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
-            child: FutureBuilder(
-                future: fetchSingleProduct(),
-                builder: (context, snapShot) {
-                  if (snapShot.connectionState == ConnectionState.waiting ||
-                      !snapShot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: MyThemeColors.primaryColor,
-                      ),
-                    );
-                  }
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+          child: FutureBuilder(
+              future: fetchSingleProduct(),
+              builder: (context, snapShot) {
+                if (snapShot.connectionState == ConnectionState.waiting ||
+                    !snapShot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: MyThemeColors.primaryColor,
+                    ),
+                  );
+                }
+                double avgRating;
+                if (snapShot.data!['reviews'].length > 0) {
                   int rateAcc = snapShot.data!['reviews'].fold(0, (prev, item) {
                     return prev + item['rating'];
                   });
-                  double avgRating = rateAcc / snapShot.data!['reviews'].length;
-                  // double avgRating = rateAcc / snapShot.data!['reviews'].length;
-                  // int rateAcc = 2;
+                  avgRating = rateAcc / snapShot.data!['reviews'].length;
+                } else {
+                  avgRating = 0;
+                }
+                // double avgRating = rateAcc / snapShot.data!['reviews'].length;
+                // int rateAcc = 2;
 
-                  productItem =
-                      ProductModel.fromJSON(snapShot.data!, productID);
-                  // print(productItem);
-                  MoneyFormatter money =
-                      MoneyFormatter(amount: productItem.price);
-                  snapShot.data!["formattedAmount"] = money;
+                productItem = ProductModel.fromJSON(snapShot.data!, productID);
+                // print(productItem);
+                MoneyFormatter money =
+                    MoneyFormatter(amount: productItem.price);
+                snapShot.data!["formattedAmount"] = money;
 
-                  MoneyFormatter discountpriceMoney =
-                      MoneyFormatter(amount: productItem.originalPrice);
-                  // print("this is product: $productItem");
-                  return Column(
+                MoneyFormatter discountpriceMoney =
+                    MoneyFormatter(amount: productItem.originalPrice);
+                // print("this is product: $productItem");
+                return SingleChildScrollView(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
@@ -459,9 +463,9 @@ class ProductDetailPage extends StatelessWidget {
                         ],
                       )
                     ],
-                  );
-                }),
-          ),
+                  ),
+                );
+              }),
         ),
       ),
     );
