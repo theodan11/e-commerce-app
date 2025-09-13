@@ -8,6 +8,7 @@ class ProductModel {
   final int stock;
   final String storeId;
   final String desc;
+  final String category;
   // final List<ReviewModel>? reviews;
   final List<dynamic>? reviews;
   final bool isDiscount;
@@ -22,6 +23,7 @@ class ProductModel {
     required this.stock,
     required this.storeId,
     required this.desc,
+    required this.category,
     this.reviews = const [],
     this.isDiscount = false,
     this.isFeatured,
@@ -38,6 +40,7 @@ class ProductModel {
       // stock: int.parse(json['stock']),
       storeId: json['storeId'],
       desc: json['desc'],
+      category: json['category'] ?? '',
       isFeatured: json['isFeatured'] ?? false,
       reviews: json['reviews'] != null
           ? (json['reviews'] as List).map((rev) {

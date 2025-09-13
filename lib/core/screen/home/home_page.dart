@@ -1,9 +1,11 @@
 import 'package:e_commerce_app/core/common/banner_card.dart';
+import 'package:e_commerce_app/core/common/category_builder.dart';
 import 'package:e_commerce_app/core/common/discount_product_card.dart';
 import 'package:e_commerce_app/core/common/header_and_see_all.dart';
 import 'package:e_commerce_app/core/common/latest_news_card.dart';
 import 'package:e_commerce_app/core/common/text_field.dart';
 import 'package:e_commerce_app/core/common/show_now_card.dart';
+import 'package:e_commerce_app/core/constant/category_of_item.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/news_list_cubit.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/news_list_state.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_list_cubit.dart';
@@ -14,8 +16,10 @@ import 'package:e_commerce_app/core/screen/news/news_page.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -89,41 +93,7 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 16,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: SizedBox(
-              height: 80,
-              child: ListView.builder(
-                  itemCount: 6,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return SizedBox(
-                      width: 80,
-                      height: 76,
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 48,
-                            height: 48,
-                            decoration: BoxDecoration(
-                              color: const Color(0x483A9B7B),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child:
-                                  Image.asset("assets/images/Vegetable 1.png"),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text("Foods", style: MyTextTheme.productTitle)
-                        ],
-                      ),
-                    );
-                  }),
-            ),
-          ),
+          const CategoryBuilder(),
           const SizedBox(
             height: 50,
           ),
@@ -372,6 +342,7 @@ class _HomePageState extends State<HomePage> {
               stock: product.stock,
               storeId: product.storeId,
               desc: product.desc,
+              category: product.category,
               reviews: product.reviews);
         }).toList();
 

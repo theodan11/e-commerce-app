@@ -42,6 +42,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
     bool? isDiscount = false,
     int? stock,
     String? desc,
+    String? category,
   }) async {
     try {
       var db = FirebaseFirestore.instance.collection("products");
@@ -64,6 +65,7 @@ class FirebaseDbServices implements DatabaseActionRepository {
         "isDiscount": isDiscount,
         "stock": stock ?? 0,
         "desc": desc,
+        "category": category,
         "reviews": [],
         "addedAt": FieldValue.serverTimestamp()
       });

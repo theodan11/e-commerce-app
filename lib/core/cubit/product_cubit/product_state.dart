@@ -9,6 +9,7 @@ class ProductState extends Equatable {
   final int? stock;
   final String? storeId;
   final String? desc;
+  final String? category;
   final bool isLoading;
   final bool isSuccess;
 
@@ -20,6 +21,7 @@ class ProductState extends Equatable {
     this.stock = 0,
     this.storeId = '',
     this.desc = '',
+    this.category = 'All',
     this.isDiscount = false,
     this.isLoading = false,
     this.isSuccess = false,
@@ -33,6 +35,7 @@ class ProductState extends Equatable {
     int? stock,
     String? storeId,
     String? desc,
+    String? category,
     bool? isDiscount,
     bool? isLoading,
     bool? isSuccess,
@@ -45,6 +48,7 @@ class ProductState extends Equatable {
       stock: stock ?? this.stock,
       storeId: storeId ?? this.storeId,
       desc: desc ?? this.desc,
+      category: category ?? this.category,
       isDiscount: isDiscount ?? this.isDiscount,
       isLoading: isLoading ?? this.isLoading,
       isSuccess: isSuccess ?? this.isSuccess,
@@ -60,6 +64,7 @@ class ProductState extends Equatable {
         stock,
         storeId,
         desc,
+        category,
         isLoading,
         isSuccess,
         isDiscount

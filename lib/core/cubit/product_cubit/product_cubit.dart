@@ -8,12 +8,13 @@ class ProductCubit extends Cubit<ProductState> {
     const ProductState();
   }
 
-  void updateAll(String title, String imagePath, String desc, double price,
-      int stock, double originalPrice, bool isDiscount) {
+  void updateAll(String title, String imagePath, String desc, String category,
+      double price, int stock, double originalPrice, bool isDiscount) {
     emit(ProductState(
       title: title,
       imagePath: imagePath,
       desc: desc,
+      category: category,
       price: price,
       originalPrice: originalPrice,
       stock: stock,
@@ -31,6 +32,10 @@ class ProductCubit extends Cubit<ProductState> {
 
   void updateDesc(String desc) {
     emit(state.copyWith(desc: desc));
+  }
+
+  void updatecategory(String category) {
+    emit(state.copyWith(category: category));
   }
 
   void updatePrice(double price) {
@@ -95,6 +100,9 @@ class ProductCubit extends Cubit<ProductState> {
       }
       if (state.originalPrice != 0.0) {
         updatedData['originalPrice'] = state.originalPrice;
+      }
+      if (state.category != null) {
+        updatedData['category'] = state.category;
       }
 
       await FirebaseFirestore.instance

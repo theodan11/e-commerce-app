@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/common/text_field.dart';
+import 'package:e_commerce_app/core/constant/category_of_item.dart';
 import 'package:e_commerce_app/core/cubit/product_cubit/product_cubit.dart';
 import 'package:e_commerce_app/core/cubit/product_cubit/product_state.dart';
 import 'package:e_commerce_app/core/screen/home/home_layout.dart';
@@ -6,6 +7,7 @@ import 'package:e_commerce_app/core/screen/home/home_layout.dart';
 import 'package:e_commerce_app/core/services/firebase_db_services.dart';
 import 'package:e_commerce_app/core/utility/theme/my_text_theme.dart';
 import 'package:e_commerce_app/core/utility/theme/my_theme_colors.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +17,10 @@ class AddProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> categoryLables = CategoryItem.categoryList.map((item) {
+      return item['lable'] as String;
+    }).toList();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Product",
@@ -177,6 +183,27 @@ class AddProductPage extends StatelessWidget {
                         height: 20,
                       ),
                       Text(
+                        "Category",
+                        style: MyTextTheme.loginPageLabel,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      DropdownButton(
+                        hint: const Text("Select a category"),
+                        value: state.category,
+                        onChanged: (value) {
+                          context.read<ProductCubit>().updatecategory(value!);
+                        },
+                        items: categoryLables.map((item) {
+                          return DropdownMenuItem(
+                              value: item, child: Text(item));
+                        }).toList(),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
                         "Description",
                         style: MyTextTheme.loginPageLabel,
                       ),
@@ -208,6 +235,7 @@ class AddProductPage extends StatelessWidget {
                                     imagePath: state.imagePath,
                                     stock: state.stock,
                                     desc: state.desc,
+                                    category: state.category,
                                     isDiscount: state.isDiscount,
                                     originalPrice: state.originalPrice,
                                   );

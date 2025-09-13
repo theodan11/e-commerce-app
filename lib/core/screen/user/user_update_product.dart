@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/common/text_field.dart';
+import 'package:e_commerce_app/core/constant/category_of_item.dart';
 import 'package:e_commerce_app/core/cubit/product_cubit/product_cubit.dart';
 import 'package:e_commerce_app/core/cubit/product_cubit/product_state.dart';
 import 'package:e_commerce_app/core/cubit/product_list_cubit/product_model.dart';
@@ -23,6 +24,7 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
         widget.product.title,
         widget.product.imagePath,
         widget.product.desc,
+        widget.product.category,
         widget.product.price,
         widget.product.stock,
         widget.product.originalPrice,
@@ -31,6 +33,9 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> categoryLables = CategoryItem.categoryList.map((item) {
+      return item['lable'] as String;
+    }).toList();
     return Scaffold(
       appBar: AppBar(
         title: Text("Update Product",
@@ -255,6 +260,26 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
               const SizedBox(
                 height: 20,
               ),
+              BlocBuilder<ProductCubit, ProductState>(
+                buildWhen: (previous, current) {
+                  return previous.category != current.category;
+                },
+                builder: (context, state) {
+                  return DropdownButton(
+                    hint: const Text("Select a category"),
+                    value: state.category,
+                    onChanged: (value) {
+                      context.read<ProductCubit>().updatecategory(value!);
+                    },
+                    items: categoryLables.map((item) {
+                      return DropdownMenuItem(value: item, child: Text(item));
+                    }).toList(),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Text(
                 "Description",
                 style: MyTextTheme.loginPageLabel,
@@ -290,6 +315,7 @@ class _UserUpdateProductState extends State<UserUpdateProduct> {
                   return GestureDetector(
                     onTap: state.title != widget.product.title ||
                             state.desc != widget.product.desc ||
+                            state.category != widget.product.category ||
                             state.imagePath != widget.product.imagePath ||
                             state.originalPrice !=
                                 widget.product.originalPrice ||

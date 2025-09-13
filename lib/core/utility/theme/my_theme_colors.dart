@@ -20,7 +20,10 @@ class MyThemeColors {
 
   static const Color latestNewsHeaderTitleColor = Color(0XFF06070C);
 
+  static const Color categoriesAll = Color(0xFF396884);
   static const Color categoriesGreen = Color(0XFF3A9B7A);
   static const Color categoriesOrange = Color(0XFFFE6E4C);
   static const Color categoriesYellow = Color(0XFFFFC120);
+  static const Color categoriesPurple = Color(0xFF672B58);
+  static const Color categoriesRed = Color(0xFF8B1E10);
 }

@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/cubit/cart_cubit/cart_cubit.dart';
+import 'package:e_commerce_app/core/cubit/catogory_cubit/category_cubit.dart';
 import 'package:e_commerce_app/core/cubit/login_form_cubit/login_form_cubit.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/add_news_cubit.dart';
 import 'package:e_commerce_app/core/cubit/news_cubit/news_list_cubit.dart';
@@ -35,6 +36,7 @@ void main() async {
     BlocProvider(create: (_) => UserUpdateCubit()),
     BlocProvider(create: (_) => UserStoreProductListCubit()),
     BlocProvider(create: (_) => OrderCubit()),
+    BlocProvider(create: (_) => CategoryCubit()),
   ], child: const MyApp()));
 }
 
