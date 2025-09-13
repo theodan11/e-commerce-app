@@ -27,7 +27,9 @@ class ReviewListPage extends StatelessWidget {
             const SizedBox(
               width: 4,
             ),
-            Text(ratingTotal.toStringAsFixed(1)),
+            Text(ratingTotal.isNaN
+                ? 0.toString()
+                : ratingTotal.toStringAsFixed(1)),
             const SizedBox(
               width: 4,
             ),

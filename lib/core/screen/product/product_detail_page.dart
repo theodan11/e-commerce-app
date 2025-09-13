@@ -80,7 +80,7 @@ class ProductDetailPage extends StatelessWidget {
                   );
                 }
                 double avgRating;
-                if (snapShot.data!['reviews'].length > 0) {
+                if (snapShot.data!['reviews'] != null) {
                   int rateAcc = snapShot.data!['reviews'].fold(0, (prev, item) {
                     return prev + item['rating'];
                   });
@@ -100,6 +100,14 @@ class ProductDetailPage extends StatelessWidget {
                 MoneyFormatter discountpriceMoney =
                     MoneyFormatter(amount: productItem.originalPrice);
                 // print("this is product: $productItem");
+                final reviews = snapShot.data!['reviews'];
+                final isReviewValid = reviews != null && reviews is List;
+                int reviewCount = 0;
+                List reviewList = [];
+                if (isReviewValid) {
+                  reviewList = reviews;
+                  reviewCount = reviewList.length;
+                }
                 return SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,10 +195,15 @@ class ProductDetailPage extends StatelessWidget {
                                 const SizedBox(
                                   width: 6,
                                 ),
-                                Text(
-                                  "${snapShot.data!['reviews'].length} Reviews",
-                                  style: MyTextTheme.productBottomText,
-                                )
+                                snapShot.data!['reviews'] != null
+                                    ? Text(
+                                        "${snapShot.data!['reviews'].length} Reviews",
+                                        style: MyTextTheme.productBottomText,
+                                      )
+                                    : Text(
+                                        "0 Reviews",
+                                        style: MyTextTheme.productBottomText,
+                                      )
                               ],
                             ),
                             snapShot.data!['stock'] >= 1
@@ -332,29 +345,56 @@ class ProductDetailPage extends StatelessWidget {
                         height: 14,
                       ),
                       HeaderAndSeeAll(
-                        headerTitle:
-                            "Reviews (${snapShot.data!['reviews'].length})",
+                        headerTitle: snapShot.data!['reviews'] != null
+                            ? "Reviews (${snapShot.data!['reviews'].length})"
+                            : "Reviews (0)",
                         btnTitle: avgRating.isNaN
                             ? 0.toString()
                             : avgRating.toStringAsFixed(2),
                       ),
                       const SizedBox(height: 20),
-                      SizedBox(
-                        height: snapShot.data!['reviews'].length > 3
-                            ? 360
-                            : snapShot.data!['reviews'].length * 120,
-                        child: ReviewBuilder(
-                          reviewList: snapShot.data!['reviews'],
-                          itemC: snapShot.data!['reviews'].length > 3
-                              ? 3
-                              : snapShot.data!['reviews'].length,
-                        ),
-                      ),
+                      // snapShot.data!['reviews'] != null
+                      //     ? SizedBox(
+                      //         height: snapShot.data!['reviews'].length > 3
+                      //             ? 360
+                      //             : snapShot.data!['reviews'].length * 120,
+                      //         child: snapShot.data!['reviews'].length > 0
+                      //             ? ReviewBuilder(
+                      //                 reviewList: snapShot.data!['reviews'],
+                      //                 itemC: snapShot.data!['reviews'].length >
+                      //                         3
+                      //                     ? 3
+                      //                     : snapShot.data!['reviews'].length,
+                      //               )
+                      //             : Text("No Reviews yet",
+                      //                 style:
+                      //                     MyTextTheme.loginPageSubHeaderText),
+                      //       )
+                      //     : Text("No Reviews yet",
+                      //         style: MyTextTheme.loginPageSubHeaderText),
+
+                      isReviewValid
+                          ? SizedBox(
+                              height: reviewCount > 3 ? 360 : reviewCount * 120,
+                              child: reviewCount > 0
+                                  ? ReviewBuilder(
+                                      reviewList: reviewList,
+                                      itemC: reviewCount >= 3 ? 3 : reviewCount,
+                                    )
+                                  : Text("No Reviews yet",
+                                      style:
+                                          MyTextTheme.loginPageSubHeaderText),
+                            )
+                          : Text("No Reviews yet",
+                              style: MyTextTheme.loginPageSubHeaderText),
+
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ReviewListPage(
-                                  reviews: snapShot.data!['reviews'])));
+                          snapShot.data!['reviews'] != null
+                              ? (Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ReviewListPage(
+                                      reviews: snapShot.data!['reviews']))))
+                              : null;
                         },
                         child: Container(
                           height: 50,
