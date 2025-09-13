@@ -16,7 +16,7 @@ class CategoryItem {
       "color": MyThemeColors.categoriesGreen,
     },
     {
-      "lable": "Vagetable",
+      "lable": "Vegetable",
       "imagePath": "assets/images/salad.svg",
       "bgColor": MyThemeColors.categoriesOrange.withAlpha(60),
       "color": MyThemeColors.categoriesOrange,

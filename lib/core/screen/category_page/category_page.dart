@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/common/app_bar_custom.dart';
 import 'package:e_commerce_app/core/common/category_builder.dart';
 import 'package:e_commerce_app/core/common/discount_product_card.dart';
 import 'package:e_commerce_app/core/cubit/catogory_cubit/category_cubit.dart';
@@ -17,25 +18,8 @@ class CategoryPage extends StatelessWidget {
     String category;
     return BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
       return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              state.category,
-              style: MyTextTheme.appBarTitle,
-            ),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.notifications_outlined),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.shopping_cart_outlined),
-              ),
-              const SizedBox(
-                width: 25,
-              )
-            ],
+          appBar: AppBarCustom(
+            appBarTitle: state.category,
           ),
           body: Column(
             children: [
