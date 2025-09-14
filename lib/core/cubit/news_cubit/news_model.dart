@@ -6,7 +6,7 @@ class NewsModel {
   final String imagePath;
   final String userID;
   final String id;
-  final Timestamp nDate;
+  final dynamic nDate;
 
   NewsModel({
     required this.title,
@@ -14,7 +14,7 @@ class NewsModel {
     required this.imagePath,
     required this.userID,
     required this.id,
-    required this.nDate,
+    this.nDate,
   });
 
   factory NewsModel.fromJSON(Map<String, dynamic> json, String id) {

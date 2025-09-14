@@ -29,7 +29,7 @@ class WriteAReview extends StatelessWidget {
                   backgroundColor: Color.fromARGB(255, 10, 207, 66),
                 ),
               );
-
+              context.read<ReviewCreateCubit>().resetForm();
               Navigator.pop(context, true);
             }
           },

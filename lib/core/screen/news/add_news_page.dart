@@ -23,7 +23,29 @@ class AddNewsPage extends StatelessWidget {
             style: MyTextTheme.appBarTitle.copyWith(color: Colors.black87)),
         centerTitle: true,
       ),
-      body: BlocBuilder<AddNewsCubit, AddNewsState>(
+      body: BlocConsumer<AddNewsCubit, AddNewsState>(
+          listener: (context, state) {
+            if (state.isSuccess) {
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("News added successfully"),
+                  backgroundColor: Color.fromARGB(255, 10, 207, 66),
+                ),
+              );
+              // ignore: use_build_context_synchronously
+              context.read<AddNewsCubit>().resetForm();
+
+              // ignore: use_build_context_synchronously
+              Navigator.of(context).pop();
+              // ignore: use_build_context_synchronously
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const NewsPage(),
+                ),
+              );
+            }
+          },
           builder: (context, state) => SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -128,29 +150,6 @@ class AddNewsPage extends StatelessWidget {
                                   await context
                                       .read<AddNewsCubit>()
                                       .uploadToCloud();
-
-                                  if (state.isSuccess) {
-                                    // ignore: use_build_context_synchronously
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content:
-                                            Text("News added successfully"),
-                                        backgroundColor:
-                                            Color.fromARGB(255, 10, 207, 66),
-                                      ),
-                                    );
-                                    // ignore: use_build_context_synchronously
-                                    context.read<AddNewsCubit>().resetForm();
-
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.of(context).pop();
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => const NewsPage(),
-                                      ),
-                                    );
-                                  }
 
                                   // ignore: use_build_context_synchronously
 
